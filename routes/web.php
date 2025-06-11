@@ -27,7 +27,7 @@ Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistControl
 
 
 Route::controller(AuthController::class)->group(function(){
-    Route::get('/login', 'showLoginForm')->name('auth.login');
+    Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login')->name('login.submit');
     Route::get('/logout', 'logoutUser')->name('auth.logout');
 });
