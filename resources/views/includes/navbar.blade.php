@@ -3,7 +3,7 @@
         <!-- Left: Logo and Title -->
         <div class="flex items-center space-x-3">
             <!-- Square Image -->
-            <img src="https://picsum.photos/40" alt="Logo" class="w-10 h-10 object-cover" />
+            <img src="{{ asset('storage/images.jpg') }}" alt="Logo" class="w-10 h-10 object-cover" />
 
             <!-- Text -->
             <div>

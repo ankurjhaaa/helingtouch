@@ -77,7 +77,7 @@
     <section class="px-6 py-12 max-w-7xl mx-auto">
         <!-- Heading -->
         <h2 class="text-2xl md:text-3xl font-semibold">
-            <span class="border-l-4 border-sky-500 pl-3 inline-block">Redefining Healthcare with Expertise and
+            <span class="border-l-4 border-yellow-700 pl-3 inline-block">Redefining Healthcare with Expertise and
                 Innovation!</span>
         </h2>
         <p class="text-gray-700 mt-3 max-w-4xl">
@@ -95,7 +95,7 @@
                     <span class="text-sky-500">Experienced</span> Doctors
                 </h3>
                 <a href="#"
-                    class="mt-4 inline-block text-sm text-sky-600 hover:text-sky-800 font-medium transition duration-300">
+                    class="mt-4 inline-block text-sm text-yellow-700 hover:text-sky-800 font-medium transition duration-300">
                     Learn More →
                 </a>
             </div>
@@ -108,7 +108,7 @@
                     <span class="text-sky-500">Exceptional</span> Services
                 </h3>
                 <a href="#"
-                    class="mt-4 inline-block text-sm text-sky-600 hover:text-sky-800 font-medium transition duration-300">
+                    class="mt-4 inline-block text-sm text-yellow-700 hover:text-sky-800 font-medium transition duration-300">
                     Learn More →
                 </a>
             </div>
@@ -121,7 +121,7 @@
                     <span class="text-sky-500">Top</span> Equipments
                 </h3>
                 <a href="#"
-                    class="mt-4 inline-block text-sm text-sky-600 hover:text-sky-800 font-medium transition duration-300">
+                    class="mt-4 inline-block text-sm text-yellow-700 hover:text-sky-800 font-medium transition duration-300">
                     Learn More →
                 </a>
             </div>
@@ -134,7 +134,7 @@
     <section class="px-6 py-12 max-w-7xl mx-auto">
         <!-- Heading -->
         <h2 class="text-2xl md:text-3xl font-semibold">
-            <span class="border-l-4 border-sky-500 pl-3 inline-block">Meet Our Healthcare Professionals</span>
+            <span class="border-l-4 border-yellow-700 pl-3 inline-block">Meet Our Healthcare Professionals</span>
         </h2>
         <p class="text-gray-700 mt-3 max-w-4xl">
             Our team of experienced doctors and specialists are committed to providing exceptional care
@@ -205,7 +205,7 @@
     <section class="px-6 py-12 max-w-7xl mx-auto">
         <!-- Heading -->
         <h2 class="text-2xl md:text-3xl font-semibold">
-            <span class="border-l-4 border-sky-500 pl-3 inline-block">Our Services</span>
+            <span class="border-l-4 border-yellow-700 pl-3 inline-block">Our Services</span>
         </h2>
         <p class="text-gray-700 mt-3 max-w-4xl">
             At KK Hospital, Purnia, we are committed to providing high-quality healthcare with a range of services
