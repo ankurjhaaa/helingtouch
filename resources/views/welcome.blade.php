@@ -8,6 +8,6 @@
 
 </head>
 <body>
-    <h1 class="text-red-300">Hello World</h1>
+    <h1 class="text-blue-900">To chaliyea suru karte hai</h1>
 </body>
 </html>
