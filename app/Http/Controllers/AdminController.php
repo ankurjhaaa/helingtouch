@@ -36,7 +36,11 @@ class AdminController extends Controller
             'photo'    => 'dp/' . $photoName,
 
         ]);
-         return redirect()->route('admin.adminlogin')->with('success', 'User registered successfully!');
+         return redirect()->route('auth.login')->with('success', 'User registered successfully!');
 
     }
+    public function adminDashboard(){
+        return view('admin.adminDashboard');
+    }
+
 }
