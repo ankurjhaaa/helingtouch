@@ -89,77 +89,92 @@
 
 
                         <div>
-                            <!-- Modal -->
-                            <div id="edit-modal-{{ $user->id }}"
-                                class="fixed inset-0 bg-gray-900 bg-opacity-60 hidden items-center justify-center z-50 p-4 transition-opacity duration-300">
-                                <div
-                                    class="bg-white p-5 rounded-2xl w-full max-w-md min-h-[450px] shadow-xl relative transform transition-all duration-300 scale-95 modal-open:scale-100">
-                                    <h2 class="text-sm font-bold text-gray-900 mb-4">Edit {{ $user->name }}</h2>
-                                    <form class="space-y-3" action="{{ route('admin.updateRole', $user->id) }}" method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PUT')
-                                        <!-- File Input for Photo -->
-                                        <div>
-                                            <input type="file" name="photo" id="photo-{{ $user->id }}" accept="image/*"
-                                                class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                                onchange="previewImage(event, 'preview-{{ $user->id }}')" />
-                                        </div>
-                                        <!-- Image Preview -->
-                                        <div class="mt-2">
-                                            @if ($user->photo)
-                                                <img id="preview-{{ $user->id }}" src="{{ asset('storage/' . $user->photo) }}"
-                                                    alt="Current Image"
-                                                    class="w-20 h-20 rounded-md border border-gray-200 object-contain bg-gray-50" />
-                                            @else
-                                                <img id="preview-{{ $user->id }}"
-                                                    class="w-20 h-20 rounded-md border border-gray-200 object-contain bg-gray-50 hidden"
-                                                    alt="Image Preview" />
-                                            @endif
-                                        </div>
+  <!-- Modal -->
+  <div id="edit-modal-{{ $user->id }}"
+    class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4 transition-opacity duration-300">
+    <div
+      class="bg-white p-6 rounded-xl w-full max-w-md shadow-2xl relative transform transition-all duration-300 scale-95 modal-open:scale-100 border border-gray-100">
+      
+      <!-- Title -->
+      <h2 class="text-lg font-semibold text-gray-800 mb-5 border-b pb-2">Edit <span class="text-indigo-600">{{ $user->name }}</span></h2>
 
-                                        <!-- Name Input -->
-                                        <input type="text" name="name" value="{{ $user->name }}"
-                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                            placeholder="Full Name" />
+      <!-- Form -->
+      <form class="space-y-4 text-sm" action="{{ route('admin.updateRole', $user->id) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-                                        <!-- Email Input -->
-                                        <input type="email" name="email" value="{{ $user->email }}"
-                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                            placeholder="Email Address" />
+        <!-- File Input -->
+        <div>
+          <label for="photo-{{ $user->id }}" class="block mb-1 font-medium text-gray-700">Profile Image</label>
+          <input type="file" name="photo" id="photo-{{ $user->id }}" accept="image/*"
+            class="w-full file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-indigo-50 file:text-indigo-700 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            onchange="previewImage(event, 'preview-{{ $user->id }}')" />
+        </div>
 
-                                        <!-- Phone Input -->
-                                        <input type="number" name="phone" value="{{ $user->phone }}"
-                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                            placeholder="Phone Number" />
+        <!-- Image Preview -->
+        <div class="mt-2">
+          @if ($user->photo)
+            <img id="preview-{{ $user->id }}" src="{{ asset('storage/' . $user->photo) }}"
+              alt="Current Image" class="w-20 h-20 rounded-md object-cover border border-gray-200" />
+          @else
+            <img id="preview-{{ $user->id }}" class="w-20 h-20 rounded-md object-cover border border-gray-200 hidden"
+              alt="Image Preview" />
+          @endif
+        </div>
 
-                                        <!-- Role Select -->
-                                        <select name="role"
-                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                            <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                                            <option value="doctor" {{ $user->role === 'doctor' ? 'selected' : '' }}>Doctor
-                                            </option>
-                                            <option value="receptionist" {{ $user->role === 'receptionist' ? 'selected' : '' }}>
-                                                Receptionist</option>
-                                        </select>
+        <!-- Name -->
+        <div>
+          <label class="block mb-1 font-medium text-gray-700">Full Name</label>
+          <input type="text" name="name" value="{{ $user->name }}"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Full Name" />
+        </div>
 
-                                        <!-- Form Actions -->
-                                        <div class="flex justify-end space-x-2 mt-4">
-                                            <button type="submit"
-                                                class="bg-indigo-600 text-white px-3 py-1 rounded-md text-xs font-medium hover:bg-indigo-700 transition-colors duration-200">Save</button>
-                                            <button type="button"
-                                                class="bg-gray-100 text-gray-600 px-3 py-1 rounded-md text-xs font-medium hover:bg-gray-200 transition-colors duration-200"
-                                                onclick="closeModal('edit-modal-{{ $user->id }}')">Cancel</button>
-                                        </div>
-                                    </form>
+        <!-- Email -->
+        <div>
+          <label class="block mb-1 font-medium text-gray-700">Email</label>
+          <input type="email" name="email" value="{{ $user->email }}"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Email Address" />
+        </div>
 
-                                    <!-- Close Modal Button -->
-                                    <button type="button"
-                                        class="absolute top-1 right-1 text-gray-400 hover:text-gray-600 text-lg font-bold transition-colors duration-200"
-                                        onclick="closeModal('edit-modal-{{ $user->id }}')">×</button>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Phone -->
+        <div>
+          <label class="block mb-1 font-medium text-gray-700">Phone</label>
+          <input type="number" name="phone" value="{{ $user->phone }}"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Phone Number" />
+        </div>
+
+        <!-- Role -->
+        <div>
+          <label class="block mb-1 font-medium text-gray-700">Role</label>
+          <select name="role"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+            <option value="doctor" {{ $user->role === 'doctor' ? 'selected' : '' }}>Doctor</option>
+            <option value="receptionist" {{ $user->role === 'receptionist' ? 'selected' : '' }}>Receptionist</option>
+          </select>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-3 pt-4 border-t mt-4">
+          <button type="submit"
+            class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition">Save</button>
+          <button type="button"
+            class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition"
+            onclick="closeModal('edit-modal-{{ $user->id }}')">Cancel</button>
+        </div>
+      </form>
+
+      <!-- Close Button -->
+      <button type="button"
+        class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl font-bold transition"
+        onclick="closeModal('edit-modal-{{ $user->id }}')">&times;</button>
+    </div>
+  </div>
+</div>
+
 
 
                         <!-- 🔳 View Modal - Aman -->

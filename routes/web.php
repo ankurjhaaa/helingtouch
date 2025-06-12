@@ -16,6 +16,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');
     Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole');
     Route::get('/admin/profile', 'adminprofile')->name('admin.profile');
+    Route::get('/admin/department', 'adddepartment')->name('admin.department');
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');
     Route::get('/admin/admindashboard', 'adminDashboard')->name('admin.Dashboard');
     Route::put('/admin/update/{id}', 'updateRole')->name('admin.updateRole');

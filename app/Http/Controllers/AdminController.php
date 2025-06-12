@@ -16,6 +16,10 @@ class AdminController extends Controller
     {
         return view('admin.adminprofile');
     }
+    public function adddepartment()
+    {
+        return view('admin.adddepartment');
+    }
     public function viewrole(Request $request)
     {
 
