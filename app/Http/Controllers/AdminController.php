@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +19,53 @@ class AdminController extends Controller
     }
     public function adddepartment()
     {
-        return view('admin.adddepartment');
+        $departments = Department::latest()->paginate(10); // latest first + pagination
+        return view('admin.adddepartment', compact('departments'));
+    }
+    public function storedepartment(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|in:1,0',  // validation
+
+        ]);
+        Department::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'status' => $request->status
+        ]);
+
+        return redirect()->route('admin.department')->with('masg', 'Department added successfully');
+    }
+    public function deleteDepartment($id)
+    {
+        $department = Department::findOrFail($id);
+        $department->delete();
+        return redirect()->back()->with('success', 'Department deleted successfully!');
+    }
+    public function editDepartment($id)
+    {
+        $department = Department::findOrFail($id);
+        return view('admin.editdepartment', compact('department'));
+    }
+    // Update Department Logic
+    public function updateDepartment(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $department = Department::findOrFail($id);
+        $department->name = $request->name;
+        $department->description = $request->description;
+        $department->status = $request->status == 'active' ? 1 : 0;
+
+        $department->save();
+
+        return redirect()->route('admin.department')->with('success', 'Department updated successfully!');
     }
     public function viewrole(Request $request)
     {
@@ -67,7 +114,7 @@ class AdminController extends Controller
             'password' => $request->password,
             'role' => $request->role,
             'phone' => $request->phone,
-            'photo' =>  $imagePath,
+            'photo' => $imagePath,
 
         ]);
         return redirect()->route('admin.viewrole')->with('success', 'User registered successfully!');
