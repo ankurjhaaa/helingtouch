@@ -66,11 +66,142 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ ucfirst($user->role) }}</td>
 
                             <td class="px-6 py-4 text-center space-x-2">
-                                <label for="" class="text-blue-600 hover:underline cursor-pointer">View</label>
-                                <label for="edit1" class="text-yellow-600 hover:underline cursor-pointer">Edit</label>
-                                <button class="text-red-600 hover:underline">Delete</button>
+                                <label for="view{{ $user->id }}"
+                                    class="text-blue-600 hover:underline cursor-pointer">View</label>
+                                <!-- Edit Label to Trigger Modal -->
+                                <!-- Edit Label to Trigger Modal -->
+                                <!-- Edit Button to Trigger Modal -->
+                                <button type="button"
+                                    class="text-yellow-500 hover:text-yellow-600  font-medium  cursor-pointer transition-colors duration-200"
+                                    onclick="openModal('edit-modal-{{ $user->id }}')">Edit</button>
+                                <form action="{{ route('admin.deleteRole', $user->id) }}" method="post" class="inline-block"
+                                    onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                </form>
+
+
+
                             </td>
                         </tr>
+
+
+                        <div>
+                            <!-- Modal -->
+                            <div id="edit-modal-{{ $user->id }}"
+                                class="fixed inset-0 bg-gray-900 bg-opacity-60 hidden items-center justify-center z-50 p-4 transition-opacity duration-300">
+                                <div
+                                    class="bg-white p-5 rounded-2xl w-full max-w-md min-h-[450px] shadow-xl relative transform transition-all duration-300 scale-95 modal-open:scale-100">
+                                    <h2 class="text-sm font-bold text-gray-900 mb-4">Edit {{ $user->name }}</h2>
+                                    <form class="space-y-3" action="{{ route('admin.updateRole', $user->id) }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <!-- File Input for Photo -->
+                                        <div>
+                                            <input type="file" name="photo" id="photo-{{ $user->id }}" accept="image/*"
+                                                class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                onchange="previewImage(event, 'preview-{{ $user->id }}')" />
+                                        </div>
+                                        <!-- Image Preview -->
+                                        <div class="mt-2">
+                                            @if ($user->photo)
+                                                <img id="preview-{{ $user->id }}" src="{{ asset('storage/' . $user->photo) }}"
+                                                    alt="Current Image"
+                                                    class="w-20 h-20 rounded-md border border-gray-200 object-contain bg-gray-50" />
+                                            @else
+                                                <img id="preview-{{ $user->id }}"
+                                                    class="w-20 h-20 rounded-md border border-gray-200 object-contain bg-gray-50 hidden"
+                                                    alt="Image Preview" />
+                                            @endif
+                                        </div>
+
+                                        <!-- Name Input -->
+                                        <input type="text" name="name" value="{{ $user->name }}"
+                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                            placeholder="Full Name" />
+
+                                        <!-- Email Input -->
+                                        <input type="email" name="email" value="{{ $user->email }}"
+                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                            placeholder="Email Address" />
+
+                                        <!-- Phone Input -->
+                                        <input type="number" name="phone" value="{{ $user->phone }}"
+                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                            placeholder="Phone Number" />
+
+                                        <!-- Role Select -->
+                                        <select name="role"
+                                            class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                            <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                            <option value="doctor" {{ $user->role === 'doctor' ? 'selected' : '' }}>Doctor
+                                            </option>
+                                            <option value="receptionist" {{ $user->role === 'receptionist' ? 'selected' : '' }}>
+                                                Receptionist</option>
+                                        </select>
+
+                                        <!-- Form Actions -->
+                                        <div class="flex justify-end space-x-2 mt-4">
+                                            <button type="submit"
+                                                class="bg-indigo-600 text-white px-3 py-1 rounded-md text-xs font-medium hover:bg-indigo-700 transition-colors duration-200">Save</button>
+                                            <button type="button"
+                                                class="bg-gray-100 text-gray-600 px-3 py-1 rounded-md text-xs font-medium hover:bg-gray-200 transition-colors duration-200"
+                                                onclick="closeModal('edit-modal-{{ $user->id }}')">Cancel</button>
+                                        </div>
+                                    </form>
+
+                                    <!-- Close Modal Button -->
+                                    <button type="button"
+                                        class="absolute top-1 right-1 text-gray-400 hover:text-gray-600 text-lg font-bold transition-colors duration-200"
+                                        onclick="closeModal('edit-modal-{{ $user->id }}')">×</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 🔳 View Modal - Aman -->
+                        <div>
+                            <input type="checkbox" id="view{{ $user->id }}" class="hidden peer/view" aria-hidden="true" />
+                            <div
+                                class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 transition-opacity duration-300 peer-checked/view:opacity-100 peer-checked/view:visible opacity-0 invisible">
+                                <div
+                                    class="bg-white p-8 rounded-2xl w-full max-w-md shadow-xl transform transition-all duration-300 scale-95 peer-checked/view:scale-100">
+                                    <div class="flex items-center mb-6">
+                                        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('default/default-user.jpg') }}"
+                                            alt="{{ $user->name }}"
+                                            class="w-16 h-16 rounded-full object-cover ring-2 ring-gray-300 mr-4">
+                                        <h2 class="text-2xl font-bold text-gray-900">User Details</h2>
+                                    </div>
+                                    <div class="space-y-4 text-gray-700 text-base">
+                                        <div class="flex">
+                                            <span class="font-semibold w-24">Name:</span>
+                                            <span>{{ $user->name }}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="font-semibold w-24">Email:</span>
+                                            <span>{{ $user->email }}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="font-semibold w-24">Phone:</span>
+                                            <span>{{ $user->phone }}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="font-semibold w-24">Role:</span>
+                                            <span class="capitalize">{{ $user->role }}</span>
+                                        </div>
+                                    </div>
+                                    <label for="view{{ $user->id }}"
+                                        class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 cursor-pointer text-2xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-10 h-10 flex items-center justify-center"
+                                        aria-label="Close modal">
+                                        ×
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
 
 
                     @endforeach
@@ -97,76 +228,35 @@
         });
     </script>
 
-    <!-- 🔳 View Modal - Aman -->
-    <div>
-        <input type="checkbox" id="view1" class="hidden peer/view1" />
-        <div
-            class="fixed inset-0 bg-black bg-opacity-40 hidden peer-checked/view1:flex items-center justify-center z-50 p-4">
-            <div class="bg-white p-6 rounded-lg w-full max-w-md relative">
-                <h2 class="text-lg font-semibold mb-4">View User - Aman Kumar</h2>
-                <div class="space-y-2">
-                    <p><strong>Name:</strong> Aman Kumar</p>
-                    <p><strong>Email:</strong> aman@example.com</p>
-                    <p><strong>Role:</strong> Admin</p>
-                </div>
-                <label for="view1" class="absolute top-2 right-3 text-gray-600 cursor-pointer text-2xl">&times;</label>
-            </div>
-        </div>
-    </div>
-
-    <!-- 🛠️ Edit Modal - Aman -->
-    <div>
-        <input type="checkbox" id="edit1" class="hidden peer/edit1" />
-        <div
-            class="fixed inset-0 bg-black bg-opacity-40 hidden peer-checked/edit1:flex items-center justify-center z-50 p-4">
-            <div class="bg-white p-6 rounded-lg w-full max-w-md relative">
-                <h2 class="text-lg font-semibold mb-4">Edit User - {{ $user->name }}</h2>
-                <form class="space-y-3" action="{{ route('admin.updateRole', $user->id) }}" method="post"
-                    enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <input type="file" name="photo" class="w-full border px-3 py-2 "/>
-                    @if ($user->photo)
-                        <div class="mt-3">
-
-                            <img src="{{ asset('storage/' . $user->photo) }}" alt="Current Image" width="100"
-                                class="w-full h-50 border px-3 py-2 rounded">
-                        </div>
-                    @endif
-
-                    <input type="text" name="name" value="{{ $user->name }}"
-                        class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-blue-500" />
-
-                    <input type="email" name="email" value="{{ $user->email }}"
-                        class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-blue-500" />
-
-                    <input type="number" name="phone" value="{{ $user->phone }}"
-                        class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-blue-500" />
-
-                    <select name="role"
-                        class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="doctor" {{ $user->role === 'doctor' ? 'selected' : '' }}>Doctor</option>
-                        <option value="receptionist" {{ $user->role === 'receptionist' ? 'selected' : '' }}>Receptionist
-                        </option>
-                    </select>
-
-                    <div class="text-right">
-                        <button type="submit"
-                            class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700">Save</button>
-                    </div>
-                </form>
-
-                <!-- ❌ Close Modal -->
-                <label for="edit{{ $user->id }}"
-                    class="absolute top-2 right-3 text-gray-600 cursor-pointer text-2xl">&times;
-                </label>
-
-
-            </div>
-        </div>
-    </div>
 
     <!-- 📌 Tip: Copy this structure for view2/edit2 and view3/edit3 -->
 
+    <script src="{{ asset('js/modal.js') }}"></script>
+    <!-- JavaScript for Modal Toggle and Image Preview -->
+    <script>
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function previewImage(event, previewId) {
+            const input = event.target;
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endsection

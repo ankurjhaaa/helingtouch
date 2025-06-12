@@ -19,6 +19,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');
     Route::get('/admin/admindashboard', 'adminDashboard')->name('admin.Dashboard');
     Route::put('/admin/update/{id}', 'updateRole')->name('admin.updateRole');
+    Route::delete('/admin/delete/{id}', 'deleteUser')->name('admin.deleteRole');
 
 });
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function(){

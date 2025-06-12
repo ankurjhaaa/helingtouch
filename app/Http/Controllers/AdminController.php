@@ -50,9 +50,11 @@ class AdminController extends Controller
 
         ]);
 
-        // Save Image
-        $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
-        $request->file('photo')->move(public_path('dp'), $photoName);
+        $imagePath = null;
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imagePath = $image->store('dp', 'public');
+        }
 
         // Create User
         User::create([
@@ -61,10 +63,10 @@ class AdminController extends Controller
             'password' => $request->password,
             'role' => $request->role,
             'phone' => $request->phone,
-            'photo' => 'dp/' . $photoName,
+            'photo' =>  $imagePath,
 
         ]);
-        return redirect()->route('login')->with('success', 'User registered successfully!');
+        return redirect()->route('admin.viewrole')->with('success', 'User registered successfully!');
 
     }
     public function updateRole(Request $request, $id)
@@ -82,19 +84,34 @@ class AdminController extends Controller
         if ($request->hasFile('photo')) {
             //old image delete
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-                Storage::disk('public')->delete('$user->photo');
+                Storage::disk('public')->delete($user->photo);
             }
+            //save new photo
+            $photoPath = $request->file('photo')->store('dp', 'public');
+            $user->photo = $photoPath;
         }
-        //save new photo
-        $photoPath = $request->file('photo')->store('dp', 'public');
-        $user->photo = $photoPath;
+
 
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->role = strtolower($request->role);
         $user->save();
-         return redirect()->back()->with('success', 'User updated successfully!');
+        return redirect()->back()->with('success', 'User updated successfully!');
+
+    }
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        //delete the user 
+        // 🧹 Delete photo from storage
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted successfully!');
 
     }
     public function adminDashboard()
