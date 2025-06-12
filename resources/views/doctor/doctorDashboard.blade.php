@@ -10,7 +10,7 @@
 
         <!-- Greeting -->
         <div class="mb-6 p-4">
-            <h2 class="text-2xl font-semibold">Welcome back, Dr. Rajeev 👋</h2>
+            <h2 class="text-2xl font-semibold">Welcome back, Dr. {{ Auth::user()->name }} 👋</h2>
             <p class="text-gray-600">Here's a quick overview of your activity today.</p>
         </div>
 

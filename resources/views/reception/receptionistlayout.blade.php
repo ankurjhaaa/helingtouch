@@ -16,14 +16,14 @@
         <!-- Left: Title -->
         <div class="text-xl font-bold text-white flex items-center space-x-2">
             <!-- <span>👨‍⚕️</span> -->
-            <span> Dashboard</span>
+            <span> <a href="{{ route('receptionist.Dashboard') }}">Dashboard</a></span>
         </div>
 
         <!-- Right: Profile Dropdown -->
         <div class="relative">
             <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
                 <!-- <img src="https://picsum.photos/32" alt="Profile" class="w-8 h-8 rounded-full object-cover border"> -->
-                <span class="text-sm font-medium text-white">Dr. Rajeev Singh</span>
+                <span class="text-sm font-medium text-white">{{ Auth::user()->name }}</span>
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 9l-7 7-7-7" />
