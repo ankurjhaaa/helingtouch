@@ -42,9 +42,11 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <a href="{{ route('admin.addrole') }}" class="bg-blue-600 text-center  text-white py-3 rounded shadow hover:bg-blue-700 transition">➕ Add (Doctor,
                     Staff..)</a>
+
+                <a href="{{ route('admin.viewrole') }}" class="bg-green-600 text-center  text-white py-3 rounded shadow hover:bg-blue-700 transition"> View (Doctor,
+                    Staff..)</a>
                     
-                <button class="bg-green-600 text-white py-3 rounded shadow hover:bg-green-700 transition">📁 View
-                    Reports</button>
+                
                 <button class="bg-yellow-500 text-white py-3 rounded shadow hover:bg-yellow-600 transition">📅 Manage
                     Appointments</button>
                 <button class="bg-red-600 text-white py-3 rounded shadow hover:bg-red-700 transition">⚙️ Admin

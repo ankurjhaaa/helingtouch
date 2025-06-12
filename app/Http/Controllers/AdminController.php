@@ -11,6 +11,10 @@ class AdminController extends Controller
     {
         return view('admin.addrole');
     }
+    public function viewrole()
+    {
+        return view('admin.viewrole');
+    }
 
     public function submitform(Request $request)
     {
