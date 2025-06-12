@@ -15,7 +15,7 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-  public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         // Check if user is authenticated
         if (!Auth::guard('web')->check() || !Auth::user()->role) {
@@ -25,6 +25,11 @@ class RoleMiddleware
         // Normalize roles to lowercase to avoid case sensitivity issues
         $userRole = strtolower(Auth::user()->role);
         $allowedRoles = array_map('strtolower', $roles);
+
+        // ✅ Allow admin to access all routes
+        if ($userRole === 'admin') {
+            return $next($request);
+        }
 
         // Check if user has one of the allowed roles
         if (!in_array($userRole, $allowedRoles)) {
