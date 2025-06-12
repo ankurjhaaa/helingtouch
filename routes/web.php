@@ -13,7 +13,7 @@ Route::controller(HomeController::class)->group(function () {
   
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
-    Route::get('/admin/apply', 'showform')->name('admin.applyForm');
+    Route::get('/admin/addrole', 'showform')->name('admin.addrole');
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');
     Route::get('/admin/admindashboard', 'adminDashboard')->name('admin.Dashboard');
 });

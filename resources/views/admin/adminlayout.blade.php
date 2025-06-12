@@ -15,7 +15,7 @@
         <!-- Left: Title -->
         <div class="text-xl font-bold text-white flex items-center space-x-2">
             <!-- <span>👨‍⚕️</span> -->
-            <span> Dashboard</span>
+            <span><a href="{{ route('admin.Dashboard') }}">Dashboard</a> </span>
         </div>
 
         <!-- Right: Profile Dropdown -->

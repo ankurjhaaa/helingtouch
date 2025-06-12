@@ -40,7 +40,7 @@
         <section>
             <h2 class="text-xl font-bold mb-4">Quick Actions</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <a href="{{ route('admin.applyForm') }}" class="bg-blue-600 text-center  text-white py-3 rounded shadow hover:bg-blue-700 transition">➕ Add (Doctor,
+                <a href="{{ route('admin.addrole') }}" class="bg-blue-600 text-center  text-white py-3 rounded shadow hover:bg-blue-700 transition">➕ Add (Doctor,
                     Staff..)</a>
                     
                 <button class="bg-green-600 text-white py-3 rounded shadow hover:bg-green-700 transition">📁 View
