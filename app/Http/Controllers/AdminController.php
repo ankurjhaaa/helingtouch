@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -11,9 +12,26 @@ class AdminController extends Controller
     {
         return view('admin.addrole');
     }
-    public function viewrole()
+    public function viewrole(Request $request)
     {
-        return view('admin.viewrole');
+
+        $role = $request->get('role');
+        $search = $request->get('search');
+
+        $users = User::query()
+            ->when($role && in_array($role, ['doctor', 'receptionist']), function ($query) use ($role) {
+                $query->where('role', $role);
+            })
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->get();
+
+        return view('admin.viewrole', compact('users'));
     }
 
     public function submitform(Request $request)
@@ -43,6 +61,36 @@ class AdminController extends Controller
 
         ]);
         return redirect()->route('login')->with('success', 'User registered successfully!');
+
+    }
+    public function updateRole(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'required|numeric',
+            'role' => 'required|in:admin,doctor,receptionist',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+        //photo logic
+        if ($request->hasFile('photo')) {
+            //old image delete
+            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+                Storage::disk('public')->delete('$user->photo');
+            }
+        }
+        //save new photo
+        $photoPath = $request->file('photo')->store('dp', 'public');
+        $user->photo = $photoPath;
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->role = strtolower($request->role);
+        $user->save();
+         return redirect()->back()->with('success', 'User updated successfully!');
 
     }
     public function adminDashboard()

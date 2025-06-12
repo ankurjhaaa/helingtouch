@@ -17,6 +17,8 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole');
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');
     Route::get('/admin/admindashboard', 'adminDashboard')->name('admin.Dashboard');
+    Route::put('/admin/update/{id}', 'updateRole')->name('admin.updateRole');
+
 });
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function(){
     Route::get('/doctor/home', 'home')->name('doctor.Dashboard');
