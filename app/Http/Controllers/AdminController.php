@@ -12,6 +12,10 @@ class AdminController extends Controller
     {
         return view('admin.addrole');
     }
+    public function adminprofile()
+    {
+        return view('admin.adminprofile');
+    }
     public function viewrole(Request $request)
     {
 

@@ -15,6 +15,7 @@ Route::controller(HomeController::class)->group(function () {
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');
     Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole');
+    Route::get('/admin/profile', 'adminprofile')->name('admin.profile');
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');
     Route::get('/admin/admindashboard', 'adminDashboard')->name('admin.Dashboard');
     Route::put('/admin/update/{id}', 'updateRole')->name('admin.updateRole');
@@ -22,10 +23,12 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
 });
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function(){
     Route::get('/doctor/home', 'home')->name('doctor.Dashboard');
+    Route::get('/doctor/profile', 'doctorprofile')->name('doctor.profile');
 });
 
 Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistController::class)->group(function(){
     Route::get('/recption/home', 'land')->name('receptionist.Dashboard');
+    Route::get('/recption/profile', 'recptionprofile')->name('receptionist.profile');
 });
 
 
