@@ -5,11 +5,29 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <h1 class="text-2xl font-bold mb-6">User Management</h1>
 
-        <!-- 🔍 Search Input -->
-        <div class="mb-4">
-            <input id="searchInput" type="text" placeholder="Search by name or email..."
-                class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
+        <!-- 🔍 Search + Role Filter -->
+        <form method="GET" class="mb-6 flex flex-col md:flex-row md:items-center gap-3">
+
+            <!-- Search Input -->
+            <input id="searchInput" type="text" name="search" value="{{ request('search') }}"
+                placeholder="Search by name or email..."
+                class="w-full md:w-1/2 border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+            <!-- Role Dropdown -->
+            <select name="role"
+                class="w-full md:w-1/4 border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">All Roles</option>
+                <option value="doctor" {{ request('role') == 'doctor' ? 'selected' : '' }}>Doctor</option>
+                <option value="receptionist" {{ request('role') == 'receptionist' ? 'selected' : '' }}>Receptionist</option>
+            </select>
+
+            <!-- Filter Button -->
+            <button type="submit"
+                class="bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition w-full md:w-auto">
+                Filter
+            </button>
+        </form>
+
 
         <!-- 📋 User Table -->
         <div class="bg-white shadow rounded-lg overflow-x-auto">
