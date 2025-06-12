@@ -66,7 +66,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ ucfirst($user->role) }}</td>
 
                             <td class="px-6 py-4 text-center space-x-2">
-                                <label for="view1" class="text-blue-600 hover:underline cursor-pointer">View</label>
+                                <label for="" class="text-blue-600 hover:underline cursor-pointer">View</label>
                                 <label for="edit1" class="text-yellow-600 hover:underline cursor-pointer">Edit</label>
                                 <button class="text-red-600 hover:underline">Delete</button>
                             </td>
