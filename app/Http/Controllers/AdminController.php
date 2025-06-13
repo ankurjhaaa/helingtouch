@@ -32,7 +32,7 @@ class AdminController extends Controller
             'status' => 'required|in:1,0',  // validation
 
         ]);
-        Department::create([
+        Department::create([ 
             'name' => $request->name,
             'description' => $request->description,
             'status' => $request->status

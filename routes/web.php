@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Route;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/appointment', 'appointment')->name('appointment');
-    Route::get('/book-appointment', 'bookAppointment')->name('bookAppointment');
-
+    Route::get('/book-appointment/{id}', 'bookAppointment')->name('bookAppointment');
+    Route::post('/insert-appointment','insertAppointment')->name('insertAppointment');
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');
-    Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole');
+    Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole'); 
     Route::get('/admin/profile', 'adminprofile')->name('admin.profile');
     Route::get('/admin/department', 'adddepartment')->name('admin.department');
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');

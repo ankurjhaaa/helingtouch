@@ -136,7 +136,7 @@
                     <div class="w-36 h-36 rounded-xl border-4 border-[#9b714a] overflow-hidden shadow-md">
                         <img src="https://via.placeholder.com/200" alt="Doctor Image" class="w-full h-full object-cover" />
                     </div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. Charly Kumar Sinha</h3>
+                    <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. {{ $doctor->name }}</h3>
                     <p class="text-sm text-[#9b714a] font-medium">Surgeon</p>
                 </div>
 
@@ -164,7 +164,7 @@
                     <!-- Description -->
                     <div class="bg-white p-4 rounded-md shadow-sm border border-[#d9c3a9]">
                         <p class="text-gray-700 leading-relaxed">
-                            Dr. Charly Kumar Sinha is a highly skilled healthcare professional with comprehensive training
+                            Dr. {{ $doctor->name }} is a highly skilled healthcare professional with comprehensive training
                             and
                             experience in the field of surgery. He specializes in laparoscopic and laser techniques to
                             provide
@@ -191,8 +191,9 @@
                     <span>Appointments for: <span class="text-[#9b714a]">14 June (Tomorrow)</span></span>
                 </div>
                 <button class="text-sm text-[#9b714a] hover:underline">Change Date</button>
-            </div>
-            <form class="space-y-6">
+            </div> 
+            <form method="post" action="{{ route('insertAppointment') }}" class="space-y-6">
+                @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Time Selection -->
                     <div class="md:col-span-2">
@@ -202,26 +203,31 @@
                             class="w-full text-left border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] bg-gray-50"
                             id="selectedTime">Click to select time</button>
                     </div>
+                    <input type="hidden" name="time" id="timeInput">
+                    <input type="hidden" name="doctor_id" value="{{  $doctor->id  }}">
+                    <input type="hidden" name="date" value="14">
+                    <input type="hidden" name="fee" value="500" >
+
                     <!-- Form Inputs (same as previous) -->
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Full Name (पूरा नाम)</label>
-                        <input type="text"
+                        <input type="text" name="name"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Email Address (ईमेल) <span
                                 class="text-sm text-gray-500">(optional) (वैकल्पिक)</span></label>
-                        <input type="email"
+                        <input type="email" name="email"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Phone Number (फ़ोन नंबर)</label>
-                        <input type="text"
+                        <input type="text" name="phone"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Gender (लिंग)</label>
-                        <select
+                        <select name="gender"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]">
                             <option>Select Gender (लिंग चुनें)</option>
                             <option>Male (पुरुष)</option>
@@ -231,33 +237,33 @@
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Age (उम्र)</label>
-                        <input type="number"
+                        <input type="number" name="age"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div class="md:col-span-2">
                         <label class="block font-medium text-gray-700 mb-1">Address (पता)</label>
-                        <input type="text"
+                        <input type="text" name="address"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">PIN Code (पिन कोड)</label>
-                        <input type="text"
+                        <input type="text" name="pincode"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">City (शहर)</label>
-                        <input type="text"
+                        <input type="text" name="city"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">State (राज्य)</label>
-                        <input type="text"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        <input type="text" name="state"
+                            class="w-full border  rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
                     </div>
                     <div class="md:col-span-2">
                         <label class="block font-medium text-gray-700 mb-1">Notes for Doctor (डॉक्टर के लिए नोट्स) <span
                                 class="text-sm text-gray-500">(Optional) (वैकल्पिक)</span></label>
-                        <textarea rows="4"
+                        <textarea rows="4" name="message"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"></textarea>
                     </div>
 
@@ -358,10 +364,12 @@
 
         <script>
             function selectTime(time) {
-                document.getElementById('selectedTime').innerText = time;
-                document.getElementById('timeModal').classList.add('hidden');
+                document.getElementById('selectedTime').innerText = time;     // Button par show kare
+                document.getElementById('timeInput').value = time;            // Hidden input me store kare
+                document.getElementById('timeModal').classList.add('hidden'); // Modal band kare
             }
         </script>
+
 
     </div>
 

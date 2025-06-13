@@ -92,22 +92,15 @@
                 </button>
 
                 <!-- Others -->
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Surgeon
-                </button>
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Gynecology
-                </button>
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Surgeon
-                </button>
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Gynecology
-                </button>
+                @foreach ($departments as $department)
+                    <a href=""
+                        class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
+                        Surgeon
+                    </a>
+
+                @endforeach
+
+
             </div>
         </div>
 
@@ -121,100 +114,39 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- Doctor 2 -->
-                <a href="{{ route('bookAppointment') }}">
-                    <div
-                        class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
-                        <div class="flex items-center gap-4">
-                            <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
-                                <img src="https://via.placeholder.com/100" alt="Doctor"
-                                    class="w-full h-full object-cover" />
+                @foreach ($doctors as $doctor)
+                    <a href="{{ route('bookAppointment', $doctor->id) }}">
+                        <div
+                            class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
+                                    <img src="https://via.placeholder.com/100" alt="Doctor"
+                                        class="w-full h-full object-cover" />
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Dr. {{ $doctor->name }}</h3>
+                                    <p class="text-sm text-[#9b714a] font-medium">Gynecology</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Dr. Kiran Kumari</h3>
-                                <p class="text-sm text-[#9b714a] font-medium">Gynecology</p>
+                            <div class="mt-4 space-x-1">
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
                             </div>
-                        </div>
-                        <div class="mt-4 space-x-1">
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-700 font-semibold">₹500 Fee</span>
-                            <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                Select Doctor
-                            </button>
-                        </div>
-                    </div>
-                </a>
-                <!-- Doctor 2 -->
-                <a href="{{ route('bookAppointment') }}">
-                    <div
-                        class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
-                        <div class="flex items-center gap-4">
-                            <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
-                                <img src="https://via.placeholder.com/100" alt="Doctor"
-                                    class="w-full h-full object-cover" />
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Dr. Kiran Kumari</h3>
-                                <p class="text-sm text-[#9b714a] font-medium">Gynecology</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-gray-700 font-semibold">₹500 Fee</span>
+                                <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
+                                    Select Doctor
+                                </button>
                             </div>
                         </div>
-                        <div class="mt-4 space-x-1">
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-700 font-semibold">₹500 Fee</span>
-                            <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                Select Doctor
-                            </button>
-                        </div>
-                    </div>
-                </a>
-                <!-- Doctor 2 -->
-                <a href="{{ route('bookAppointment') }}">
-                    <div
-                        class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
-                        <div class="flex items-center gap-4">
-                            <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
-                                <img src="https://via.placeholder.com/100" alt="Doctor"
-                                    class="w-full h-full object-cover" />
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Dr. Kiran Kumari</h3>
-                                <p class="text-sm text-[#9b714a] font-medium">Gynecology</p>
-                            </div>
-                        </div>
-                        <div class="mt-4 space-x-1">
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
-                            <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-700 font-semibold">₹500 Fee</span>
-                            <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                Select Doctor
-                            </button>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
+                
 
             </div>
         </div>
