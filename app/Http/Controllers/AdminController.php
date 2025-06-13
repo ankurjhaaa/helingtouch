@@ -94,7 +94,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:3',
             'role' => 'required|in:admin,doctor,receptionist',
             'phone' => 'required|digits_between:10,15',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
