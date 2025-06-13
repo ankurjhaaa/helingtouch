@@ -1,29 +1,31 @@
 @extends('admin.adminlayout')
 @section('title', 'Manage Doctors')
 @section('content')
-    <div class="container mt-3 p-3">
-        <h2 class="text-xl font-bold mb-4">Manage Doctor Profiles</h2>
+    <div class="container max-w-6xl mx-auto p-4 sm:p-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Manage Doctor Profiles</h2>
 
         @if (session('success'))
-            <div class="bg-green-100 text-green-800 p-3 rounded mb-3">
+            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-2 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
         @if (session('error'))
-            <div class="bg-red-100
-                                             text-red-800 p-3 rounded mb-3">
+            <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-2 rounded mb-4">
                 {{ session('error') }}
             </div>
         @endif
-        <!-- Add Doctor Form -->
-        <form action="{{ route('admin.addDoctor') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-            @csrf
-            <div class="grid grid-cols-2 gap-4">
 
-                {{-- User Dropdown --}}
+        <!-- Add Doctor Form -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <form action="{{ route('admin.addDoctor') }}" method="POST" enctype="multipart/form-data"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                @csrf
+
+                <!-- User Dropdown -->
                 <div>
-                    <label>User</label>
-                    <select name="user_id" id="user_select" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">User</label>
+                    <select name="user_id" id="user_select"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="{{ old('user_id') }}">Select User</option>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" data-name="{{ $user->name }}"
@@ -36,9 +38,12 @@
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <!-- Department -->
                 <div>
-                    <label for="">Department</label>
-                    <select name="department_id" value="{{ old('department_id') }}" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">Department</label>
+                    <select name="department_id"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="">Select Department</option>
                         @foreach ($departments as $department)
                             <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>
@@ -51,63 +56,31 @@
                     @enderror
                 </div>
 
-
-
-                {{-- Qualification --}}
+                <!-- Qualification -->
                 <div>
-                    <label>Qualification</label>
-                    <input type="text" name="qualification" value="{{ old('qualification') }}" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">Qualification</label>
+                    <input type="text" name="qualification" value="{{ old('qualification') }}"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                     @error('qualification')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-                @php
-                    $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-                @endphp
 
-                <div class="mb-3">
-                    <label class="form-label">Select Working Days <span class="text-danger">*</span></label>
-
-                    <div class="flex flex-wrap gap-3">
-                        @foreach($days as $day)
-                            <label class="flex items-center gap-1">
-                                <input type="checkbox" name="{{ $day }}" value="1" {{ old($day) ? 'checked' : '' }}>
-                                {{ ucfirst($day) }}
-                            </label>
-                        @endforeach
-                    </div>
-
-                    {{-- Custom validation error message --}}
-                    @if ($errors->has('days'))
-                        <div class="text-red-500 text-sm mt-1">{{ $errors->first('days') }}</div>
-                    @endif
-                </div>
-
-
-
-
-                {{-- Bio --}}
+                <!-- Experience -->
                 <div>
-                    <label value="{{ old('bio') }}">Bio</label>
-                    <textarea name="bio" class="form-input border-2" rows="4"></textarea>
-                    @error('bio')
-                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Experience --}}
-                <div>
-                    <label value="{{ old('experiemce') }}">Experience</label>
-                    <input type="text" name="experience" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">Experience</label>
+                    <input type="text" name="experience" value="{{ old('experience') }}"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                     @error('experience')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Status --}}
+                <!-- Status -->
                 <div>
-                    <label value="{{ old('status') }}">Status</label>
-                    <select name="status" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">Status</label>
+                    <select name="status"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="">Select Status</option>
                         <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
                         <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
@@ -117,59 +90,89 @@
                     @enderror
                 </div>
 
+                <!-- Bio -->
+                <div class="sm:col-span-2">
+                    <label class="block font-medium text-gray-700 mb-1">Bio</label>
+                    <textarea name="bio" rows="4"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">{{ old('bio') }}</textarea>
+                    @error('bio')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
 
+                <!-- Working Days -->
+                <div class="sm:col-span-2">
+                    <label class="block font-medium text-gray-700 mb-2">Select Working Days <span
+                            class="text-red-500">*</span></label>
+                    <div class="flex flex-wrap gap-4">
+                        @php
+                            $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                        @endphp
+                        @foreach($days as $day)
+                            <label class="inline-flex items-center gap-2">
+                                <input type="checkbox" name="{{ $day }}" value="1" {{ old($day) ? 'checked' : '' }}
+                                    class="form-checkbox text-blue-600">
+                                <span class="capitalize">{{ $day }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @if ($errors->has('days'))
+                        <div class="text-red-500 text-sm mt-1">{{ $errors->first('days') }}</div>
+                    @endif
+                </div>
 
-               
-            </div>
-
-            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Add Doctor</button>
-        </form>
-
-        <!-- Doctor List -->
-        <h3 class="text-lg font-semibold mt-8">Doctor List</h3>
-
-
-
-
-
+                <div class="sm:col-span-2">
+                    <button type="submit"
+                        class="mt-4 w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition duration-150">
+                        Add Doctor
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="container mx-auto mt-10">
-        <h2 class="text-2xl font-semibold mb-4">Doctor List</h2>
+
+
+
+
+    <div class="container max-w-6xl mx-auto mt-10 px-4">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Doctor List</h2>
 
         @if(session('success'))
-            <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+            <div class="mb-4 p-3 bg-green-100 border border-green-300 text-green-800 rounded">
                 {{ session('success') }}
             </div>
         @endif
 
         <div class="overflow-x-auto bg-white shadow rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-100">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead class="bg-gray-100 text-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">#</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Name</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Department</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Qualification</th>
-                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Bio</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Experience</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Working Days</th>
-                        <th class="px-6 py-3 text-center text-sm font-medium text-gray-700">Actions</th>
+                        <th class="px-4 py-3 text-left">#</th>
+                        <th class="px-4 py-3 text-left">Name</th>
+                        <th class="px-4 py-3 text-left">Department</th>
+                        <th class="px-4 py-3 text-left">Qualification</th>
+                        <th class="px-4 py-3 text-left">Bio</th>
+                        <th class="px-4 py-3 text-left">Experience</th>
+                        <th class="px-4 py-3 text-left">Working Days</th>
+                        <th class="px-4 py-3 text-center">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-100">
                     @foreach($doctors as $index => $doctor)
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $index + 1 }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $doctor->user->name }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $doctor->department->name ?? 'N/A' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $doctor->qualification }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $doctor->bio }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $doctor->experience }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">{{ $index + 1 }}</td>
+                            <td class="px-4 py-3 font-medium text-gray-800">{{ $doctor->user->name }}</td>
+                            <td class="px-4 py-3">{{ $doctor->department->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-3">{{ $doctor->qualification }}</td>
+                            <td class="px-4 py-3 max-w-xs truncate" title="{{ $doctor->bio }}">
+                                {{ Str::limit($doctor->bio, 50) }}
+                            </td>
+                            <td class="px-4 py-3">{{ $doctor->experience }}</td>
+                            <td class="px-4 py-3">
                                 @php
                                     $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                                 @endphp
-                                <ul class="list-disc list-inside">
+                                <ul class="list-disc list-inside text-xs text-gray-600">
                                     @foreach($days as $day)
                                         @php $dayKey = strtolower($day); @endphp
                                         @if($doctor->$dayKey)
@@ -178,22 +181,34 @@
                                     @endforeach
                                 </ul>
                             </td>
-                            <td class="px-6 py-4 text-center text-sm">
-                                <a href="{{ route('admin.doctor.edit', $doctor ) }}"
-                                    class="inline-block px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">Edit</a>
-                                <form action="{{  route('admin.doctor.delete', $doctor->id)  }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?')">
+                            <td class="px-4 py-3 text-center space-x-2">
+                                <a href="{{ route('admin.doctor.edit', $doctor) }}"
+                                    class="inline-block bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">
+                                    Edit
+                                </a>
+                                <form action="{{ route('admin.doctor.delete', $doctor->id) }}" method="POST"
+                                    class="inline-block" onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm">Delete</button>
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">
+                                        Delete
+                                    </button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
+
+                    @if($doctors->isEmpty())
+                        <tr>
+                            <td colspan="8" class="text-center text-gray-500 py-6">No doctors found.</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
     </div>
+
 
 
 

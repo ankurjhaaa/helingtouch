@@ -1,32 +1,32 @@
 @extends('admin.adminlayout')
 @section('title', 'Manage Doctors')
 @section('content')
-    <div class="container mt-3 p-3">
-        <h2 class="text-xl font-bold mb-4">Edit-{{ $doctor->user->name }}</h2>
+    <div class="container max-w-6xl mx-auto p-4 sm:p-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit - {{ $doctor->user->name }}</h2>
 
         @if (session('success'))
-            <div class="bg-green-100 text-green-800 p-3 rounded mb-3">
+            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-2 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
         @if (session('error'))
-            <div class="bg-red-100
-                                                             text-red-800 p-3 rounded mb-3">
+            <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-2 rounded mb-4">
                 {{ session('error') }}
             </div>
         @endif
+
         <!-- Edit Doctor Form -->
-        <form action="{{ route('admin.doctor.update', $doctor->id) }}" method="POST" enctype="multipart/form-data"
-            class="space-y-4">
-            @csrf
-            @method('PUT')
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <form action="{{ route('admin.doctor.update', $doctor->id) }}" method="POST" enctype="multipart/form-data"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                @csrf
+                @method('PUT')
 
-            <div class="grid grid-cols-2 gap-4">
-
-                {{-- User Dropdown --}}
+                <!-- User Dropdown -->
                 <div>
-                    <label>User</label>
-                    <select name="user_id" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">User</label>
+                    <select name="user_id"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="">Select User</option>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" {{ $doctor->user_id == $user->id ? 'selected' : '' }}>
@@ -39,10 +39,11 @@
                     @enderror
                 </div>
 
-                {{-- Department Dropdown --}}
+                <!-- Department Dropdown -->
                 <div>
-                    <label>Department</label>
-                    <select name="department_id" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">Department</label>
+                    <select name="department_id"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="">Select Department</option>
                         @foreach ($departments as $department)
                             <option value="{{ $department->id }}" {{ $doctor->department_id == $department->id ? 'selected' : '' }}>
@@ -55,46 +56,49 @@
                     @enderror
                 </div>
 
-                {{-- Qualification --}}
+                <!-- Qualification -->
                 <div>
-                    <label>Qualification</label>
+                    <label class="block font-medium text-gray-700 mb-1">Qualification</label>
                     <input type="text" name="qualification" value="{{ old('qualification', $doctor->qualification) }}"
-                        class="form-input">
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                     @error('qualification')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Experience --}}
+                <!-- Experience -->
                 <div>
-                    <label>Experience</label>
+                    <label class="block font-medium text-gray-700 mb-1">Experience</label>
                     <input type="text" name="experience" value="{{ old('experience', $doctor->experience) }}"
-                        class="form-input">
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                     @error('experience')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Bio --}}
-                <div class="col-span-2">
-                    <label>Bio</label>
-                    <textarea name="bio" rows="4" class="form-input border-2">{{ old('bio', $doctor->bio) }}</textarea>
+                <!-- Bio -->
+                <div class="sm:col-span-2">
+                    <label class="block font-medium text-gray-700 mb-1">Bio</label>
+                    <textarea name="bio" rows="4"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">{{ old('bio', $doctor->bio) }}</textarea>
                     @error('bio')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Working Days --}}
+                <!-- Working Days -->
                 @php
                     $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
                 @endphp
-                <div class="col-span-2">
-                    <label class="form-label">Select Working Days <span class="text-danger">*</span></label>
-                    <div class="flex flex-wrap gap-3">
+                <div class="sm:col-span-2">
+                    <label class="block font-medium text-gray-700 mb-2">Select Working Days <span
+                            class="text-red-500">*</span></label>
+                    <div class="flex flex-wrap gap-4">
                         @foreach($days as $day)
-                            <label class="flex items-center gap-1">
-                                <input type="checkbox" name="{{ $day }}" value="1" {{ $doctor->$day ? 'checked' : '' }}>
-                                {{ ucfirst($day) }}
+                            <label class="inline-flex items-center gap-2">
+                                <input type="checkbox" name="{{ $day }}" value="1" {{ $doctor->$day ? 'checked' : '' }}
+                                    class="form-checkbox text-blue-600">
+                                <span class="capitalize">{{ $day }}</span>
                             </label>
                         @endforeach
                     </div>
@@ -103,10 +107,11 @@
                     @endif
                 </div>
 
-                {{-- Status --}}
+                <!-- Status -->
                 <div>
-                    <label>Status</label>
-                    <select name="status" class="form-input">
+                    <label class="block font-medium text-gray-700 mb-1">Status</label>
+                    <select name="status"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="">Select Status</option>
                         <option value="1" {{ $doctor->status == 1 ? 'selected' : '' }}>Active</option>
                         <option value="0" {{ $doctor->status == 0 ? 'selected' : '' }}>Inactive</option>
@@ -116,19 +121,17 @@
                     @enderror
                 </div>
 
-            </div>
-
-            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">
-                Update Doctor
-            </button>
-        </form>
-
-
-
-
-
-
+                <!-- Submit Button -->
+                <div class="sm:col-span-2">
+                    <button type="submit"
+                        class="mt-4 w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition duration-150">
+                        Update Doctor
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
 
 
 
