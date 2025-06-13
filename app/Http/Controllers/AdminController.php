@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Comment\Doc;
 
 class AdminController extends Controller
 {
@@ -168,6 +170,84 @@ class AdminController extends Controller
     public function adminDashboard()
     {
         return view('admin.adminDashboard');
+    }
+    //doctor manage logic 
+    public function manageDoctor()
+    {
+        $doctors = Doctor::with(['user', 'department'])->latest()->paginate(10); // latest first + pagination
+        $departments = Department::whereDoesntHave('doctors')->get();
+        $users = User::whereDoesntHave('doctor')->get(); // Make sure User model has 'doctor' relation
+        return view('admin.managedoctors', compact('users', 'departments', 'doctors'));
+    }
+
+    public function storeDoctor(Request $request, )
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'department_id' => 'required|exists:departments,id',
+            'qualification' => 'required|string|max:255',
+            'experience' => 'required|string|max:255',
+            'bio' => 'required|string',
+            'status' => 'required|boolean',
+            // Days can be optionally checked
+            'sunday' => 'nullable|in:1',
+            'monday' => 'nullable|in:1',
+            'tuesday' => 'nullable|in:1',
+            'wednesday' => 'nullable|in:1',
+            'thursday' => 'nullable|in:1',
+            'friday' => 'nullable|in:1',
+            'saturday' => 'nullable|in:1',
+
+        ]);
+
+        // Custom check: At least one day should be selected
+        $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        $selected = collect($days)->filter(fn($day) => $request->has($day));
+        if ($selected->isEmpty()) {
+            return back()->withErrors(['days' => 'At least one working day must be selected'])->withInput();
+        }
+
+        // Add day values to data
+        $data = $request->only(['user_id', 'department_id', 'qualification', 'experience', 'bio', 'status']);
+        foreach ($days as $day) {
+            $data[$day] = $request->has($day) ? 1 : 0;
+        }
+        Doctor::create($data);
+
+        return redirect()->back()->with('success', 'Doctor added successfully!');
+
+    }
+    public function deleteDoctor(Doctor $doctor){
+        $doctor->delete();
+        return redirect()->back()->with('success', 'Doctor deleted successfully!');
+    }
+    public function edit(Doctor $doctor){
+        $users = User::where('role', 'doctor')->get();
+        $departments = Department::all();   
+        return view('admin.editdoctors', compact('doctor', 'users', 'departments'));
+
+    }
+    public function updateDoctor(Request $request, Doctor $doctor){
+          $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'department_id' => 'required|exists:departments,id',
+          
+            'qualification' => 'required|string',
+            'experience' => 'required|string',
+            'bio' => 'nullable|string',
+            'status' => 'required|boolean',
+        ]);
+
+         $days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+
+        $data = $request->only(['user_id', 'department_id', 'specialization', 'qualification', 'experience', 'bio', 'status']);
+
+        foreach ($days as $day) {
+            $data[$day] = $request->has($day);
+        }
+
+        $doctor->update($data);
+        return redirect()->route('admin.manageDoctor')->with('success', 'Doctor updated successfully!');
     }
 
 }

@@ -27,6 +27,14 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::delete('/admin/department/delete/{id}', 'deleteDepartment')->name('admin.department.delete');
     Route::get('/admin/department/edit/{id}','editDepartment' )->name('admin.department.edit');
     Route::post('/admin/department/update/{id}', 'updateDepartment')->name('admin.department.update');
+    Route::get('/admin/managedoctor', 'manageDoctor')->name('admin.manageDoctor');
+    Route::post('/admin/adddoctor', 'storeDoctor')->name('admin.addDoctor');
+    Route::delete('/admin/doctor/{doctor}', 'deleteDoctor')->name('admin.doctor.delete');
+    Route::get('/admin/doctors/{doctor}/edit', 'edit')->name('admin.doctor.edit');
+   Route::put('/admin/doctor/update/{doctor}', 'updateDoctor')->name('admin.doctor.update');
+
+
+
 
 });
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function(){

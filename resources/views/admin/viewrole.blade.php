@@ -72,7 +72,7 @@
                                 <!-- Edit Label to Trigger Modal -->
                                 <!-- Edit Button to Trigger Modal -->
                                 <button type="button"
-                                    class="text-yellow-500 hover:text-yellow-600  font-medium  cursor-pointer transition-colors duration-200"
+                                    class="text-yellow-500 hover:text-yellow-600 hover:underline  font-medium  cursor-pointer transition-colors duration-200"
                                     onclick="openModal('edit-modal-{{ $user->id }}')">Edit</button>
                                 <form action="{{ route('admin.deleteRole', $user->id) }}" method="post" class="inline-block"
                                     onsubmit="return confirm('Are you sure you want to delete this user?');">
@@ -81,6 +81,7 @@
 
                                     <button type="submit" class="text-red-600 hover:underline">Delete</button>
                                 </form>
+                               
 
 
 
