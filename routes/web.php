@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+    Route::get('/appointment', 'appointment')->name('appointment');
+    Route::get('/book-appointment', 'bookAppointment')->name('bookAppointment');
   
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {

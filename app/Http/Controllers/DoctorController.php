@@ -11,13 +11,9 @@ class DoctorController extends Controller
         return view('doctor.doctorDashboard');
     }
     public function doctorprofile(){
-        // return view('doctor.doctorprofile');
         $departments = Department::all(); // latest first + pagination
         return view('doctor.doctorprofile', compact('departments'));
     }
 
-    // public function calDepartment()
-    // {
-        
-    // }
+    
 }

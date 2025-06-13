@@ -1,23 +1,25 @@
 <nav class="bg-white shadow-md px-4 py-3 md:px-6 fixed top-0 left-0 w-full z-50">
     <div class="flex items-center justify-between">
         <!-- Left: Logo and Title -->
-        <div class="flex items-center space-x-3">
-            <!-- Square Image -->
-            <img src="{{ asset('storage/images.jpg') }}" alt="Logo" class="w-10 h-10 object-cover" />
+        <a href="{{ route('home') }}">
+            <div class="flex items-center space-x-3">
+                <!-- Square Image -->
+                <img src="{{ asset('storage/images.jpg') }}" alt="Logo" class="w-10 h-10 object-cover" />
 
-            <!-- Text -->
-            <div>
-                <!-- Mobile Short Text -->
-                <div class="font-semibold text-base md:hidden">Healing Touch</div>
-                <div class="text-xs text-gray-500 md:hidden">Purnea</div>
+                <!-- Text -->
+                <div>
+                    <!-- Mobile Short Text -->
+                    <div class="font-semibold text-base md:hidden">Healing Touch</div>
+                    <div class="text-xs text-gray-500 md:hidden">Purnea</div>
 
-                <!-- Desktop Full Text -->
-                <div class="hidden md:block">
-                    <div class="font-bold text-lg">Healing Touch</div>
-                    <div class="text-sm text-gray-500">Hospital (Purnea)</div>
+                    <!-- Desktop Full Text -->
+                    <div class="hidden md:block">
+                        <div class="font-bold text-lg">Healing Touch</div>
+                        <div class="text-sm text-gray-500">Hospital (Purnea)</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
 
 
         <!-- Middle: Nav Links (Visible in Desktop) -->
@@ -33,7 +35,7 @@
         <!-- Right: Book Button + Hamburger Icon -->
         <div class="flex items-center space-x-3">
             <!-- Book Appointment Button (Always Visible) -->
-            <button
+            <a href="{{ route('appointment') }}"
                 class="bg-yellow-700 text-white px-5 py-2 rounded shadow hover:bg-yellow-800 flex items-center space-x-2 text-sm md:text-base">
                 <!-- Mobile Icon + Short Text -->
                 <span class="md:hidden flex items-center space-x-1">
@@ -47,7 +49,7 @@
 
                 <!-- Desktop Full Text -->
                 <span class="hidden md:inline">Book Appointment</span>
-            </button>
+            </a>
 
 
             <!-- Hamburger/X Toggle Button (Mobile Only) -->

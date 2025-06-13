@@ -136,59 +136,39 @@
         <!-- Cards Grid -->
         <div class="flex flex-wrap justify-center gap-6 mt-10">
 
-            <!-- Doctor Card -->
-            <div
-                class="w-full sm:w-[48%] lg:w-[23%] bg-white border rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 flex flex-col">
+            @foreach ($doctors as $doctor)
+                <!-- Doctor Card -->
+                <div
+                    class="w-full sm:w-[48%] lg:w-[23%] bg-white border rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 flex flex-col">
 
-                <!-- Image Link -->
-                <a href="/doctor/charly-kumar" class="block overflow-hidden">
-                    <img src="https://picsum.photos/seed/doc1/400/250" alt="Doctor"
-                        class="w-full object-cover hover:scale-105 transition duration-300">
-                </a>
+                    <!-- Image Link -->
+                    <a href="/doctor/charly-kumar" class="block overflow-hidden">
+                        <img src="https://picsum.photos/seed/doc1/400/250" alt="Doctor"
+                            class="w-full object-cover hover:scale-105 transition duration-300">
+                    </a>
 
-                <!-- Card Content -->
-                <div class="p-5 flex-grow flex flex-col text-left">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Dr. Charly Kumar</h3>
-                        <p class="text-sm text-yellow-700">Laparoscopic & Laser Surgeon</p>
+                    <!-- Card Content -->
+                    <div class="p-5 flex-grow flex flex-col text-left">
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1">Dr. {{ $doctor->name }}</h3>
+                            <p class="text-sm text-yellow-700">Laparoscopic & Laser Surgeon</p>
+                        </div>
+
+                        <!-- Appointment Button -->
+                        <form method="POST" action="/book-appointment" class="mt-auto">
+                            <input type="hidden" name="doctor" value="Dr. Charly Kumar">
+                            <button type="submit"
+                                class="w-full text-sm bg-yellow-700 text-white py-2 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all">
+                                Book Appointment
+                            </button>
+                        </form>
                     </div>
-
-                    <!-- Appointment Button -->
-                    <form method="POST" action="/book-appointment" class="mt-auto">
-                        <input type="hidden" name="doctor" value="Dr. Charly Kumar">
-                        <button type="submit"
-                            class="w-full text-sm bg-yellow-700 text-white py-2 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all">
-                            Book Appointment
-                        </button>
-                    </form>
                 </div>
-            </div>
 
-            <!-- Doctor Card 2 -->
-            <div
-                class="w-full sm:w-[48%] lg:w-[23%] bg-white border rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 flex flex-col">
+            @endforeach
 
-                <a href="/doctor/kiran-kumari" class="block overflow-hidden">
-                    <img src="https://picsum.photos/seed/doc2/400/250" alt="Doctor"
-                        class="w-full object-cover hover:scale-105 transition duration-300">
-                </a>
 
-                <div class="p-5 flex-grow flex flex-col text-left">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Dr. Kiran Kumari</h3>
-                        <p class="text-sm text-yellow-700">Gynaecology Specialist</p>
-                    </div>
-                    <form method="POST" action="/book-appointment" class="mt-auto">
-                        <input type="hidden" name="doctor" value="Dr. Kiran Kumari">
-                        <button type="submit"
-                            class="w-full text-sm bg-yellow-700 text-white py-2 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all">
-                            Book Appointment
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- More Cards... -->
+            
 
         </div>
     </section>
