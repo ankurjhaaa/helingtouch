@@ -66,53 +66,10 @@
         </div>
 
 
+
+
+
         <div class="bg-white p-6 rounded-t-lg shadow-sm border-b border-gray-100 max-w-6xl mx-auto mt-6">
-            <!-- Header -->
-            <div class="flex items-center gap-3 mb-4">
-                <!-- Icon Box -->
-                <div class="bg-[#a77c52]/10 p-2 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#a77c52]" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18" />
-                    </svg>
-                </div>
-                <!-- Title -->
-                <div>
-                    <h3 class="text-sm sm:text-base font-semibold text-gray-900">Choose Your Department</h3>
-                    <p class="text-xs sm:text-sm text-gray-500">Browse from available specialties</p>
-                </div>
-            </div>
-
-            <!-- Pill Style Toggle Buttons -->
-            <div class="flex flex-wrap gap-2">
-                <!-- Active -->
-                <button
-                    class="bg-white border border-[#a77c52] text-[#a77c52] font-semibold text-sm px-5 py-2 rounded-full shadow hover:bg-[#a77c52]/10 transition">
-                    All Departments
-                </button>
-
-                <!-- Others -->
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Surgeon
-                </button>
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Gynecology
-                </button>
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Surgeon
-                </button>
-                <button
-                    class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                    Gynecology
-                </button>
-            </div>
-        </div>
-
-
-        <div class="bg-white p-6 shadow-md max-w-6xl mx-auto">
             <!-- Header -->
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-[#015551] flex items-center space-x-2">
@@ -136,8 +93,14 @@
                     <div class="w-36 h-36 rounded-xl border-4 border-[#9b714a] overflow-hidden shadow-md">
                         <img src="https://via.placeholder.com/200" alt="Doctor Image" class="w-full h-full object-cover" />
                     </div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. {{ $doctor->name }}</h3>
-                    <p class="text-sm text-[#9b714a] font-medium">Surgeon</p>
+                    <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. {{ $doctorprofile->name }}</h3>
+                    @php
+                        $deptName = \App\Models\Department::find($doctor->department_id)->name ?? 'N/A';
+                    @endphp
+
+
+
+                    <p class="text-sm text-[#9b714a] font-medium">{{ $deptName }}</p>
                 </div>
 
                 <!-- Doctor Info -->
@@ -145,11 +108,11 @@
                     <div class="flex flex-wrap gap-6">
                         <div>
                             <p class="text-xs text-gray-500 font-semibold">Qualification</p>
-                            <p class="font-medium">General Laparoscopic & Laser Surgeon</p>
+                            <p class="font-medium">{{ $doctor->qualification }}</p>
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 font-semibold">Department</p>
-                            <p class="font-medium">Surgeon</p>
+                            <p class="font-medium">{{ $deptName }}</p>
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 font-semibold">Consultation Fee</p>
@@ -157,18 +120,36 @@
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 font-semibold">Available Days</p>
-                            <p class="font-medium">Mon – Sun</p>
+                            <p class="font-medium">
+                                @if ($doctor->sunday == 1)
+                                    {{ 'Sun,' }}
+                                @endif
+                                @if ($doctor->monday == 1)
+                                    {{ 'Mon,' }}
+                                @endif
+                                @if ($doctor->tuesday == 1)
+                                    {{ 'Tue,' }}
+                                @endif
+                                @if ($doctor->wednesday == 1)
+                                    {{ 'Wed,' }}
+                                @endif
+                                @if ($doctor->thursday == 1)
+                                    {{ 'Thu,' }}
+                                @endif
+                                @if ($doctor->friday == 1)
+                                    {{ 'Fri,' }}
+                                @endif
+                                @if ($doctor->saturday == 1)
+                                    {{ 'Sat,' }}
+                                @endif
+                            </p>
                         </div>
                     </div>
 
                     <!-- Description -->
                     <div class="bg-white p-4 rounded-md shadow-sm border border-[#d9c3a9]">
                         <p class="text-gray-700 leading-relaxed">
-                            Dr. {{ $doctor->name }} is a highly skilled healthcare professional with comprehensive training
-                            and
-                            experience in the field of surgery. He specializes in laparoscopic and laser techniques to
-                            provide
-                            minimally invasive solutions to patients.
+                            {{ $doctor->bio }}
                         </p>
                     </div>
                 </div>
@@ -214,7 +195,7 @@
                             id="selectedTime">Click to select time</button>
                     </div>
                     <input type="hidden" name="time" id="timeInput">
-                    <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                    <input type="hidden" name="doctor_id" value="{{ $doctor->user_id }}">
                     <input type="hidden" name="date" value="{{ date('Y-m-d') }}">
                     <input type="hidden" name="fee" value="500">
 
@@ -245,8 +226,9 @@
                         @enderror
                     </div>
                     <div>
+                        <label class="block font-medium text-gray-700 mb-1">Select Gender </label>
                         <select name="gender"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]">
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] ">
                             <option value="">Select Gender (लिंग चुनें)</option>
                             <option value="Male">Male (पुरुष)</option>
                             <option value="Female">Female (महिला)</option>

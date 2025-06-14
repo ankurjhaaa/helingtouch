@@ -13,6 +13,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/appointment', 'appointment')->name('appointment');
     Route::get('/book-appointment/{id}', 'bookAppointment')->name('bookAppointment');
     Route::post('/insert-appointment','insertAppointment')->name('insertAppointment');
+    Route::get('/our-doctor', 'alldoctor')->name('landing.our-doctor');
+    Route::get('/doctor/ankur', 'doctorprofile')->name('landing.doctor');
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');

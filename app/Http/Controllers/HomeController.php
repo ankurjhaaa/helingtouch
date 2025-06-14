@@ -25,17 +25,27 @@ class HomeController extends Controller
 
 
 
-public function bookAppointment($id)
-{
-    $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
-    return view('landing.book-appointment', compact('doctor'));
-}
+    public function bookAppointment($id)
+    {
+        $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
+        $doctorprofile = User::where('id', $id)->firstOrFail();
+        return view('landing.book-appointment', compact('doctor','doctorprofile'));
+    }
 
+    public function alldoctor()
+    {
 
+        return view('landing.our-doctor');
+    }
+    public function doctorprofile()
+    {
+
+        return view('landing.doctor');
+    }
 
     public function insertAppointment(Request $request)
     {
-         
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|',
@@ -48,11 +58,11 @@ public function bookAppointment($id)
             'state' => 'required',
             'time' => 'required',
 
-             'doctor_id' => 'required|exists:doctors,id',
+            'doctor_id' => 'required|exists:doctors,user_id',
             'date' => 'required|date',
             'fee' => 'required|numeric',
         ]);
-       
+
 
 
         Appointment::create([

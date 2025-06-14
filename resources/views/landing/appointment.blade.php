@@ -95,7 +95,7 @@
                 @foreach ($departments as $department)
                     <a href=""
                         class="bg-[#f8f8f8] hover:bg-[#f0f0f0] text-gray-700 border border-gray-200 text-sm px-5 py-2 rounded-full transition">
-                        Surgeon
+                        {{ $department->name }}
                     </a>
 
                 @endforeach
@@ -115,7 +115,12 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($doctors as $doctor)
+
+
                     <a href="{{ route('bookAppointment', $doctor->id) }}">
+                        @php
+                            $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
+                        @endphp
                         <div
                             class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
                             <div class="flex items-center gap-4">
@@ -125,17 +130,36 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-800">Dr. {{ $doctor->name }}</h3>
-                                    <p class="text-sm text-[#9b714a] font-medium">Gynecology</p>
+                                    @php
+                                        $departmentname = \App\Models\Department::where('id', $availableDay->department_id)->first();
+                                    @endphp
+                                    <p class="text-sm text-[#9b714a] font-medium">{{ $departmentname->name }}</p>
                                 </div>
                             </div>
                             <div class="mt-4 space-x-1">
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
-                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
+                                @if ($availableDay->monday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
+                                @endif
+                                @if ($availableDay->tuesday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
+                                @endif
+                                @if ($availableDay->wednesday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
+                                @endif
+                                @if ($availableDay->thursday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
+                                @endif
+                                @if ($availableDay->friday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
+                                @endif
+                                @if ($availableDay->saturday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
+                                @endif
+                                @if ($availableDay->sunday == 1)
+                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
+                                @endif
+
+
                             </div>
                             <div class="mt-4 flex justify-between items-center">
                                 <span class="text-sm text-gray-700 font-semibold">₹500 Fee</span>
@@ -146,7 +170,7 @@
                         </div>
                     </a>
                 @endforeach
-                
+
 
             </div>
         </div>
