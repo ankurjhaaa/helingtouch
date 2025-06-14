@@ -116,7 +116,7 @@
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 font-semibold">Consultation Fee</p>
-                            <p class="font-medium text-green-700">₹500</p>
+                            <p class="font-medium text-green-700">{{ $doctor->fee }}</p>
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 font-semibold">Available Days</p>
