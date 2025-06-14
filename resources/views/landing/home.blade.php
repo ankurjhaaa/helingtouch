@@ -143,32 +143,32 @@
 
                     <!-- Image Link -->
                     <a href="/doctor/charly-kumar" class="block overflow-hidden">
-                        <img src="https://picsum.photos/seed/doc1/400/250" alt="Doctor"
-                            class="w-full object-cover hover:scale-105 transition duration-300">
+                        <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}" alt="Doctor"
+                            class="w-full h-40 object-cover hover:scale-105 transition duration-300">
                     </a>
 
                     <!-- Card Content -->
                     <div class="p-5 flex-grow flex flex-col text-left">
-                        <div class="mb-4">
+                        <div class="mb-2">
                             <h3 class="text-lg font-semibold text-gray-800 mb-1">Dr. {{ $doctor->name }}</h3>
                             <p class="text-sm text-yellow-700">Laparoscopic & Laser Surgeon</p>
                         </div>
 
                         <!-- Appointment Button -->
-                        <form method="POST" action="/book-appointment" class="mt-auto">
-                            <input type="hidden" name="doctor" value="Dr. Charly Kumar">
-                            <button type="submit"
-                                class="w-full text-sm bg-yellow-700 text-white py-2 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all">
-                                Book Appointment
-                            </button>
-                        </form>
+
+                        <a href="{{ route('bookAppointment', ['id' => $doctor->id]) }}"
+                            class="w-full text-sm bg-yellow-700 text-white py-2 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all text-center block">
+                            Book Appointment
+                        </a>
+
+
                     </div>
                 </div>
 
             @endforeach
 
 
-            
+
 
         </div>
     </section>

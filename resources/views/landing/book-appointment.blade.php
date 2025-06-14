@@ -91,7 +91,8 @@
                 <!-- Doctor Image & Name -->
                 <div class="flex flex-col items-center">
                     <div class="w-36 h-36 rounded-xl border-4 border-[#9b714a] overflow-hidden shadow-md">
-                        <img src="{{ $doctorprofile->photo ? asset('storage/' . $doctorprofile->photo) : asset('default/default-user.jpg') }}" alt="Doctor Image" class="w-full h-full object-cover" />
+                        <img src="{{ $doctorprofile->photo ? asset('storage/' . $doctorprofile->photo) : asset('default/default-user.jpg') }}"
+                            alt="Doctor Image" class="w-full h-full object-cover" />
                     </div>
                     <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. {{ $doctorprofile->name }}</h3>
                     @php
@@ -169,9 +170,24 @@
                         <path
                             d="M6 2a1 1 0 000 2h1v1a1 1 0 002 0V4h2v1a1 1 0 002 0V4h1a1 1 0 100-2H6zM3 7a2 2 0 012-2h10a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7zm2 0v9h10V7H5z" />
                     </svg>
-                    <span>Appointments for: <span class="text-[#9b714a]">14 June (Tomorrow)</span></span>
+                    @php
+                        use Carbon\Carbon;
+                        $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
+                        // Column se value nikalna (dynamic column name)
+                        $isAvailableToday = $doctor->$todayDay ?? 0;
+                    @endphp
+
+                    @if ($isAvailableToday == 1)
+                        <span>Appointments for: <span class="text-[#9b714a]">{{ \Carbon\Carbon::tomorrow()->format('j F') }}
+                                (Tomorrow)</span></span>
+                    @else
+                        <span>Doctor is Absent Tomorrow <span class="text-[#9b714a]">
+                            | Change Doctor</span></span>
+                    @endif
+
+
                 </div>
-                <button class="text-sm text-[#9b714a] hover:underline">Change Date</button>
+                <button class="text-sm text-[#9b714a] hover:underline">Change Doctor</button>
             </div>
             @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
@@ -182,6 +198,8 @@
                     </ul>
                 </div>
             @endif
+
+
 
             <form method="post" action="{{ route('insertAppointment') }}" class="space-y-6">
                 @csrf
@@ -196,7 +214,7 @@
                     </div>
                     <input type="hidden" name="time" id="timeInput">
                     <input type="hidden" name="doctor_id" value="{{ $doctor->user_id }}">
-                    <input type="hidden" name="date" value="{{ date('Y-m-d') }}">
+                    <input type="hidden" name="date" value="{{ \Carbon\Carbon::tomorrow()->format('Y-m-d') }}">
                     <input type="hidden" name="fee" value="500">
 
                     <!-- Form Inputs (same as previous) -->
@@ -299,19 +317,31 @@
                         </svg>
                         <span>Back</span>
                     </a>
-                    <button type="submit"
-                        class="bg-[#9b714a] hover:bg-[#825c3e] text-white px-6 py-2 rounded flex items-center space-x-1">
-                        <span>Next</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
+
+                    @if ($isAvailableToday == 1)
+                        <button type="submit"
+                            class="bg-[#9b714a] hover:bg-[#825c3e] text-white px-6 py-2 rounded flex items-center space-x-1">
+                            <span>Next</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    @else
+                        <a href="{{ route('appointment') }}"
+                            class="bg-[#9b714a] hover:bg-[#825c3e] text-white px-6 py-2 rounded flex items-center space-x-1">
+                            <span>Change Doctor</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    @endif
+
                 </div>
             </form>
         </div>
 
         <!-- Time Selection Modal -->
-        <div id="timeModal" class=" hidden fixed inset-0 bg-black bg-opacity-50  p-5  z-50">
+        <div id="timeModal" class=" hidden fixed inset-0 backdrop-blur-xs bg-white/10  p-5  z-50">
             <div class="flex justify-center items-center mt-40">
                 <div class="bg-white p-6 rounded-md shadow-xl w-full max-w-md">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Select Appointment Time</h2>
@@ -322,14 +352,145 @@
                             🌅 <span class="ml-2">Morning (Before 12 PM)</span>
                         </div>
                         <div class="grid grid-cols-3 gap-3">
-                            <button onclick="selectTime('10:00 AM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">10:00 AM</button>
-                            <button onclick="selectTime('10:30 AM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">10:30 AM</button>
-                            <button onclick="selectTime('11:00 AM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">11:00 AM</button>
-                            <button onclick="selectTime('11:30 AM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">11:30 AM</button>
+                            @php
+
+
+                                $tomorrow = Carbon::tomorrow()->toDateString();
+
+                                $is1000Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '10:00 AM')
+                                    ->exists();
+
+                                $is1030Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '10:30 AM')
+                                    ->exists();
+
+                                $is1100Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '11:00 AM')
+                                    ->exists();
+
+                                $is1130Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '11:30 AM')
+                                    ->exists();
+
+
+                                $is1200Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '12:00 PM')
+                                    ->exists();
+
+                                $is1230Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '12:30 PM')
+                                    ->exists();
+
+                                $is0100Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '01:00 PM')
+                                    ->exists();
+
+                                $is0130Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '01:30 PM')
+                                    ->exists();
+
+                                $is0200Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '02:00 PM')
+                                    ->exists();
+
+                                $is0230Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '02:30 PM')
+                                    ->exists();
+
+                                $is0300Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '03:00 PM')
+                                    ->exists();
+
+                                $is0330Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '03:30 PM')
+                                    ->exists();
+
+                                $is0400Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '04:00 PM')
+                                    ->exists();
+
+                                $is0430Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '04:30 PM')
+                                    ->exists();
+
+                                $is0500Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '05:00 PM')
+                                    ->exists();
+
+                                $is0530Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
+                                    ->whereDate('date', $tomorrow)
+                                    ->where('time', '05:30 PM')
+                                    ->exists();
+
+
+                            @endphp
+
+                            {{-- 10:00 AM --}}
+                            @if (!$is1000Booked)
+                                <button onclick="selectTime('10:00 AM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    10:00 AM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    10:00 AM
+                                </button>
+                            @endif
+
+                            {{-- 10:30 AM --}}
+                            @if (!$is1030Booked)
+                                <button onclick="selectTime('10:30 AM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    10:30 AM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    10:30 AM
+                                </button>
+                            @endif
+
+                            {{-- 11:00 AM --}}
+                            @if (!$is1100Booked)
+                                <button onclick="selectTime('11:00 AM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    11:00 AM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    11:00 AM
+                                </button>
+                            @endif
+
+                            {{-- 11:30 AM --}}
+                            @if (!$is1130Booked)
+                                <button onclick="selectTime('11:30 AM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    11:30 AM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    11:30 AM
+                                </button>
+                            @endif
+
+
+
                         </div>
                     </div>
 
@@ -339,22 +500,94 @@
                             🌞 <span class="ml-2">Afternoon (12 PM - 4 PM)</span>
                         </div>
                         <div class="grid grid-cols-3 gap-3">
-                            <button onclick="selectTime('12:00 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">12:00 PM</button>
-                            <button onclick="selectTime('12:30 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">12:30 PM</button>
-                            <button onclick="selectTime('1:00 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">1:00 PM</button>
-                            <button onclick="selectTime('1:30 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">1:30 PM</button>
-                            <button onclick="selectTime('2:00 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">2:00 PM</button>
-                            <button onclick="selectTime('2:30 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">2:30 PM</button>
-                            <button onclick="selectTime('3:00 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">3:00 PM</button>
-                            <button onclick="selectTime('3:30 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">3:30 PM</button>
+                            @if (!$is1200Booked)
+                                <button onclick="selectTime('12:00 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    12:00 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    12:00 PM
+                                </button>
+                            @endif
+
+                            @if (!$is1230Booked)
+                                <button onclick="selectTime('12:30 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    12:30 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    12:30 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0100Booked)
+                                <button onclick="selectTime('01:00 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    01:00 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    01:00 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0130Booked)
+                                <button onclick="selectTime('01:30 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    01:30 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    01:30 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0200Booked)
+                                <button onclick="selectTime('02:00 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    02:00 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    02:00 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0230Booked)
+                                <button onclick="selectTime('02:30 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    02:30 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    02:30 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0300Booked)
+                                <button onclick="selectTime('03:00 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    03:00 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    03:00 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0330Booked)
+                                <button onclick="selectTime('03:30 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    03:30 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    03:30 PM
+                                </button>
+                            @endif
+
                         </div>
                     </div>
 
@@ -364,14 +597,51 @@
                             🌙 <span class="ml-2">Evening (After 4 PM)</span>
                         </div>
                         <div class="grid grid-cols-3 gap-3">
-                            <button onclick="selectTime('4:00 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">4:00 PM</button>
-                            <button onclick="selectTime('4:30 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">4:30 PM</button>
-                            <button onclick="selectTime('5:00 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">5:00 PM</button>
-                            <button onclick="selectTime('5:30 PM')"
-                                class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">5:30 PM</button>
+                            @if (!$is0400Booked)
+                                <button onclick="selectTime('04:00 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    04:00 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    04:00 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0430Booked)
+                                <button onclick="selectTime('04:30 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    04:30 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    04:30 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0500Booked)
+                                <button onclick="selectTime('05:00 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    05:00 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    05:00 PM
+                                </button>
+                            @endif
+
+                            @if (!$is0530Booked)
+                                <button onclick="selectTime('05:30 PM')"
+                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
+                                    05:30 PM
+                                </button>
+                            @else
+                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
+                                    05:30 PM
+                                </button>
+                            @endif
+
+
                         </div>
                     </div>
 
