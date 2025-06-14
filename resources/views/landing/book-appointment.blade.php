@@ -91,7 +91,7 @@
                 <!-- Doctor Image & Name -->
                 <div class="flex flex-col items-center">
                     <div class="w-36 h-36 rounded-xl border-4 border-[#9b714a] overflow-hidden shadow-md">
-                        <img src="https://via.placeholder.com/200" alt="Doctor Image" class="w-full h-full object-cover" />
+                        <img src="{{ $doctorprofile->photo ? asset('storage/' . $doctorprofile->photo) : asset('default/default-user.jpg') }}" alt="Doctor Image" class="w-full h-full object-cover" />
                     </div>
                     <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. {{ $doctorprofile->name }}</h3>
                     @php

@@ -125,8 +125,9 @@
                             class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
                             <div class="flex items-center gap-4">
                                 <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
-                                    <img src="https://via.placeholder.com/100" alt="Doctor"
-                                        class="w-full h-full object-cover" />
+                                    <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
+                                        alt="Doctor" class="w-full h-full object-cover" />
+
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-800">Dr. {{ $doctor->name }}</h3>
@@ -162,7 +163,8 @@
 
                             </div>
                             <div class="mt-4 flex justify-between items-center">
-                                <span class="text-sm text-gray-700 font-semibold">₹500 Fee</span>
+                                
+                                <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
                                 <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
                                     Select Doctor
                                 </button>
