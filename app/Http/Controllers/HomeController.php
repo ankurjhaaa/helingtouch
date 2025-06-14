@@ -25,17 +25,20 @@ class HomeController extends Controller
 
 
 
-    public function bookAppointment($id)
-    {
-        $doctor = User::where('role', 'doctor')->where('id', $id)->firstOrFail();
-        return view('landing.book-appointment', compact('doctor'));
-    }
+public function bookAppointment($id)
+{
+    $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
+    return view('landing.book-appointment', compact('doctor'));
+}
+
 
 
     public function insertAppointment(Request $request)
     {
+         
         $request->validate([
             'name' => 'required|string|max:255',
+            'email' => 'required|email|',
             'phone' => 'required',
             'gender' => 'required',
             'age' => 'required',
@@ -44,10 +47,12 @@ class HomeController extends Controller
             'city' => 'required',
             'state' => 'required',
             'time' => 'required',
-            'doctor_id' => 'required|exists:users,id', // ✅ FIXED
+
+             'doctor_id' => 'required|exists:doctors,id',
             'date' => 'required|date',
             'fee' => 'required|numeric',
         ]);
+       
 
 
         Appointment::create([
@@ -58,6 +63,7 @@ class HomeController extends Controller
             'date' => $request->date,
             'message' => $request->message,
             'time' => $request->time,
+
             'fee' => $request->fee,
             'gender' => $request->gender,
             'age' => $request->age,
@@ -65,6 +71,8 @@ class HomeController extends Controller
             'pincode' => $request->pincode,
             'city' => $request->city,
             'state' => $request->state,
+
+
         ]);
 
         return redirect()->back()->with('msg', 'Appointment added successfully');

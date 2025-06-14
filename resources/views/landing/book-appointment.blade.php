@@ -191,7 +191,17 @@
                     <span>Appointments for: <span class="text-[#9b714a]">14 June (Tomorrow)</span></span>
                 </div>
                 <button class="text-sm text-[#9b714a] hover:underline">Change Date</button>
-            </div> 
+            </div>
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form method="post" action="{{ route('insertAppointment') }}" class="space-y-6">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -204,67 +214,97 @@
                             id="selectedTime">Click to select time</button>
                     </div>
                     <input type="hidden" name="time" id="timeInput">
-                    <input type="hidden" name="doctor_id" value="{{  $doctor->id  }}">
-                    <input type="hidden" name="date" value="14">
-                    <input type="hidden" name="fee" value="500" >
+                    <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                    <input type="hidden" name="date" value="{{ date('Y-m-d') }}">
+                    <input type="hidden" name="fee" value="500">
 
                     <!-- Form Inputs (same as previous) -->
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Full Name (पूरा नाम)</label>
                         <input type="text" name="name"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('name')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Email Address (ईमेल) <span
                                 class="text-sm text-gray-500">(optional) (वैकल्पिक)</span></label>
                         <input type="email" name="email"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('email')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Phone Number (फ़ोन नंबर)</label>
                         <input type="text" name="phone"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('phone')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
-                        <label class="block font-medium text-gray-700 mb-1">Gender (लिंग)</label>
                         <select name="gender"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]">
-                            <option>Select Gender (लिंग चुनें)</option>
-                            <option>Male (पुरुष)</option>
-                            <option>Female (महिला)</option>
-                            <option>Other (अन्य)</option>
+                            <option value="">Select Gender (लिंग चुनें)</option>
+                            <option value="Male">Male (पुरुष)</option>
+                            <option value="Female">Female (महिला)</option>
+                            <option value="Other">Other (अन्य)</option>
                         </select>
+                        @error('gender')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
+
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Age (उम्र)</label>
                         <input type="number" name="age"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('age')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="md:col-span-2">
                         <label class="block font-medium text-gray-700 mb-1">Address (पता)</label>
                         <input type="text" name="address"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('address')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">PIN Code (पिन कोड)</label>
                         <input type="text" name="pincode"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('pincode')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">City (शहर)</label>
                         <input type="text" name="city"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('city')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">State (राज्य)</label>
                         <input type="text" name="state"
                             class="w-full border  rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                        @error('state')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="md:col-span-2">
                         <label class="block font-medium text-gray-700 mb-1">Notes for Doctor (डॉक्टर के लिए नोट्स) <span
                                 class="text-sm text-gray-500">(Optional) (वैकल्पिक)</span></label>
                         <textarea rows="4" name="message"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"></textarea>
+                        @error('message')
+                            <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
+                        @enderror
                     </div>
 
                 </div>
@@ -363,11 +403,12 @@
 
 
         <script>
-            function selectTime(time) {
-                document.getElementById('selectedTime').innerText = time;     // Button par show kare
-                document.getElementById('timeInput').value = time;            // Hidden input me store kare
-                document.getElementById('timeModal').classList.add('hidden'); // Modal band kare
+            function selectTime(t) {
+                document.getElementById('selectedTime').innerText = t;
+                document.getElementById('timeInput').value = t;  // now "appointTime" field set ho jayega
+                document.getElementById('timeModal').classList.add('hidden');
             }
+
         </script>
 
 
