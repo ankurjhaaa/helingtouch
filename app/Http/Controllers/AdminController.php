@@ -176,7 +176,11 @@ class AdminController extends Controller
     {
         $doctors = Doctor::with(['user', 'department'])->latest()->paginate(10); // latest first + pagination
         $departments = Department::whereDoesntHave('doctors')->get();
-        $users = User::whereDoesntHave('doctor')->get(); // Make sure User model has 'doctor' relation
+      
+          $users = User::where('role', 'doctor') // sirf doctor role wale
+                 ->whereDoesntHave('doctor') // jo abhi doctor table me assign nahi hue
+                 ->get();
+
         return view('admin.managedoctors', compact('users', 'departments', 'doctors'));
     }
 
