@@ -17,8 +17,8 @@
 
                 <!-- Profile Photo Upload -->
                 <div class="col-span-full flex items-start gap-6">
-                    <img src="https://via.placeholder.com/100x100" alt="Doctor Photo"
-                        class="w-24 h-24 rounded-md border object-cover bg-gray-100">
+                    <img src="{{ Auth::check() && Auth::user()->photo && file_exists(storage_path('app/public/' . Auth::user()->photo)) ? asset('storage/' . Auth::user()->photo) : asset('default/default-user.jpg') }}"
+                        alt="Doctor Photo" class="w-24 h-24 rounded-md border object-cover bg-gray-100">
 
                 </div>
 
@@ -47,27 +47,28 @@
                 <!-- Department Select -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Department</label>
-                    <select name="department_id	"
-                        class="mt-1 w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500">
-                        <option value="">-- Select Department --</option>
+                    <select name="department_id">
                         @foreach($departments as $department)
-                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                            <option value="{{ $department->id }}" {{ Auth::user()->doctor && Auth::user()->doctor->department_id == $department->id ? 'selected' : '' }}>
+                                {{ $department->name }}
+                            </option>
                         @endforeach
-
                     </select>
+
                 </div>
 
                 <!-- Qualification -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Qualification</label>
-                    <input name="qualification" type="text" placeholder="MBBS, MD"
-                        class="mt-1 w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500">
+                    <input name="qualification" value="{{ old('qualification', Auth::user()->doctor?->qualification) }}"
+                        type="text" placeholder="MBBS, MD"
+                        class="mt-1 w-full border  px-4 py-2 rounded focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <!-- Experience -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Experience (years)</label>
-                    <input name="experience" type="number" placeholder="12"
+                    <input name="experience" type="number" placeholder="12" value="{{ old('experience', Auth::user()->doctor?->experience) }}"
                         class="mt-1 w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500">
                 </div>
 
@@ -84,7 +85,7 @@
                 <div class="col-span-full">
                     <label class="block text-sm font-medium text-gray-700">Bio</label>
                     <textarea name="bio" rows="4" placeholder="Short introduction..."
-                        class="mt-1 w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                        class="mt-1 w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 resize-none">{{ old('bio', Auth::user()->doctor?->bio) }}</textarea>
                 </div>
 
                 <!-- Weekly Availability Checkboxes -->
@@ -92,31 +93,31 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Weekly Availability</label>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="sunday" value="sunday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="sunday" value="sunday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->sunday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Sunday</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="monday" value="monday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="monday" value="monday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->monday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Monday</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="tuesday" value="tuesday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="tuesday" value="tuesday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->tuesday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Tuesday</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="wednesday" value="wednesday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="wednesday" value="wednesday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->wednesday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Wednesday</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="thursday" value="thursday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="thursday" value="thursday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->thrusday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Thursday</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="friday" value="friday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="friday" value="friday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->friday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Friday</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="saturday" value="saturday" class="h-4 w-4 text-blue-600">
+                            <input type="checkbox" name="saturday" value="saturday" class="h-4 w-4 text-blue-600"  {{ Auth::user()->doctor && Auth::user()->doctor->satuarday ? 'checked' : '' }}>
                             <span class="text-sm text-gray-700">Saturday</span>
                         </label>
                     </div>

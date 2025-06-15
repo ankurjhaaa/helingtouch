@@ -221,7 +221,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Full Name (पूरा नाम)</label>
                         <input type="text" name="name"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"  value="{{ old('name') }}"/>
                         @error('name')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -230,7 +230,7 @@
                         <label class="block font-medium text-gray-700 mb-1">Email Address (ईमेल) <span
                                 class="text-sm text-gray-500">(optional) (वैकल्पिक)</span></label>
                         <input type="email" name="email"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('email') }}" />
                         @error('email')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -238,7 +238,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Phone Number (फ़ोन नंबर)</label>
                         <input type="text" name="phone"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('phone') }}" />
                         @error('phone')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -246,7 +246,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Select Gender </label>
                         <select name="gender"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] ">
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] " value="{{ old('gender') }}">
                             <option value="">Select Gender (लिंग चुनें)</option>
                             <option value="Male">Male (पुरुष)</option>
                             <option value="Female">Female (महिला)</option>
@@ -260,7 +260,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Age (उम्र)</label>
                         <input type="number" name="age"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('age') }}" />
                         @error('age')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -268,7 +268,7 @@
                     <div class="md:col-span-2">
                         <label class="block font-medium text-gray-700 mb-1">Address (पता)</label>
                         <input type="text" name="address"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('address') }}" />
                         @error('address')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -276,7 +276,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">PIN Code (पिन कोड)</label>
                         <input type="text" name="pincode"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('pincode') }}" />
                         @error('pincode')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -284,7 +284,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">City (शहर)</label>
                         <input type="text" name="city"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('city') }}" />
                         @error('city')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -292,7 +292,7 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">State (राज्य)</label>
                         <input type="text" name="state"
-                            class="w-full border  rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" />
+                            class="w-full border  rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('state') }}" />
                         @error('state')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -301,7 +301,7 @@
                         <label class="block font-medium text-gray-700 mb-1">Notes for Doctor (डॉक्टर के लिए नोट्स) <span
                                 class="text-sm text-gray-500">(Optional) (वैकल्पिक)</span></label>
                         <textarea rows="4" name="message"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"></textarea>
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('message') }}"></textarea>
                         @error('message')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror

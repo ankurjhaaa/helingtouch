@@ -164,6 +164,8 @@
                         <th class="px-4 py-3 text-left">Bio</th>
                         <th class="px-4 py-3 text-left">Experience</th>
                         <th class="px-4 py-3 text-left">Working Days</th>
+                        <th class="px-4 py-3 text-left">Status</th>
+
                         <th class="px-4 py-3 text-center">Actions</th>
                     </tr>
                 </thead>
@@ -192,7 +194,8 @@
                                     @endforeach
                                 </ul>
                             </td>
-                            <td class="px-4 py-3 text-center space-x-2">
+                             <td class="px-4 py-3">{{ $doctor->status }}</td>
+                            <td class="px-4 py-3 flex text-center space-x-1">
                                 <a href="{{ route('admin.doctor.edit', $doctor) }}"
                                     class="inline-block bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">
                                     Edit
