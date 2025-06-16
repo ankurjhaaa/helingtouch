@@ -15,6 +15,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::post('/insert-appointment','insertAppointment')->name('insertAppointment');
     Route::get('/our-doctor', 'alldoctor')->name('landing.our-doctor');
     Route::get('/doctor/ankur', 'doctorprofile')->name('landing.doctor');
+    Route::get('/doctor-profile/{id}', 'doctorprofileview')->name('landing.doctor-profile');
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');

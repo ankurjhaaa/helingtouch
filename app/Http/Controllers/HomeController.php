@@ -29,18 +29,24 @@ class HomeController extends Controller
     {
         $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
         $doctorprofile = User::where('id', $id)->firstOrFail();
-        return view('landing.book-appointment', compact('doctor','doctorprofile'));
+        return view('landing.book-appointment', compact('doctor', 'doctorprofile'));
     }
 
     public function alldoctor()
     {
 
-        return view('landing.our-doctor');
+        $doctors = Doctor::with(['user'])->get();
+        return view('landing.our-doctor', compact('doctors'));
     }
     public function doctorprofile()
     {
 
         return view('landing.doctor');
+    }
+    public function doctorprofileview($id)
+    {
+        $doctor = Doctor::with('user')->findOrFail($id);
+        return view('landing.doctor-profile', compact('doctor'));
     }
 
     public function insertAppointment(Request $request)
