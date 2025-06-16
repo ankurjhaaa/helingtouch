@@ -16,6 +16,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/our-doctor', 'alldoctor')->name('landing.our-doctor');
     Route::get('/doctor/ankur', 'doctorprofile')->name('landing.doctor');
     Route::get('/doctor-profile/{id}', 'doctorprofileview')->name('landing.doctor-profile');
+    Route::get('/gallery', 'ourGallery')->name('landing.gallery');
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');
@@ -35,7 +36,9 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::delete('/admin/doctor/{doctor}', 'deleteDoctor')->name('admin.doctor.delete');
     Route::get('/admin/doctors/{doctor}/edit', 'edit')->name('admin.doctor.edit');
     Route::put('/admin/doctor/update/{doctor}', 'updateDoctor')->name('admin.doctor.update');
-
+    Route::get('/admin/gallery', 'gallery')->name('admin.gallery');
+    Route::post('/admin/gallery/store', 'storeGallery')->name('admin.gallery.store');
+    Route::delete('/admin/gallery/delete/{id}', 'deleteGallery')->name('admin.gallery.delete');
 
 
 

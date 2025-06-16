@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\Gallery;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -92,5 +93,11 @@ class HomeController extends Controller
         ]);
 
         return redirect()->back()->with('msg', 'Appointment added successfully');
+    }
+
+    public function ourGallery()
+    {
+         $galleryItems = Gallery::latest()->get();
+         return view('landing.our-gallery', compact('galleryItems')); 
     }
 }

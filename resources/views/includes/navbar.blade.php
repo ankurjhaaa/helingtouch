@@ -27,8 +27,8 @@
             <li><a href="{{ route('home') }}" class="hover:text-yellow-600">Home</a></li>
             <li><a href="#" class="hover:text-yellow-600">Services</a></li>
             <li><a href="{{ route('landing.our-doctor') }}" class="hover:text-yellow-600">Our Doctors</a></li>
-            <li><a href="#" class="hover:text-yellow-600">About Us</a></li>
-            <li><a href="#" class="hover:text-yellow-600">Gallery</a></li>
+            <li><a href="" class="hover:text-yellow-600">About Us</a></li>
+            <li><a href="{{ route('landing.gallery') }}" class="hover:text-yellow-600">Gallery</a></li>
             <li><a href="#" class="hover:text-yellow-600">Contact</a></li>
         </ul>
 

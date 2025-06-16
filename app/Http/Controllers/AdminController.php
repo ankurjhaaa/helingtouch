@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\Gallery;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -254,6 +255,43 @@ class AdminController extends Controller
 
         $doctor->update($data);
         return redirect()->route('admin.manageDoctor')->with('success', 'Doctor updated successfully!');
+    }
+
+    public function gallery(){
+          $galleryItems = Gallery::latest()->get();
+        return view('admin.gallery', compact('galleryItems'));
+    }
+
+    public function storeGallery(Request $request){
+
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'type' => 'required|in:image,video',
+            'file' => 'required|file|mimes:jpg,jpeg,png,mp4,mov,avi,wmv|max:63775', // max:51200 = 50MB
+        ]);
+
+         $file = $request->file('file')->store('gallery', 'public');
+
+           Gallery::create([
+            'title' => $request->title,
+            'type' => $request->type,
+            'file' => $file,
+        ]);
+
+        return redirect()->back()->with('success', 'Gallery item added successfully!');
+    }
+
+    public function deleteGallery( $id){
+        $gallery = Gallery::findOrFail($id);
+    // Delete the file from storage
+        if (Storage::disk('public')->exists($gallery->file)) {
+            Storage::disk('public')->delete($gallery->file);
+        }
+
+        // Delete the gallery item from the database
+        $gallery->delete();
+
+        return redirect()->back()->with('success', 'Gallery item deleted successfully!');   
     }
 
 }
