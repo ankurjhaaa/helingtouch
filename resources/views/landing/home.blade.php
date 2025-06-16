@@ -50,7 +50,7 @@
 
         <!-- Right Side Image -->
         <div class="relative">
-            <img src="https://picsum.photos/600/400" alt="Surgery" class="rounded-xl shadow-xl">
+            <img src="{{ asset('storage/banner/banner.avif') }}" alt="Surgery" class="rounded-xl shadow-xl">
             <div class="absolute bottom-4 left-4 bg-white p-4 rounded-xl shadow-md flex items-start space-x-3">
                 <div class="bg-yellow-100 p-2 rounded-full">
                     <svg class="w-6 h-6 text-yellow-700" fill="none" stroke="currentColor" stroke-width="2"
