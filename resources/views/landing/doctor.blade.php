@@ -27,7 +27,9 @@
                                 ->filter(fn($day) => $doctor->$day)
                                 ->map(fn($d) => ucfirst($d))
                                 ->implode(', ');
+                                
                         @endphp
+                        
                         
 
 
