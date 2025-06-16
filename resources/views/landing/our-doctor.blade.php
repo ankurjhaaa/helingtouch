@@ -21,18 +21,17 @@
         <div id="doctorList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
             @forelse ($doctors as $doctor)
                 @php
-                    $availability = collect(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
+                    $availableDays = collect(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
                         ->filter(fn($day) => $doctor->$day)
                         ->map(fn($d) => ucfirst($d))
                         ->implode(', ');
-
-                    $departmentNames = $doctor->departments?->pluck('name')->join(', ') ?? 'Not Assigned';
                 @endphp
+
 
                 <div class="doctorCard bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group"
                     data-name="{{ $doctor->user->name }}" data-department="{{ $departmentNames }}"
                     data-days="{{ $availability }}">
-                    <a href="{{  route('landing.doctor-profile', $doctor->id)  }}">
+                    <a href="{{  route('landing.doctor', $doctor->id)  }}">
                         <div class="flex flex-col items-center text-center">
                             <div class="relative">
                                 <img src="{{ $doctor->user->photo ? asset('storage/' . $doctor->user->photo) : asset('default/default-user.jpg') }}"

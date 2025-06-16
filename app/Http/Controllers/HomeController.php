@@ -39,10 +39,11 @@ class HomeController extends Controller
         $doctors = Doctor::with(['user'])->get();
         return view('landing.our-doctor', compact('doctors'));
     }
-    public function doctorprofile()
+    public function doctorprofile($id)
     {
+         $doctor = Doctor::with('user')->findOrFail($id);
 
-        return view('landing.doctor');
+        return view('landing.doctor', compact('doctor'));
     }
     public function doctorprofileview($id)
     {
