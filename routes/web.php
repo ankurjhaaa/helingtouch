@@ -39,7 +39,8 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/gallery', 'gallery')->name('admin.gallery');
     Route::post('/admin/gallery/store', 'storeGallery')->name('admin.gallery.store');
     Route::delete('/admin/gallery/delete/{id}', 'deleteGallery')->name('admin.gallery.delete');
-
+    Route::get('/admin/edit-gallery/{id}', 'editGallery')->name('admin.gallery.edit');
+    Route::put('/admin/update-gallery/{id}', 'updateGallery')->name('admin.gallery.update');
 
 
 });

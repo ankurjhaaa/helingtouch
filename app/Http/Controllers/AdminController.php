@@ -295,5 +295,35 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Gallery item deleted successfully!');   
     }
+    public function editGallery($id){
+        $gallery = Gallery::findOrFail($id);
+        return view('admin.edit-gallery', compact('gallery'));
+    }
+    public function updateGallery(Request $request, $id){
+         $request->validate([
+        'title' => 'nullable|string|max:255',
+        'type' => 'required|in:image,video',
+        'file' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi,wmv|max:51200', // 50MB
+    ]);
+    $gallery = Gallery::findOrFail($id); 
+    $gallery->title = $request->title;
+    $gallery->type = $request->type;
+    // If a new file is uploaded, store it and update the file path
+     if($request->hasFile('file')){
+        if($gallery->file && Storage::disk('public')->exists($gallery->file)){
+            Storage::disk('public')->delete($gallery->file);
+        }
+
+          // Store new file
+        $filePath = $request->file('file')->store('gallery', 'public');
+        $gallery->file = $filePath;
+    
+     }
+    $gallery->save();
+    return redirect()->route('admin.gallery')->with('success', 'Gallery item updated successfully!');
+
+
+
+    }
 
 }

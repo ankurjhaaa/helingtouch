@@ -38,19 +38,29 @@
         <div class="mb-4">
             <label class="block font-semibold">Title (optional)</label>
             <input type="text" name="title" class="w-full border px-3 py-2 rounded" value="{{ old('title') }}" />
+            @error('title')
+                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-4">
             <label class="block font-semibold">Type</label>
             <select name="type" class="w-full border px-3 py-2 rounded">
+                <option value="">Select Type</option>
                 <option value="image" {{ old('type') == 'image' ? 'selected' : '' }}>Image</option>
                 <option value="video" {{ old('type') == 'video' ? 'selected' : '' }}>Video</option>
             </select>
+            @error('type')
+                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-4">
             <label class="block font-semibold">Upload File</label>
-            <input type="file" name="file" class="w-full" required />
+            <input type="file" name="file" class="w-full" />
+            @error('file')
+                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <button type="submit" class="bg-[#015551] text-white px-6 py-2 rounded hover:bg-[#013c3a]">
@@ -98,9 +108,13 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="text-red-600 cursor-pointer hover:text-red-800 font-semibold text-sm">Delete</button>
+                                    class="text-red-600 cursor-pointer hover:text-red-800 hover:underline font-semibold text-sm">Delete</button>
                             </form>
-                            </td>
+
+                            <a href="{{ route('admin.gallery.edit', $item->id) }}"
+                                class="text-blue-600 cursor-pointer hover:text-blue-800  hover:underline font-semibold text-sm ml-2">Edit</a>
+
+                         </td>
                     </tr>
                 @endforeach
             </tbody>
