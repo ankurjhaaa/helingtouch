@@ -68,7 +68,7 @@
                     <div class="bg-gray-50 p-5 rounded-xl border">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">💼 Specialties</h3>
                         <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
-                            {{ $doctor->specialization ?? 'Not specified' }}
+                            {{ $doctor->specialist ?? 'Not specified' }}
                         </span>
                     </div>
 

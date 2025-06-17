@@ -203,6 +203,7 @@ class AdminController extends Controller
             'friday' => 'nullable|in:1',
             'saturday' => 'nullable|in:1',
             'fee' => 'required|numeric|min:100',
+            'specialist' => 'nullable|string|max:255', 
 
         ]);
 
@@ -214,7 +215,7 @@ class AdminController extends Controller
         }
 
         // Add day values to data
-        $data = $request->only(['user_id', 'department_id', 'qualification', 'experience', 'bio', 'status', 'fee']);
+        $data = $request->only(['user_id', 'department_id', 'qualification', 'experience', 'bio', 'status', 'fee', 'specialist']);
         foreach ($days as $day) {
             $data[$day] = $request->has($day) ? 1 : 0;
         }
@@ -243,11 +244,12 @@ class AdminController extends Controller
             'bio' => 'nullable|string',
             'status' => 'required|boolean',
             'fee' => 'required|numeric|min:100',
+            'specialist' => 'nullable|string|max:255', // Add validation for specialization
         ]);
 
          $days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
-        $data = $request->only(['user_id', 'department_id', 'specialization', 'qualification', 'experience', 'bio', 'status', 'fee']);
+        $data = $request->only(['user_id', 'department_id', 'specialization', 'qualification', 'experience', 'bio', 'status', 'fee', 'specialist']);
 
         foreach ($days as $day) {
             $data[$day] = $request->has($day);

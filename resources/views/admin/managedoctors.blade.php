@@ -99,6 +99,15 @@
                     @enderror
                 </div>
 
+                 <div>
+                    <label class="block font-medium text-gray-700 mb-1">Specialist</label>
+                    <input type="text" name="specialist" value="{{ old('specialist', $doctor->specialist ?? '') }}"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
+                    @error('specialist')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <!-- Bio -->
                 <div class="sm:col-span-2">
                     <label class="block font-medium text-gray-700 mb-1">Bio</label>
@@ -159,6 +168,7 @@
                         <th class="px-4 py-3 text-left">#</th>
                         <th class="px-4 py-3 text-left">Name</th>
                         <th class="px-4 py-3 text-left">Department</th>
+                         <th class="px-4 py-3 text-left"> specialist</th>
                         <th class="px-4 py-3 text-left">Qualification</th>
                         <th class="px-4 py-3 text-left">Consultation Fee</th>
                         <th class="px-4 py-3 text-left">Bio</th>
@@ -175,6 +185,7 @@
                             <td class="px-4 py-3">{{ $index + 1 }}</td>
                             <td class="px-4 py-3 font-medium text-gray-800">{{ $doctor->user->name }}</td>
                             <td class="px-4 py-3">{{ $doctor->department->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-3">{{ $doctor->specialist }}</td>
                             <td class="px-4 py-3">{{ $doctor->qualification }}</td>
                              <td class="px-4 py-3">₹{{ $doctor->fee }}</td>
                             <td class="px-4 py-3 max-w-xs truncate" title="{{ $doctor->bio }}">

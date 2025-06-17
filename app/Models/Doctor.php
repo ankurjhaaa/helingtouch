@@ -21,7 +21,8 @@ class Doctor extends Model
     'thursday',
     'friday',
     'saturday',
-    'fee'
+    'fee',
+    'specialist'
 ];
 
 

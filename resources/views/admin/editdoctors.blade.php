@@ -121,10 +121,17 @@
                     @enderror
                 </div>
                 <!-- fee -->
-                  <div>
+              <div>
                     <label class="block font-medium text-gray-700 mb-1">Consultation Fee</label>
                     <input type="number" name="fee" value="{{ $doctor->fee }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
                     @error('fee')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+                  <div>
+                    <label class="block font-medium text-gray-700 mb-1">Specialist</label>
+                    <input type="text" name="specialist" value="{{ $doctor->specialist }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200">
+                    @error('specialist')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
