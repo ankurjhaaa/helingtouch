@@ -49,8 +49,8 @@
                 
                 <button class="bg-yellow-500 text-white py-3 rounded shadow hover:bg-yellow-600 transition">📅 Manage
                     Appointments</button>
-                <button class="bg-red-600 text-white py-3 rounded shadow hover:bg-red-700 transition">⚙️ Admin
-                    Settings</button>
+                <a href="{{ route('admin.seeting') }}" class="bg-red-600 text-center text-white py-3 rounded shadow hover:bg-red-700 transition">⚙️ Admin
+                    Settings</a>
             </div>
         </section>
 

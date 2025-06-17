@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
+use App\Models\Seeting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -322,6 +323,35 @@ class AdminController extends Controller
     $gallery->save();
     return redirect()->route('admin.gallery')->with('success', 'Gallery item updated successfully!');
 
+
+
+    }
+    public function seetings(){
+        return view('admin.seeting');
+    }
+    public function saveSeetings(Request $request){
+         $request->validate([
+        'address' => 'nullable|string',
+        'latitude' => 'nullable|string',
+        'longitude' => 'nullable|string',
+    ]);
+    $seeting = Seeting::first();
+    if($seeting){
+        //if exits
+        $seeting->update([
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+    }else{
+        //if not exits
+        Seeting::create([
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+    }
+     return back()->with('success', 'Location saved successfully!');
 
 
     }

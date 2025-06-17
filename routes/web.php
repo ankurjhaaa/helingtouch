@@ -4,8 +4,15 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HoscontactController;
 use App\Http\Controllers\ReceptionistController;
 use Illuminate\Support\Facades\Route;
+
+
+Route::controller(HoscontactController::class)->group(function(){
+    Route::get('/hospital-contact', 'index')->name('landing.hospital-contact'); 
+    Route::post('/hospital-contact', 'store')->name('landing.hospital-contact.store');
+});
 
 
 Route::controller(HomeController::class)->group(function () {
@@ -41,6 +48,8 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::delete('/admin/gallery/delete/{id}', 'deleteGallery')->name('admin.gallery.delete');
     Route::get('/admin/edit-gallery/{id}', 'editGallery')->name('admin.gallery.edit');
     Route::put('/admin/update-gallery/{id}', 'updateGallery')->name('admin.gallery.update');
+    Route::get('/admin/seeting', 'seetings')->name('admin.seeting');
+    Route::post('/admin/seeting/store',  'saveSeetings' )->name('admin.seeting.store');
 
 
 });
