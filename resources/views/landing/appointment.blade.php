@@ -113,67 +113,87 @@
                 <span>Choose Your Doctor</span>
             </h2>
 
+            @php
+                use Carbon\Carbon;
+            @endphp
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
                 @foreach ($doctors as $doctor)
-
-
-                    <a href="{{ route('bookAppointment', $doctor->id) }}">
-                        @php
-                            $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
-                        @endphp
-                        <div
-                            class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
-                            <div class="flex items-center gap-4">
-                                <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
-                                    <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
-                                        alt="Doctor" class="w-full h-full object-cover" />
-
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-800">Dr. {{ $doctor->name }}</h3>
-                                    @php
-                                        $departmentname = \App\Models\Department::where('id', $availableDay->department_id)->first();
-                                    @endphp
-                                    <p class="text-sm text-[#9b714a] font-medium">{{ $departmentname->name }}</p>
-                                </div>
-                            </div>
-                            <div class="mt-4 space-x-1">
-                                @if ($availableDay->monday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
-                                @endif
-                                @if ($availableDay->tuesday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
-                                @endif
-                                @if ($availableDay->wednesday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
-                                @endif
-                                @if ($availableDay->thursday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
-                                @endif
-                                @if ($availableDay->friday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
-                                @endif
-                                @if ($availableDay->saturday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
-                                @endif
-                                @if ($availableDay->sunday == 1)
-                                    <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
-                                @endif
-
+                    @php
+                        $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
+                    @endphp
+                    <div class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-[#9b714a]">
+                                <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
+                                    alt="Doctor" class="w-full h-full object-cover" />
 
                             </div>
-                            <div class="mt-4 flex justify-between items-center">
-                                
-                                <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Dr. {{ $doctor->name }}</h3>
+                                @php
+                                    $departmentname = \App\Models\Department::where('id', $availableDay->department_id)->first();
+                                @endphp
+                                <p class="text-sm text-[#9b714a] font-medium">{{ $departmentname->name }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-x-1">
+                            @if ($availableDay->monday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
+                            @endif
+                            @if ($availableDay->tuesday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
+                            @endif
+                            @if ($availableDay->wednesday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
+                            @endif
+                            @if ($availableDay->thursday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
+                            @endif
+                            @if ($availableDay->friday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
+                            @endif
+                            @if ($availableDay->saturday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
+                            @endif
+                            @if ($availableDay->sunday == 1)
+                                <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
+                            @endif
+
+
+                        </div>
+
+                        <div class="mt-4 flex justify-between items-center">
+                            @php
+
+                                $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
+                                // Column se value nikalna (dynamic column name)
+                                $isAvailableToday = $availableDay->$todayDay ?? 0;
+                            @endphp
+                            <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
+                            @if ($isAvailableToday == 1)
+                                <a href="{{ route('bookAppointment', $doctor->id) }}"
+                                    class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
+                                    Select Doctor
+                                </a>
+                            @else
                                 <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
                                     Select Doctor
                                 </button>
-                            </div>
+                            @endif
+
                         </div>
-                    </a>
+                        @if ($isAvailableToday == 1)
+                            <div class="mt-2 text-sm font-medium text-green-600">
+                                Doctor available tomorrow
+                            </div>
+                        @else
+                            <div class="mt-2 text-sm font-medium text-red-500">
+                                Doctor absent tomorrow
+                            </div>
+                        @endif
+                    </div>
                 @endforeach
-
-
             </div>
         </div>
 

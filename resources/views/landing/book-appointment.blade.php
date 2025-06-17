@@ -178,11 +178,11 @@
                     @endphp
 
                     @if ($isAvailableToday == 1)
-                        <span>Appointments for: <span class="text-[#9b714a]">{{ \Carbon\Carbon::tomorrow()->format('j F') }}
+                        <span>Appointments for: <span class="text-[#9b714a]">{{ Carbon::tomorrow()->format('j F') }}
                                 (Tomorrow)</span></span>
                     @else
                         <span>Doctor is Absent Tomorrow <span class="text-[#9b714a]">
-                            | Change Doctor</span></span>
+                                | Change Doctor</span></span>
                     @endif
 
 
@@ -214,14 +214,15 @@
                     </div>
                     <input type="hidden" name="time" id="timeInput">
                     <input type="hidden" name="doctor_id" value="{{ $doctor->user_id }}">
-                    <input type="hidden" name="date" value="{{ \Carbon\Carbon::tomorrow()->format('Y-m-d') }}">
+                    <input type="hidden" name="date" value="{{ Carbon::tomorrow()->format('Y-m-d') }}">
                     <input type="hidden" name="fee" value="500">
 
                     <!-- Form Inputs (same as previous) -->
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Full Name (पूरा नाम)</label>
                         <input type="text" name="name"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"  value="{{ old('name') }}"/>
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('name') }}" />
                         @error('name')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -230,7 +231,8 @@
                         <label class="block font-medium text-gray-700 mb-1">Email Address (ईमेल) <span
                                 class="text-sm text-gray-500">(optional) (वैकल्पिक)</span></label>
                         <input type="email" name="email"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('email') }}" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('email') }}" />
                         @error('email')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -238,7 +240,8 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Phone Number (फ़ोन नंबर)</label>
                         <input type="text" name="phone"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('phone') }}" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('phone') }}" />
                         @error('phone')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -246,7 +249,8 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Select Gender </label>
                         <select name="gender"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] " value="{{ old('gender') }}">
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] "
+                            value="{{ old('gender') }}">
                             <option value="">Select Gender (लिंग चुनें)</option>
                             <option value="Male">Male (पुरुष)</option>
                             <option value="Female">Female (महिला)</option>
@@ -260,7 +264,8 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Age (उम्र)</label>
                         <input type="number" name="age"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('age') }}" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('age') }}" />
                         @error('age')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -268,7 +273,8 @@
                     <div class="md:col-span-2">
                         <label class="block font-medium text-gray-700 mb-1">Address (पता)</label>
                         <input type="text" name="address"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('address') }}" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('address') }}" />
                         @error('address')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -276,7 +282,8 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">PIN Code (पिन कोड)</label>
                         <input type="text" name="pincode"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('pincode') }}" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('pincode') }}" />
                         @error('pincode')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -284,7 +291,8 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">City (शहर)</label>
                         <input type="text" name="city"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('city') }}" />
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('city') }}" />
                         @error('city')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -292,7 +300,8 @@
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">State (राज्य)</label>
                         <input type="text" name="state"
-                            class="w-full border  rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('state') }}" />
+                            class="w-full border  rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('state') }}" />
                         @error('state')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -301,7 +310,8 @@
                         <label class="block font-medium text-gray-700 mb-1">Notes for Doctor (डॉक्टर के लिए नोट्स) <span
                                 class="text-sm text-gray-500">(Optional) (वैकल्पिक)</span></label>
                         <textarea rows="4" name="message"
-                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]" value="{{ old('message') }}"></textarea>
+                            class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
+                            value="{{ old('message') }}"></textarea>
                         @error('message')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -342,9 +352,73 @@
 
         <!-- Time Selection Modal -->
         <div id="timeModal" class=" hidden fixed inset-0 backdrop-blur-xs bg-white/10  p-5  z-50">
-            <div class="flex justify-center items-center mt-40">
+            <div class="flex justify-center items-center mt-20">
                 <div class="bg-white p-6 rounded-md shadow-xl w-full max-w-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Select Appointment Time</h2>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-1">Select Appointment Time</h2>
+
+                    @php
+
+                        use App\Models\Appointment;
+
+                        $tomorrow = Carbon::tomorrow()->toDateString();
+
+                        // Define all time slots
+                        $timeSlots = [
+                            '10:00 AM',
+                            '10:30 AM',
+                            '11:00 AM',
+                            '11:30 AM',
+                            '12:00 PM',
+                            '12:30 PM',
+                            '01:00 PM',
+                            '01:30 PM',
+                            '02:00 PM',
+                            '02:30 PM',
+                            '03:00 PM',
+                            '03:30 PM',
+                            '04:00 PM',
+                            '04:30 PM',
+                            '05:00 PM',
+                            '05:30 PM',
+                        ];
+
+                        // Count how many bookings per slot
+                        $slotCounts = [];
+                        foreach ($timeSlots as $slot) {
+                            $slotCounts[$slot] = Appointment::where('doctor_id', $doctor->user_id)
+                                ->whereDate('date', $tomorrow)
+                                ->where('time', $slot)
+                                ->count();
+                        }
+
+                        // Group time slots by time of day
+                        $morningSlots = array_slice($timeSlots, 0, 4); // till 11:30 AM
+                        $afternoonSlots = array_slice($timeSlots, 4, 8); // 12:00 PM to 03:30 PM
+                        $eveningSlots = array_slice($timeSlots, 12); // 04:00 PM onward
+
+                        function renderSlots($slots, $slotCounts)
+                        {
+                            foreach ($slots as $slot) {
+                                $count = $slotCounts[$slot];
+                                $disabled = $count >= 4;
+
+                                // Define button colors
+                                $colorClass = match ($count) {
+                                    0 => 'bg-[#93cde6] text-[#015551]',
+                                    1 => 'bg-yellow-200 text-yellow-900',
+                                    2 => 'bg-orange-300 text-orange-900',
+                                    3 => 'bg-red-400 text-white',
+                                    default => 'bg-gray-300 text-gray-500 cursor-not-allowed',
+                                };
+
+                                if (!$disabled) {
+                                    echo "<button onclick=\"selectTime('{$slot}')\" class=\"time-slot {$colorClass} py-2 px-1 rounded-md transition duration-200\">{$slot} </button>";
+                                } else {
+                                    echo "<button disabled class=\"{$colorClass} py-2 px-1 rounded-md cursor-not-allowed\">{$slot}</button>";
+                                }
+                            }
+                        }
+                    @endphp
 
                     <!-- Morning Section -->
                     <div class="mb-4">
@@ -352,303 +426,74 @@
                             🌅 <span class="ml-2">Morning (Before 12 PM)</span>
                         </div>
                         <div class="grid grid-cols-3 gap-3">
-                            @php
-
-
-                                $tomorrow = Carbon::tomorrow()->toDateString();
-
-                                $is1000Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '10:00 AM')
-                                    ->exists();
-
-                                $is1030Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '10:30 AM')
-                                    ->exists();
-
-                                $is1100Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '11:00 AM')
-                                    ->exists();
-
-                                $is1130Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '11:30 AM')
-                                    ->exists();
-
-
-                                $is1200Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '12:00 PM')
-                                    ->exists();
-
-                                $is1230Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '12:30 PM')
-                                    ->exists();
-
-                                $is0100Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '01:00 PM')
-                                    ->exists();
-
-                                $is0130Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '01:30 PM')
-                                    ->exists();
-
-                                $is0200Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '02:00 PM')
-                                    ->exists();
-
-                                $is0230Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '02:30 PM')
-                                    ->exists();
-
-                                $is0300Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '03:00 PM')
-                                    ->exists();
-
-                                $is0330Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '03:30 PM')
-                                    ->exists();
-
-                                $is0400Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '04:00 PM')
-                                    ->exists();
-
-                                $is0430Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '04:30 PM')
-                                    ->exists();
-
-                                $is0500Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '05:00 PM')
-                                    ->exists();
-
-                                $is0530Booked = \App\Models\Appointment::where('doctor_id', $doctor->user_id)
-                                    ->whereDate('date', $tomorrow)
-                                    ->where('time', '05:30 PM')
-                                    ->exists();
-
-
-                            @endphp
-
-                            {{-- 10:00 AM --}}
-                            @if (!$is1000Booked)
-                                <button onclick="selectTime('10:00 AM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    10:00 AM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    10:00 AM
-                                </button>
-                            @endif
-
-                            {{-- 10:30 AM --}}
-                            @if (!$is1030Booked)
-                                <button onclick="selectTime('10:30 AM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    10:30 AM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    10:30 AM
-                                </button>
-                            @endif
-
-                            {{-- 11:00 AM --}}
-                            @if (!$is1100Booked)
-                                <button onclick="selectTime('11:00 AM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    11:00 AM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    11:00 AM
-                                </button>
-                            @endif
-
-                            {{-- 11:30 AM --}}
-                            @if (!$is1130Booked)
-                                <button onclick="selectTime('11:30 AM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    11:30 AM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    11:30 AM
-                                </button>
-                            @endif
-
-
-
+                            @php renderSlots($morningSlots, $slotCounts); @endphp
                         </div>
                     </div>
 
                     <!-- Afternoon Section -->
                     <div class="mb-4">
                         <div class="flex items-center mb-2 text-sm font-medium text-[#015551]">
-                            🌞 <span class="ml-2">Afternoon (12 PM - 4 PM)</span>
+                            ☀️ <span class="ml-2">Afternoon (12 PM – 4 PM)</span>
                         </div>
                         <div class="grid grid-cols-3 gap-3">
-                            @if (!$is1200Booked)
-                                <button onclick="selectTime('12:00 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    12:00 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    12:00 PM
-                                </button>
-                            @endif
-
-                            @if (!$is1230Booked)
-                                <button onclick="selectTime('12:30 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    12:30 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    12:30 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0100Booked)
-                                <button onclick="selectTime('01:00 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    01:00 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    01:00 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0130Booked)
-                                <button onclick="selectTime('01:30 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    01:30 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    01:30 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0200Booked)
-                                <button onclick="selectTime('02:00 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    02:00 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    02:00 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0230Booked)
-                                <button onclick="selectTime('02:30 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    02:30 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    02:30 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0300Booked)
-                                <button onclick="selectTime('03:00 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    03:00 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    03:00 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0330Booked)
-                                <button onclick="selectTime('03:30 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    03:30 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    03:30 PM
-                                </button>
-                            @endif
-
+                            @php renderSlots($afternoonSlots, $slotCounts); @endphp
                         </div>
                     </div>
 
                     <!-- Evening Section -->
                     <div class="mb-4">
                         <div class="flex items-center mb-2 text-sm font-medium text-[#015551]">
-                            🌙 <span class="ml-2">Evening (After 4 PM)</span>
+                            🌇 <span class="ml-2">Evening (After 4 PM)</span>
                         </div>
                         <div class="grid grid-cols-3 gap-3">
-                            @if (!$is0400Booked)
-                                <button onclick="selectTime('04:00 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    04:00 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    04:00 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0430Booked)
-                                <button onclick="selectTime('04:30 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    04:30 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    04:30 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0500Booked)
-                                <button onclick="selectTime('05:00 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    05:00 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    05:00 PM
-                                </button>
-                            @endif
-
-                            @if (!$is0530Booked)
-                                <button onclick="selectTime('05:30 PM')"
-                                    class="time-slot bg-[#93cde6] text-[#015551] py-1 rounded-md">
-                                    05:30 PM
-                                </button>
-                            @else
-                                <button disabled class="bg-gray-300 text-gray-500 py-1 rounded-md cursor-not-allowed">
-                                    05:30 PM
-                                </button>
-                            @endif
-
-
+                            @php renderSlots($eveningSlots, $slotCounts); @endphp
                         </div>
                     </div>
 
+
+
+
                     <div class="mt-6 text-right">
+                        <div class="mb-4 text-sm text-gray-700 text-left">
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-4 h-4 rounded bg-[#93cde6] border border-gray-300"></span>
+                                    Available
+                                </div>
+                                <span class="hidden sm:inline">-</span>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-4 h-4 rounded bg-yellow-200 border border-gray-300"></span>
+                                    1 booked
+                                </div>
+                                <span class="hidden sm:inline">-</span>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-4 h-4 rounded bg-orange-300 border border-gray-300"></span>
+                                    2 booked
+                                </div>
+                                <span class="hidden sm:inline">-</span>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-4 h-4 rounded bg-red-400 border border-gray-300"></span>
+                                    3 booked
+                                </div>
+                                <span class="hidden sm:inline">-</span>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-4 h-4 rounded bg-gray-300 border border-gray-300"></span>
+                                    Full
+                                </div>
+                            </div>
+                        </div>
+
                         <button onclick="document.getElementById('timeModal').classList.add('hidden')"
-                            class="text-sm text-gray-600 hover:text-red-500 transition">Cancel</button>
+                            class="text-sm text-gray-600 hover:text-red-500 transition">
+                            Cancel
+                        </button>
                     </div>
+
+
                 </div>
             </div>
         </div>
