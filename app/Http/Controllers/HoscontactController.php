@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hoscontact;
+use App\Models\Information;
 use App\Models\Seeting;
 use Illuminate\Http\Request;
 
 class HoscontactController extends Controller
 {
     public function index(){
+        $info = Information::first();
+        if (!$info) {
+            $info = new Information();
+            $info->address = 'No address set';
+            $info->latitude = '0';
+            $info->longitude = '0';
+        }
         $setting = Seeting::first();
         if (!$setting) {
             $map = new Seeting();
@@ -16,7 +24,7 @@ class HoscontactController extends Controller
             $map->latitude = '0';
             $map->longitude = '0';
         }
-        return view('landing.hospitalcontact', compact('setting'));
+        return view('landing.hospitalcontact', compact('setting', 'info'));
     }
     public function store(Request $request){
         //validate the request

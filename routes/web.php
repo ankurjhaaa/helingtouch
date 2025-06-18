@@ -50,6 +50,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::put('/admin/update-gallery/{id}', 'updateGallery')->name('admin.gallery.update');
     Route::get('/admin/seeting', 'seetings')->name('admin.seeting');
     Route::post('/admin/seeting/store',  'saveSeetings' )->name('admin.seeting.store');
+    Route::post('/admin/seeting/information', 'information')->name('admin.seeting.information');
 
 
 });

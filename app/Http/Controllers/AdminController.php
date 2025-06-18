@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
+use App\Models\Information;
 use App\Models\Seeting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class AdminController extends Controller
             'status' => 'required|in:1,0',  // validation
 
         ]);
-        Department::create([ 
+        Department::create([
             'name' => $request->name,
             'description' => $request->description,
             'status' => $request->status
@@ -178,10 +179,10 @@ class AdminController extends Controller
     {
         $doctors = Doctor::with(['user', 'department'])->latest()->paginate(10); // latest first + pagination
         $departments = Department::whereDoesntHave('doctors')->get();
-      
-          $users = User::where('role', 'doctor') // sirf doctor role wale
-                 ->whereDoesntHave('doctor') // jo abhi doctor table me assign nahi hue
-                 ->get();
+
+        $users = User::where('role', 'doctor') // sirf doctor role wale
+            ->whereDoesntHave('doctor') // jo abhi doctor table me assign nahi hue
+            ->get();
 
         return view('admin.managedoctors', compact('users', 'departments', 'doctors'));
     }
@@ -204,7 +205,7 @@ class AdminController extends Controller
             'friday' => 'nullable|in:1',
             'saturday' => 'nullable|in:1',
             'fee' => 'required|numeric|min:100',
-            'specialist' => 'nullable|string|max:255', 
+            'specialist' => 'nullable|string|max:255',
 
         ]);
 
@@ -225,21 +226,24 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Doctor added successfully!');
 
     }
-    public function deleteDoctor(Doctor $doctor){
+    public function deleteDoctor(Doctor $doctor)
+    {
         $doctor->delete();
         return redirect()->back()->with('success', 'Doctor deleted successfully!');
     }
-    public function edit(Doctor $doctor){
+    public function edit(Doctor $doctor)
+    {
         $users = User::where('role', 'doctor')->get();
-        $departments = Department::all();   
+        $departments = Department::all();
         return view('admin.editdoctors', compact('doctor', 'users', 'departments'));
 
     }
-    public function updateDoctor(Request $request, Doctor $doctor){
-          $request->validate([
+    public function updateDoctor(Request $request, Doctor $doctor)
+    {
+        $request->validate([
             'user_id' => 'required|exists:users,id',
             'department_id' => 'required|exists:departments,id',
-          
+
             'qualification' => 'required|string',
             'experience' => 'required|string',
             'bio' => 'nullable|string',
@@ -248,7 +252,7 @@ class AdminController extends Controller
             'specialist' => 'nullable|string|max:255', // Add validation for specialization
         ]);
 
-         $days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+        $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
         $data = $request->only(['user_id', 'department_id', 'specialization', 'qualification', 'experience', 'bio', 'status', 'fee', 'specialist']);
 
@@ -260,12 +264,14 @@ class AdminController extends Controller
         return redirect()->route('admin.manageDoctor')->with('success', 'Doctor updated successfully!');
     }
 
-    public function gallery(){
-          $galleryItems = Gallery::latest()->get();
+    public function gallery()
+    {
+        $galleryItems = Gallery::latest()->get();
         return view('admin.gallery', compact('galleryItems'));
     }
 
-    public function storeGallery(Request $request){
+    public function storeGallery(Request $request)
+    {
 
         $request->validate([
             'title' => 'nullable|string|max:255',
@@ -273,9 +279,9 @@ class AdminController extends Controller
             'file' => 'required|file|mimes:jpg,jpeg,png,mp4,mov,avi,wmv|max:63775', // max:51200 = 50MB
         ]);
 
-         $file = $request->file('file')->store('gallery', 'public');
+        $file = $request->file('file')->store('gallery', 'public');
 
-           Gallery::create([
+        Gallery::create([
             'title' => $request->title,
             'type' => $request->type,
             'file' => $file,
@@ -284,9 +290,10 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Gallery item added successfully!');
     }
 
-    public function deleteGallery( $id){
+    public function deleteGallery($id)
+    {
         $gallery = Gallery::findOrFail($id);
-    // Delete the file from storage
+        // Delete the file from storage
         if (Storage::disk('public')->exists($gallery->file)) {
             Storage::disk('public')->delete($gallery->file);
         }
@@ -294,66 +301,107 @@ class AdminController extends Controller
         // Delete the gallery item from the database
         $gallery->delete();
 
-        return redirect()->back()->with('success', 'Gallery item deleted successfully!');   
+        return redirect()->back()->with('success', 'Gallery item deleted successfully!');
     }
-    public function editGallery($id){
+    public function editGallery($id)
+    {
         $gallery = Gallery::findOrFail($id);
         return view('admin.edit-gallery', compact('gallery'));
     }
-    public function updateGallery(Request $request, $id){
-         $request->validate([
-        'title' => 'nullable|string|max:255',
-        'type' => 'required|in:image,video',
-        'file' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi,wmv|max:51200', // 50MB
-    ]);
-    $gallery = Gallery::findOrFail($id); 
-    $gallery->title = $request->title;
-    $gallery->type = $request->type;
-    // If a new file is uploaded, store it and update the file path
-     if($request->hasFile('file')){
-        if($gallery->file && Storage::disk('public')->exists($gallery->file)){
-            Storage::disk('public')->delete($gallery->file);
-        }
+    public function updateGallery(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'type' => 'required|in:image,video',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi,wmv|max:51200', // 50MB
+        ]);
+        $gallery = Gallery::findOrFail($id);
+        $gallery->title = $request->title;
+        $gallery->type = $request->type;
+        // If a new file is uploaded, store it and update the file path
+        if ($request->hasFile('file')) {
+            if ($gallery->file && Storage::disk('public')->exists($gallery->file)) {
+                Storage::disk('public')->delete($gallery->file);
+            }
 
-          // Store new file
-        $filePath = $request->file('file')->store('gallery', 'public');
-        $gallery->file = $filePath;
-    
-     }
-    $gallery->save();
-    return redirect()->route('admin.gallery')->with('success', 'Gallery item updated successfully!');
+            // Store new file
+            $filePath = $request->file('file')->store('gallery', 'public');
+            $gallery->file = $filePath;
+
+        }
+        $gallery->save();
+        return redirect()->route('admin.gallery')->with('success', 'Gallery item updated successfully!');
 
 
 
     }
-    public function seetings(){
+    public function seetings()
+    {
         return view('admin.seeting');
     }
-    public function saveSeetings(Request $request){
-         $request->validate([
-        'address' => 'nullable|string',
-        'latitude' => 'nullable|string',
-        'longitude' => 'nullable|string',
-    ]);
-    $seeting = Seeting::first();
-    if($seeting){
-        //if exits
-        $seeting->update([
-            'address' => $request->address,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
+    public function saveSeetings(Request $request)
+    {
+        $request->validate([
+            'address' => 'nullable|string',
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
         ]);
-    }else{
-        //if not exits
-        Seeting::create([
-            'address' => $request->address,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
-    }
-     return back()->with('success', 'Location saved successfully!');
+        $seeting = Seeting::first();
+        if ($seeting) {
+            //if exits
+            $seeting->update([
+                'address' => $request->address,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+            ]);
+        } else {
+            //if not exits
+            Seeting::create([
+                'address' => $request->address,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+            ]);
+        }
+        return back()->with('success', 'Location saved successfully!');
 
 
     }
+    public function information(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'address' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+
+            'visiting_hours' => 'nullable|string',
+            'emergency_available' => 'required|boolean',
+        ]);
+        $information = Information::first();
+        if ($information) {
+            $information->update([
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'visiting_hours' => $request->visiting_hours,
+                'emergency_available' => $request->emergency_available,
+
+            ]);
+        } else {
+            //if not exits
+            Information::create([
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'visiting_hours' => $request->visiting_hours,
+                'emergency_available' => $request->emergency_available,
+
+            ]);
+        }
+        return back()->with('success', 'Information saved successfully!');
+    }
+
 
 }

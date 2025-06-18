@@ -27,7 +27,7 @@
                         </div>
                         <div>
                             <p class="font-medium text-gray-800">Phone</p>
-                            <p class="text-gray-600">+919471659700</p>
+                            <p class="text-gray-600">{{ $info->phone }}</p>
                             <p class="text-sm text-gray-500">Available 24/7 for emergency</p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         </div>
                         <div>
                             <p class="font-medium text-gray-800">Email</p>
-                            <p class="text-gray-600">info@healingtouchpurnea.com</p>
+                            <p class="text-gray-600">{{ $info->email }}</p>
                             <p class="text-sm text-gray-500">We respond within 24 hours</p>
                         </div>
                     </div>
