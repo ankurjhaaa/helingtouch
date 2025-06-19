@@ -18,10 +18,12 @@ Route::controller(HoscontactController::class)->group(function(){
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/appointment', 'appointment')->name('appointment');
+    Route::get('/manage-appointments', 'manageappointments')->name('manageappointments');
     Route::get('/book-appointment/{id}', 'bookAppointment')->name('bookAppointment');
+    Route::get('/success-appointment', 'successappointment')->name('successappointment');
     Route::post('/insert-appointment','insertAppointment')->name('insertAppointment');
     Route::get('/our-doctor', 'alldoctor')->name('landing.our-doctor');
-    Route::get('/doctor/doctor-profile/{id}', 'doctorprofile')->name('landing.doctor');
+    Route::get('/doctor/{id}', 'doctorprofile')->name('landing.doctor');
     Route::get('/doctor-profile/{id}', 'doctorprofileview')->name('landing.doctor-profile');
     Route::get('/gallery', 'ourGallery')->name('landing.gallery');
 });

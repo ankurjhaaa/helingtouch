@@ -23,6 +23,14 @@ class HomeController extends Controller
         $doctors = User::where('role', 'doctor')->get();
         return view('landing.appointment', compact('departments', 'doctors'));
     }
+    public function manageappointments()
+    {
+        return view('landing.manage-appointments');
+    }
+    public function successappointment()
+    {
+        return view('landing.success-appointment');
+    }
 
 
 
@@ -41,8 +49,7 @@ class HomeController extends Controller
     }
     public function doctorprofile($id)
     {
-         $doctor = Doctor::with('user')->findOrFail($id);
-
+        $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
         return view('landing.doctor', compact('doctor'));
     }
     public function doctorprofileview($id)
@@ -73,7 +80,7 @@ class HomeController extends Controller
 
 
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -93,12 +100,13 @@ class HomeController extends Controller
 
         ]);
 
-        return redirect()->back()->with('msg', 'Appointment added successfully');
+        // Redirect to confirmation page with session data
+        return redirect()->route('successappointment')->with('appointment', $appointment);
     }
 
     public function ourGallery()
     {
-         $galleryItems = Gallery::latest()->get();
-         return view('landing.our-gallery', compact('galleryItems')); 
+        $galleryItems = Gallery::latest()->get();
+        return view('landing.our-gallery', compact('galleryItems'));
     }
 }

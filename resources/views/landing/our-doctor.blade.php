@@ -26,13 +26,16 @@
                         ->map(fn($d) => ucfirst($d))
                         ->implode(', ');
 
-                    $departmentNames = $doctor->departments?->pluck('name')->join(', ') ?? 'Not Assigned';
+                    
+
+                    $departmentname = \App\Models\Department::where('id', $doctor->department_id)->first();
+
                 @endphp
 
                 <div class="doctorCard bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group"
-                    data-name="{{ $doctor->user->name }}" data-department="{{ $departmentNames }}"
+                    data-name="{{ $doctor->user->name }}" data-department="{{ $departmentname->name }}"
                     data-days="{{ $availability }}">
-                    <a href="{{  route('landing.doctor', $doctor->id)  }}">
+                    <a href="{{  route('landing.doctor', $doctor->user_id)  }}">
                         <div class="flex flex-col items-center text-center">
                             <div class="relative">
                                 <img src="{{ $doctor->user->photo ? asset('storage/' . $doctor->user->photo) : asset('default/default-user.jpg') }}"
@@ -46,8 +49,8 @@
                                 Dr. {{ $doctor->user->name }}
                             </h3>
 
-                            <p class="text-sm text-[#015551] font-medium mt-1">{{ $departmentNames }}</p>
-                            <p class="text-sm text-gray-500">{{ $doctor->specialization }}</p>
+                            <p class="text-sm text-[#015551] font-medium mt-1">{{ $departmentname->name }}</p>
+                            <!-- <p class="text-sm text-gray-500">{{ $doctor->specialization }}</p> -->
 
                             <div class="mt-3 bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
                                 Available: {{ $availability }}

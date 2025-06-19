@@ -21,26 +21,35 @@
                     <p class="text-white text-sm mt-1">{{ $doctor->specialization }}</p>
                     <div class="text-sm text-white mt-2 space-y-1">
                         <p><strong>Department:</strong> {{ $doctor->department->name ?? 'N/A' }}</p>
-                   
+
                         @php
-                            $availableDays = collect(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
+                            use Carbon\Carbon;
+                            $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
+                            // Column se value nikalna (dynamic column name)
+                            $isAvailableToday = $doctor->$todayDay ?? 0;
+
+
+
+                            $availability = collect(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
                                 ->filter(fn($day) => $doctor->$day)
                                 ->map(fn($d) => ucfirst($d))
                                 ->implode(', ');
-                                
+
+
+
+
+
+
                         @endphp
-                        
-                        
 
-
-                        <p><strong>Availability:</strong> {{ $availableDays ?: 'Not Available' }}</p>
+                        <p><strong>Availability:</strong> {{ $availability }}</p>
                         <p><strong>Fee:</strong> ₹{{ $doctor->fee ?? 'N/A' }}</p>
                     </div>
                 </div>
 
                 <!-- Status -->
                 <div class="text-white text-sm">
-                    @if($doctor->is_available)
+                    @if($isAvailableToday == 1)
                         <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">✅ Available
                             for Appointments</span>
                     @else
@@ -91,10 +100,18 @@
                             <li>✅ Next-Day Appointments</li>
                         </ul>
 
-                        <a href="{{ route('bookAppointment', $doctor->id) }}"
-                            class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
-                            Book Appointment
-                        </a>
+
+                        @if($isAvailableToday == 1)
+                            <a href="{{ route('bookAppointment', $doctor->user_id) }}"
+                                class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
+                                Book Appointment
+                            </a>
+                        @else
+                            <a 
+                                class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
+                                Not Available Today
+                            </a>
+                        @endif
 
                         <p class="text-xs text-gray-500 text-center mt-2">Or call us at: +91 919 471 659 700</p>
                     </div>

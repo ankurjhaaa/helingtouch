@@ -352,7 +352,7 @@
 
         <!-- Time Selection Modal -->
         <div id="timeModal" class=" hidden fixed inset-0 backdrop-blur-xs bg-white/10  p-5  z-50">
-            <div class="flex justify-center items-center mt-20">
+            <div class="flex justify-center items-center mt-20 md:mt-15 lg:my-10">
                 <div class="bg-white p-6 rounded-md shadow-xl w-full max-w-md">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-1">Select Appointment Time</h2>
 
@@ -450,9 +450,6 @@
                         </div>
                     </div>
 
-
-
-
                     <div class="mt-6 text-right">
                         <div class="mb-4 text-sm text-gray-700 text-left">
                             <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -464,25 +461,27 @@
 
                                 <div class="flex items-center gap-2">
                                     <span class="inline-block w-4 h-4 rounded bg-yellow-200 border border-gray-300"></span>
-                                    1 booked
+                                    Available (3-4 slots)
                                 </div>
                                 <span class="hidden sm:inline">-</span>
 
                                 <div class="flex items-center gap-2">
                                     <span class="inline-block w-4 h-4 rounded bg-orange-300 border border-gray-300"></span>
-                                    2 booked
+                                    Filling Up (2 slots)
                                 </div>
                                 <span class="hidden sm:inline">-</span>
 
                                 <div class="flex items-center gap-2">
                                     <span class="inline-block w-4 h-4 rounded bg-red-400 border border-gray-300"></span>
-                                    3 booked
+                                    Almost Full (1 slot)
+
                                 </div>
                                 <span class="hidden sm:inline">-</span>
 
                                 <div class="flex items-center gap-2">
                                     <span class="inline-block w-4 h-4 rounded bg-gray-300 border border-gray-300"></span>
-                                    Full
+                                    Full (0 slots)
+
                                 </div>
                             </div>
                         </div>
