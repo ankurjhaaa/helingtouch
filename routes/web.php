@@ -5,13 +5,24 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HoscontactController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ReceptionistController;
+use App\Http\Controllers\UserappointmentController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::controller(HoscontactController::class)->group(function(){
     Route::get('/hospital-contact', 'index')->name('landing.hospital-contact'); 
     Route::post('/hospital-contact', 'store')->name('landing.hospital-contact.store');
+});
+Route::controller(PublicController::class)->group(function(){
+    Route::get('/register', 'home')->name('public.register');
+    Route::post('/register/apply', 'userregister')->name('public.register.apply');
+    Route::get('/register/login', 'showLogin')->name('showlogin');
+    Route::post('/register/userlogin', 'userLogin')->name('userlogin');
+});
+Route::middleware(['auth', 'role:user'])->controller(UserappointmentController::class)->group(function(){
+    Route::get('/userappointment', 'UserAppointment')->name('userappointment');
 });
 
 
@@ -57,7 +68,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
 
 });
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function () {
-    Route::get('/doctor/home', 'home')->name('doctor.Dashboard');
+    Route::get('/doctor/home', 'manageDoctor')->name('doctor.Dashboard');
     Route::get('/doctor/profile', 'doctorprofile')->name('doctor.profile');
 });
 
