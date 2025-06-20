@@ -17,7 +17,7 @@
                 </div>
 
                 <!-- Right Side Link -->
-                <a href="#"
+                <a href="{{ route('manageappointments') }}"
                     class="flex items-center gap-1 text-xs sm:text-sm hover:underline text-white justify-start sm:justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 sm:h-5 w-4 sm:w-5" fill="none" stroke="currentColor"
                         stroke-width="2" viewBox="0 0 24 24">

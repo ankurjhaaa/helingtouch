@@ -25,11 +25,16 @@ class HomeController extends Controller
     }
     public function manageappointments()
     {
-        return view('landing.manage-appointments');
+        $allappointments = Appointment::all();
+        return view('landing.manage-appointments',compact('allappointments'));
     }
     public function successappointment()
     {
         return view('landing.success-appointment');
+    }
+    public function appointmentrecipt()
+    {
+        return view('landing.appointmentrecipt');
     }
 
 

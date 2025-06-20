@@ -36,7 +36,7 @@ class PublicController extends Controller
         ]);
         Auth::login($user);
 
-        return redirect()->route('user.Apointment')->with('success', 'Registration successful! You are now logged in.');
+        return redirect()->route('userappointment')->with('success', 'Registration successful! You are now logged in.');
     }
     public function showLogin(){
         return view('landing.userlogin');

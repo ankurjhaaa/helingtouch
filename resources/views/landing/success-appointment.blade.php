@@ -20,7 +20,7 @@
                     </div>
 
                     <!-- Right Side Link -->
-                    <a href="#"
+                    <a href="{{ route('manageappointments') }}"
                         class="flex items-center gap-1 text-xs sm:text-sm hover:underline text-white justify-start sm:justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 sm:h-5 w-4 sm:w-5" fill="none" stroke="currentColor"
                             stroke-width="2" viewBox="0 0 24 24">
@@ -115,10 +115,10 @@
 
                         <!-- Action Buttons -->
                         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-                            <button
+                            <a href="{{ route('receipt.download', session('appointment')->id) }}"
                                 class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] hover:from-[#916538] hover:to-[#b98960] text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base shadow-lg hover:scale-105 transition">
                                 Download Receipt
-                            </button>
+                            </a>
 
                             <a href="{{ route('home') }}"
                                 class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">

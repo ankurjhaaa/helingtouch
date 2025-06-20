@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
@@ -11,28 +12,32 @@ use App\Http\Controllers\UserappointmentController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::controller(HoscontactController::class)->group(function(){
-    Route::get('/hospital-contact', 'index')->name('landing.hospital-contact'); 
+Route::controller(HoscontactController::class)->group(function () {
+    Route::get('/hospital-contact', 'index')->name('landing.hospital-contact');
     Route::post('/hospital-contact', 'store')->name('landing.hospital-contact.store');
 });
-Route::controller(PublicController::class)->group(function(){
+Route::controller(PublicController::class)->group(function () {
     Route::get('/register', 'home')->name('public.register');
     Route::post('/register/apply', 'userregister')->name('public.register.apply');
     Route::get('/register/login', 'showLogin')->name('showlogin');
     Route::post('/register/userlogin', 'userLogin')->name('userlogin');
 });
-Route::middleware(['auth', 'role:user'])->controller(UserappointmentController::class)->group(function(){
+Route::middleware(['auth', 'role:user'])->controller(UserappointmentController::class)->group(function () {
     Route::get('/userappointment', 'UserAppointment')->name('userappointment');
 });
+
+Route::get('/appointmentrecipt/{id}', [AppointmentController::class, 'downloadReceipt'])->name('receipt.download');
 
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/appointment', 'appointment')->name('appointment');
+
+
     Route::get('/manage-appointments', 'manageappointments')->name('manageappointments');
     Route::get('/book-appointment/{id}', 'bookAppointment')->name('bookAppointment');
     Route::get('/success-appointment', 'successappointment')->name('successappointment');
-    Route::post('/insert-appointment','insertAppointment')->name('insertAppointment');
+    Route::post('/insert-appointment', 'insertAppointment')->name('insertAppointment');
     Route::get('/our-doctor', 'alldoctor')->name('landing.our-doctor');
     Route::get('/doctor/{id}', 'doctorprofile')->name('landing.doctor');
     Route::get('/doctor-profile/{id}', 'doctorprofileview')->name('landing.doctor-profile');
@@ -40,7 +45,7 @@ Route::controller(HomeController::class)->group(function () {
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');
-    Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole'); 
+    Route::get('/admin/viewrole', 'viewrole')->name('admin.viewrole');
     Route::get('/admin/profile', 'adminprofile')->name('admin.profile');
     Route::get('/admin/department', 'adddepartment')->name('admin.department');
     Route::post('/admin/apply', 'submitform')->name('admin.applySubmit');
@@ -62,7 +67,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/edit-gallery/{id}', 'editGallery')->name('admin.gallery.edit');
     Route::put('/admin/update-gallery/{id}', 'updateGallery')->name('admin.gallery.update');
     Route::get('/admin/seeting', 'seetings')->name('admin.seeting');
-    Route::post('/admin/seeting/store',  'saveSeetings' )->name('admin.seeting.store');
+    Route::post('/admin/seeting/store', 'saveSeetings')->name('admin.seeting.store');
     Route::post('/admin/seeting/information', 'information')->name('admin.seeting.information');
 
 
