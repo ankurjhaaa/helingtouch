@@ -24,6 +24,7 @@ Route::controller(PublicController::class)->group(function () {
 });
 Route::middleware(['auth', 'role:user'])->controller(UserappointmentController::class)->group(function () {
     Route::get('/userappointment', 'UserAppointment')->name('userappointment');
+    Route::get('/user/dashboard', 'userdashboard')->name('userdashboard');
 });
 
 Route::get('/appointmentrecipt/{id}', [AppointmentController::class, 'downloadReceipt'])->name('receipt.download');

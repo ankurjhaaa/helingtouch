@@ -302,6 +302,7 @@
                             @empty
 
                             @endforelse
+                            
 
                         </tbody>
                     </table>

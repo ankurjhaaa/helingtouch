@@ -222,7 +222,7 @@
                         <label class="block font-medium text-gray-700 mb-1">Full Name (पूरा नाम)</label>
                         <input type="text" name="name"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
-                            value="{{ old('name') }}" />
+                            value="{{ old('name') }}" required />
                         @error('name')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -232,16 +232,19 @@
                                 class="text-sm text-gray-500">(optional) (वैकल्पिक)</span></label>
                         <input type="email" name="email"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
-                            value="{{ old('email') }}" />
+                            value="{{ old('email') }}" required />
                         @error('email')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
                     </div>
                     <div>
                         <label class="block font-medium text-gray-700 mb-1">Phone Number (फ़ोन नंबर)</label>
-                        <input type="text" name="phone"
+                        <input type="tel" name="phone"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
-                            value="{{ old('phone') }}" />
+                            value="{{ old('phone') }}" maxlength="10" pattern="[6-9]{1}[0-9]{9}" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
+                            placeholder="Enter 10-digit phone number" required />
+
                         @error('phone')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -265,7 +268,9 @@
                         <label class="block font-medium text-gray-700 mb-1">Age (उम्र)</label>
                         <input type="number" name="age"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
-                            value="{{ old('age') }}" />
+                            value="{{ old('age') }}" min="1" max="120" oninput="if(this.value > 120) this.value = 120;"
+                            placeholder="Enter age (1–120)" required />
+
                         @error('age')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror
@@ -283,7 +288,10 @@
                         <label class="block font-medium text-gray-700 mb-1">PIN Code (पिन कोड)</label>
                         <input type="text" name="pincode"
                             class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551]"
-                            value="{{ old('pincode') }}" />
+                            value="{{ old('pincode') }}" maxlength="6" pattern="[1-9]{1}[0-9]{5}" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);"
+                            placeholder="Enter 6-digit PIN code" required />
+
                         @error('pincode')
                             <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                         @enderror

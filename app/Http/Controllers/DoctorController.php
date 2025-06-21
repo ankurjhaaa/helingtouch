@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
-    public function home(){
+    public function manageDoctor(){
         return view('doctor.doctorDashboard');
     }
     public function doctorprofile(){
