@@ -90,3 +90,5 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login')->name('login.submit');
     Route::get('/logout', 'logoutUser')->name('auth.logout');
 });
+
+
