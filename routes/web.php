@@ -75,7 +75,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
 
 
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function () {
-    Route::get('/doctor/home', 'home')->name('doctor.dashboard');
+    Route::get('/doctor', 'home')->name('doctor.dashboard');
     Route::get('/doctor/profile', 'doctorprofile')->name('doctor.profile');
 });
 
