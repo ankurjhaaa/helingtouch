@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
-    public function home(){
-        return view('doctor.doctorDashboard');
+       public function home()
+    {
+        return view('doctor.doctordashboard');
     }
-    public function doctorprofile(){
+    public function doctorprofile()
+    {
         $departments = Department::all(); // latest first + pagination
         return view('doctor.doctorprofile', compact('departments'));
     }
 
-    
+
 }

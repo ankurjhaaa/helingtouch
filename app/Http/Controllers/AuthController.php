@@ -16,14 +16,16 @@ class AuthController extends Controller
 
         if (Auth::attempt($creadentials)){
             $user = Auth::user();
+                 
 
             if($user->role === 'admin'){
                 return redirect()->route('admin.Dashboard')->with('success', 'Welcome Admin!');
             }elseif($user->role === 'doctor'){
-                return redirect()->route('doctor.Dashboard')->with('success', 'Welcome Doctor!');
+                return redirect()->route('doctor.dashboard')->with('success', 'Welcome Doctor!');
             }elseif($user->role === 'receptionist'){
                 return redirect()->route('receptionist.Dashboard')->with('success', 'Welcome Receptionist!');
-            }else{
+            }
+            else{
                 return redirect()->route('home')->with('error', 'Unauthorized access!');
             }
 
