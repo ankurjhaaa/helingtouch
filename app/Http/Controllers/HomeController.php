@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function manageappointments()
     {
         $allappointments = Appointment::all();
-        return view('landing.manage-appointments',compact('allappointments'));
+        return view('landing.manage-appointments', compact('allappointments'));
     }
     public function successappointment()
     {
@@ -66,22 +66,24 @@ class HomeController extends Controller
     public function insertAppointment(Request $request)
     {
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|',
-            'phone' => 'required',
-            'gender' => 'required',
-            'age' => 'required',
-            'address' => 'required',
-            'pincode' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'time' => 'required',
 
-            'doctor_id' => 'required|exists:doctors,user_id',
-            'date' => 'required|date',
-            'fee' => 'required|numeric',
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['required', 'regex:/^[6-9]\d{9}$/'], // भारतीय मोबाइल नंबर pattern
+            'gender' => ['required'], // fix accepted values
+            'age' => ['required', 'integer', 'min:1', 'max:100'],
+            'address' => ['required', 'string', 'max:500'],
+            'pincode' => ['required', 'digits:6'], // भारत का 6-digit PIN code
+            'city' => ['required', 'string', 'max:255'],
+            'state' => ['required', 'string', 'max:255'],
+            'time' => ['required'],
+
+            'doctor_id' => ['required', 'exists:doctors,user_id'],
+            'date' => ['required', 'date'],
+            'fee' => ['required', 'numeric'],
         ]);
+
 
 
 
