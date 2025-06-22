@@ -119,11 +119,24 @@
                                 class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] hover:from-[#916538] hover:to-[#b98960] text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base shadow-lg hover:scale-105 transition">
                                 Download Receipt
                             </a>
+                            {{-- Role-based Dashboard --}}
+                            @if(auth()->user()->role === 'user')
+                                <a href="{{ route('home') }}"
+                                    class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">
+                                    Back To Home
+                                </a>
+                            @elseif(auth()->user()->role === 'receptionist')
+                                <a href="{{ route('receptionist.Dashboard') }}"
+                                    class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">
+                                    Back To Home
+                                </a>
+                            @else
+                                <a href="{{ route('home') }}"
+                                    class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">
+                                    Back To Home
+                                </a>
+                            @endif
 
-                            <a href="{{ route('home') }}"
-                                class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">
-                                Back To Home
-                            </a>
                         </div>
                     </div>
                 </div>

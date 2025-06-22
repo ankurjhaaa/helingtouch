@@ -28,6 +28,24 @@
             </div>
         </div>
 
+        <!-- Quick Actions -->
+        <div>
+            <h2 class="text-lg font-semibold mb-3">Quick Actions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button onclick="toggleDoctorModal(true)"
+                    class="bg-indigo-600 text-white px-4 py-3 rounded shadow hover:bg-indigo-700 transition duration-200">
+                    + New Appointment
+                </button>
+
+                <button class="bg-green-600 text-white px-4 py-3 rounded shadow hover:bg-green-700">
+                    Add New Patient
+                </button>
+                <button class="bg-red-600 text-white px-4 py-3 rounded shadow hover:bg-red-700">
+                    View Cancelled Appointments
+                </button>
+            </div>
+        </div>
+
         <!-- Appointment List -->
         <div>
             <h2 class="text-lg font-semibold mb-3">Upcoming Appointments</h2>
@@ -67,21 +85,7 @@
             </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div>
-            <h2 class="text-lg font-semibold mb-3">Quick Actions</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button class="bg-indigo-600 text-white px-4 py-3 rounded shadow hover:bg-indigo-700">
-                    + New Appointment
-                </button>
-                <button class="bg-green-600 text-white px-4 py-3 rounded shadow hover:bg-green-700">
-                    Add New Patient
-                </button>
-                <button class="bg-red-600 text-white px-4 py-3 rounded shadow hover:bg-red-700">
-                    View Cancelled Appointments
-                </button>
-            </div>
-        </div>
+
 
         <!-- Notifications -->
         <div>
@@ -94,5 +98,73 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal Backdrop -->
+    <div id="doctorModal" class="fixed inset-0 z-50 bg-black/30 bg-opacity-50 items-center justify-center hidden">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative">
+
+            <!-- Close Button -->
+            <button onclick="toggleDoctorModal(false)"
+                class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
+
+            <h2 class="text-xl font-semibold mb-4">Select Doctor</h2>
+
+            <!-- Search Input -->
+            <input type="text" id="doctorSearch" onkeyup="filterDoctors()" placeholder="Search doctors..."
+                class="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+            <!-- Doctor List -->
+            <div id="doctorList" class="space-y-3 max-h-[300px] overflow-y-auto">
+                @foreach($doctors as $doctor)
+                    <a href="{{ route('receptionist.addappointment', $doctor->id) }}"
+                        class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
+                        <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
+                            alt="Doctor Image" class="w-10 h-10 rounded-full object-cover mr-3">
+                        <div>
+                            <p class="font-medium">{{ $doctor->name }}</p>
+                            <p class="text-sm text-gray-600">ortho</p>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleDoctorModal(show) {
+            const modal = document.getElementById('doctorModal');
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+        }
+
+        function filterDoctors() {
+            const input = document.getElementById('doctorSearch');
+            const filter = input.value.toLowerCase();
+            const doctorList = document.getElementById('doctorList');
+            const items = doctorList.getElementsByTagName('a');
+
+            for (let i = 0; i < items.length; i++) {
+                const text = items[i].textContent.toLowerCase();
+                items[i].style.display = text.includes(filter) ? '' : 'none';
+            }
+        }
+    </script>
 
 @endsection

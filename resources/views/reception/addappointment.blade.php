@@ -1,168 +1,33 @@
-@extends('landing.publiclayout')
-@section('title', 'Home')
+@extends('reception.receptionistlayout')
+@section('title')
+    receptionist-dashboard
 
+@endsection
 @section('content')
 
-
-    <div class="mt-24 p-2">
-        <div class="max-w-6xl mx-auto rounded-md shadow-md bg-white overflow-hidden border border-gray-200">
-            <!-- Header -->
-            <div
-                class="bg-gradient-to-r from-[#c9a27e] to-[#a77c52] px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between sm:items-center text-white gap-3 sm:gap-0">
-
-                <!-- Left Side -->
-                <div class="text-left leading-tight">
-                    <h2 class="text-sm sm:text-lg md:text-xl font-semibold tracking-wide">Book Your Appointment</h2>
-                    <p class="text-xs sm:text-sm text-white/80">Schedule your visit with our specialists</p>
-                </div>
-
-                <!-- Right Side Link -->
-                <a href="{{ route('manageappointments') }}"
-                    class="flex items-center gap-1 text-xs sm:text-sm hover:underline text-white justify-start sm:justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 sm:h-5 w-4 sm:w-5" fill="none" stroke="currentColor"
-                        stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Already have an appointment?
-                </a>
-            </div>
-
-            <!-- Stepper -->
-            <div class="flex justify-between items-center px-6 sm:px-10 py-4 bg-[#fdfaf6] text-xs sm:text-sm">
-                <!-- Step 1 -->
-                <div class="flex flex-col items-center text-center">
-                    <div
-                        class="w-7 h-7 flex items-center justify-center rounded-full bg-[#a77c52] text-white font-semibold shadow">
-                        ✓
-                    </div>
-                    <span class="mt-2 font-medium text-gray-700">Doctor</span>
-                </div>
-
-                <!-- Line -->
-                <div class="flex-auto border-t-2 border-[#d4b59c] mx-2 sm:mx-3"></div>
-
-                <!-- Step 2 -->
-                <div class="flex flex-col items-center text-center">
-                    <div
-                        class="w-7 h-7 flex items-center justify-center rounded-full bg-[#a77c52] text-white font-semibold shadow">
-                        2
-                    </div>
-                    <span class="mt-2 font-medium text-gray-700">Details</span>
-                </div>
-
-                <!-- Line -->
-                <div class="flex-auto border-t-2 border-[#d4b59c] mx-2 sm:mx-3"></div>
-
-                <!-- Step 3 -->
-                <div class="flex flex-col items-center text-center">
-                    <div
-                        class="w-7 h-7 flex items-center justify-center rounded-full border-2 border-[#a77c52] text-[#a77c52] font-semibold">
-                        3
-                    </div>
-                    <span class="mt-2 font-medium text-gray-700">Review</span>
+    <!-- Main Content -->
+    <div class="p-6 space-y-10">
+        <div class="mt-24 p-2">
+            <div class="bg-white p-6 rounded-t-lg shadow-sm border-b border-gray-100 max-w-6xl mx-auto mt-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-[#015551] flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-[#9b714a]" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 10a2 2 0 100-4 2 2 0 000 4zm0 2a7 7 0 00-7 7h2a5 5 0 0110 0h2a7 7 0 00-7-7z" />
+                        </svg>
+                        <span>Selected Doctor</span>
+                    </h2>
+                    <button class="text-[#9b714a] font-medium hover:underline flex items-center space-x-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span><a href="{{ route('appointment') }}">Change Doctor</a></span>
+                    </button>
                 </div>
             </div>
-        </div>
 
 
-
-
-
-        <div class="bg-white p-6 rounded-t-lg shadow-sm border-b border-gray-100 max-w-6xl mx-auto mt-6">
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-[#015551] flex items-center space-x-2">
-                    <svg class="w-5 h-5 text-[#9b714a]" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 10a2 2 0 100-4 2 2 0 000 4zm0 2a7 7 0 00-7 7h2a5 5 0 0110 0h2a7 7 0 00-7-7z" />
-                    </svg>
-                    <span>Selected Doctor</span>
-                </h2>
-                <button class="text-[#9b714a] font-medium hover:underline flex items-center space-x-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                    </svg>
-                    <span><a href="{{ route('appointment') }}">Change Doctor</a></span>
-                </button>
-            </div>
-
-            <!-- Content Layout -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start bg-[#f8efe4] p-6 rounded-lg">
-                <!-- Doctor Image & Name -->
-                <div class="flex flex-col items-center">
-                    <div class="w-36 h-36 rounded-xl border-4 border-[#9b714a] overflow-hidden shadow-md">
-                        <img src="{{ $doctorprofile->photo ? asset('storage/' . $doctorprofile->photo) : asset('default/default-user.jpg') }}"
-                            alt="Doctor Image" class="w-full h-full object-cover" />
-                    </div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-800">Dr. {{ $doctorprofile->name }}</h3>
-                    @php
-                        $deptName = \App\Models\Department::find($doctor->department_id)->name ?? 'N/A';
-                    @endphp
-
-
-
-                    <p class="text-sm text-[#9b714a] font-medium">{{ $deptName }}</p>
-                </div>
-
-                <!-- Doctor Info -->
-                <div class="col-span-2 space-y-4 text-sm text-gray-800">
-                    <div class="flex flex-wrap gap-6">
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold">Qualification</p>
-                            <p class="font-medium">{{ $doctor->qualification }}</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold">Department</p>
-                            <p class="font-medium">{{ $deptName }}</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold">Consultation Fee</p>
-                            <p class="font-medium text-green-700">{{ $doctor->fee }}</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold">Available Days</p>
-                            <p class="font-medium">
-                                @if ($doctor->sunday == 1)
-                                    {{ 'Sun,' }}
-                                @endif
-                                @if ($doctor->monday == 1)
-                                    {{ 'Mon,' }}
-                                @endif
-                                @if ($doctor->tuesday == 1)
-                                    {{ 'Tue,' }}
-                                @endif
-                                @if ($doctor->wednesday == 1)
-                                    {{ 'Wed,' }}
-                                @endif
-                                @if ($doctor->thursday == 1)
-                                    {{ 'Thu,' }}
-                                @endif
-                                @if ($doctor->friday == 1)
-                                    {{ 'Fri,' }}
-                                @endif
-                                @if ($doctor->saturday == 1)
-                                    {{ 'Sat,' }}
-                                @endif
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="bg-white p-4 rounded-md shadow-sm border border-[#d9c3a9]">
-                        <p class="text-gray-700 leading-relaxed">
-                            {{ $doctor->bio }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-        <div class="bg-white p-6 rounded-b-lg shadow max-w-6xl mx-auto">
+            <div class="bg-white p-6 rounded-b-lg shadow max-w-6xl mx-auto">
             <!-- Date Selector -->
             <div class="mb-6 flex items-center justify-between border-b pb-4">
                 <div class="flex items-center gap-2 text-[#015551] font-semibold text-lg">
@@ -515,6 +380,8 @@
 
         </script>
 
+
+        </div>
 
     </div>
 

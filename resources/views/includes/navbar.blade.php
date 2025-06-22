@@ -30,6 +30,59 @@
             <li><a href="" class="hover:text-yellow-600">About Us</a></li>
             <li><a href="{{ route('landing.gallery') }}" class="hover:text-yellow-600">Gallery</a></li>
             <li><a href="{{ route('landing.hospital-contact') }}" class="hover:text-yellow-600">Contact</a></li>
+            <li class="relative group">
+                <a href="#" class="hover:text-yellow-600">More</a>
+
+                <!-- Dropdown Menu -->
+                <ul
+                    class="absolute left-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition duration-200 z-50 invisible group-hover:visible">
+
+                    @auth
+                        <!-- User is logged in -->
+                        <li>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 text-sm">Hi, {{ Auth::user()->name }}</a>
+                        </li>
+                        <li>
+                            {{-- Role-based Dashboard --}}
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.Dashboard') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">Admin
+                                    Dashboard</a>
+                            @elseif(auth()->user()->role === 'doctor')
+                                <a href="{{ route('doctor.dashboard') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 text-sm">Doctor
+                                    Dashboard</a>
+                            @elseif(auth()->user()->role === 'user')
+                                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">User
+                                    Dashboard</a>
+                            @elseif(auth()->user()->role === 'receptionist')
+                                <a href="{{ route('receptionist.Dashboard') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 text-sm">receptionist
+                                    Dashboard</a>
+
+                            @endif
+                        </li>
+                        <li>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 text-sm">Dashboard</a>
+                        </li>
+                        <li>
+
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 text-sm text-red-600">Logout</a>
+                        </li>
+                    @else
+                        <!-- User is not logged in -->
+                        <li>
+                            <a href="{{ route('login') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">Login</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('public.register') }}"
+                                class="block px-4 py-2 hover:bg-gray-100 text-sm">Register</a>
+                        </li>
+                    @endauth
+
+                </ul>
+            </li>
+
+
         </ul>
 
         <!-- Right: Book Button + Hamburger Icon -->

@@ -82,6 +82,7 @@ Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)-
 Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistController::class)->group(function () {
     Route::get('/recption/home', 'land')->name('receptionist.Dashboard');
     Route::get('/recption/profile', 'recptionprofile')->name('receptionist.profile');
+    Route::get('/recption/addappointment/{id}', 'addappointment')->name('receptionist.addappointment');
 });
 
 
