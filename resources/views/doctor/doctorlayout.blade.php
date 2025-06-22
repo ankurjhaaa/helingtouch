@@ -16,7 +16,7 @@
         <!-- Left: Title -->
         <div class="text-xl font-bold text-yellow-700 flex items-center space-x-2">
             <!-- <span>👨‍⚕️</span> -->
-            <span> <a href="{{ route('doctor.Dashboard') }}">Dashboard</a></span>
+            <span> <a href="{{ route('doctor.dashboard') }}">Dashboard</a></span>
         </div>
 
         <!-- Right: Profile Dropdown -->
