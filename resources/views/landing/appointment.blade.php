@@ -166,7 +166,7 @@
                         <div class="mt-4 flex justify-between items-center">
                             @php
 
-                                $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
+                                $todayDay = strtolower(Carbon::tomorrow()->format('l')); // e.g., 'monday', 'sunday'
                                 // Column se value nikalna (dynamic column name)
                                 $isAvailableToday = $availableDay->$todayDay ?? 0;
                             @endphp

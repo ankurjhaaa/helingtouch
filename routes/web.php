@@ -77,12 +77,23 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
 Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)->group(function () {
     Route::get('/doc', 'home')->name('doctor.dashboard');
     Route::get('/doc/profile', 'doctorprofile')->name('doctor.profile');
+    Route::get('/doc/patient/{id}', 'patient')->name('doctor.patient');
+    Route::post('/doc/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
+
 });
 
 Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistController::class)->group(function () {
     Route::get('/recption/home', 'land')->name('receptionist.Dashboard');
     Route::get('/recption/profile', 'recptionprofile')->name('receptionist.profile');
     Route::get('/recption/addappointment/{id}', 'addappointment')->name('receptionist.addappointment');
+    Route::post('/recption/insert-appointment', 'insertAppointment')->name('recption.insertAppointment');
+    Route::post('/appointments/{id}/approve', 'approve')->name('appointments.approve');
+    Route::post('/appointments/{id}/in-progress', 'markInProgress')->name('appointments.in_progress');
+    Route::post('/appointments/{id}/check-in', 'markCheckedIn')->name('appointments.checkin');
+    Route::post('/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
+    Route::post('/appointments/{id}/pay', 'markPaid')->name('appointments.pay');
+
+
 });
 
 

@@ -21,6 +21,8 @@ class Appointment extends Model
         'pincode',
         'city',
         'state',
+        'ispaid',
+        'status',
     ];
 
 

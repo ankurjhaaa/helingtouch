@@ -70,11 +70,11 @@ class HomeController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'phone' => ['required', 'regex:/^[6-9]\d{9}$/'], // भारतीय मोबाइल नंबर pattern
-            'gender' => ['required'], // fix accepted values
-            'age' => ['required', 'integer', 'min:1', 'max:100'],
+            'phone' => ['required', 'regex:/^[6-9]\d{9}$/'], 
+            'gender' => ['required'], 
+            'age' => ['required', 'integer', 'min:1', 'max:120'],
             'address' => ['required', 'string', 'max:500'],
-            'pincode' => ['required', 'digits:6'], // भारत का 6-digit PIN code
+            'pincode' => ['required', 'digits:6'], 
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'time' => ['required'],

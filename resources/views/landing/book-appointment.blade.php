@@ -172,7 +172,7 @@
                     </svg>
                     @php
                         use Carbon\Carbon;
-                        $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
+                        $todayDay = strtolower(Carbon::tomorrow()->format('l')); // e.g., 'monday', 'sunday'
                         // Column se value nikalna (dynamic column name)
                         $isAvailableToday = $doctor->$todayDay ?? 0;
                     @endphp
@@ -463,13 +463,13 @@
                             <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                                 <div class="flex items-center gap-2">
                                     <span class="inline-block w-4 h-4 rounded bg-[#93cde6] border border-gray-300"></span>
-                                    Available
+                                    Available (4 slots)
                                 </div>
                                 <span class="hidden sm:inline">-</span>
 
                                 <div class="flex items-center gap-2">
                                     <span class="inline-block w-4 h-4 rounded bg-yellow-200 border border-gray-300"></span>
-                                    Available (3-4 slots)
+                                    Available (3 slots)
                                 </div>
                                 <span class="hidden sm:inline">-</span>
 

@@ -1,11 +1,11 @@
 @extends('doctor.doctorlayout')
 @section('title')
-   doctordashboard
+    doctordashboard
 
 @endsection
 @section('content')
 
-  
+
     <div class=" max-w-7xl mx-auto">
 
         <!-- Greeting -->
@@ -41,40 +41,35 @@
                 <!-- Left: Appointments List -->
                 <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow">
                     <h3 class="text-xl font-semibold mb-4">Today's Appointments</h3>
+
                     <ul class="divide-y">
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <div class="font-semibold">Ritika Sharma</div>
-                                <div class="text-sm text-gray-500">10:00 AM • Fever & Weakness</div>
-                            </div>
-                            <button class="text-blue-600 text-sm hover:underline">View</button>
-                        </li>
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <div class="font-semibold">Arjun Mehta</div>
-                                <div class="text-sm text-gray-500">11:15 AM • Diabetes Followup</div>
-                            </div>
-                            <button class="text-blue-600 text-sm hover:underline">View</button>
-                        </li>
-                        <li class="py-3 flex justify-between items-center">
-                            <div>
-                                <div class="font-semibold">Sneha Patel</div>
-                                <div class="text-sm text-gray-500">12:30 PM • Headache</div>
-                            </div>
-                            <button class="text-blue-600 text-sm hover:underline">View</button>
-                        </li>
+                        @forelse($appointments as $appointment)
+                            <li class="py-3 flex justify-between items-center">
+                                <div>
+                                    <div class="font-semibold">{{ $appointment->name }}</div>
+                                    <div class="text-sm text-gray-500">{{ $appointment->time }} •
+                                        {{ $appointment->gender }} • {{ $appointment->message }}</div>
+                                </div>
+                                <a href="{{ route('doctor.patient',$appointment->id) }}" class="text-blue-600 text-sm hover:underline">View</a>
+                            </li>
+                        @empty
+                            <li class="py-6 text-center text-gray-500">
+                                No appointments found for today.
+                            </li>
+                        @endforelse
                     </ul>
+
                     <div class="mt-4 text-right">
                         <a href="#" class="text-sm text-yellow-700 hover:underline">View All Appointments →</a>
                     </div>
                 </div>
 
+
                 <!-- Right: Quick Actions -->
                 <div class="bg-white p-6 rounded-lg shadow">
                     <h3 class="text-xl font-semibold mb-4">Quick Actions</h3>
                     <div class="space-y-3">
-                        <button
-                            class="w-full bg-yellow-600 text-white py-2 px-4 rounded hover:bg-yellow-700 transition">➕
+                        <button class="w-full bg-yellow-600 text-white py-2 px-4 rounded hover:bg-yellow-700 transition">➕
                             Add Prescription</button>
                         <button class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">📄
                             Add Patient Note</button>
