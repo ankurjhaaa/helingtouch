@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -54,8 +55,11 @@ class HomeController extends Controller
     }
     public function doctorprofile($id)
     {
+        $today = Carbon::today()->toDateString();
+       
         $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
-        return view('landing.doctor', compact('doctor'));
+        $onLeave = $doctor->leaves()->where('leave_date', $today)->exists();
+        return view('landing.doctor', compact('doctor', 'onLeave'));
     }
     public function doctorprofileview($id)
     {

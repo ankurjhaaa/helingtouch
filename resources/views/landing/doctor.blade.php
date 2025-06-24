@@ -23,10 +23,15 @@
                         <p><strong>Department:</strong> {{ $doctor->department->name ?? 'N/A' }}</p>
 
                         @php
-                            use Carbon\Carbon;
-                            $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
-                            // Column se value nikalna (dynamic column name)
+                             use Carbon\Carbon;
+                              $today = Carbon::today()->toDateString();
+                               $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday'
+
                             $isAvailableToday = $doctor->$todayDay ?? 0;
+
+
+                            //check if doctor is in leave today
+                            $onLeaveToday = \App\Models\Leave::where('doctor_id', $doctor->id)->where('leave_date', $today)->where('status', 'approved')->exists();
 
 
 
@@ -48,11 +53,15 @@
                 </div>
 
                 <!-- Status -->
-                <div class="text-white text-sm">
-                    @if($isAvailableToday == 1)
+                <div class="text-white text-sm mt-3">
+                    @if($isAvailableToday && !$onLeaveToday)
                         <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">✅ Available
                             for Appointments</span>
-                    @else
+                    @elseif($onLeaveToday)
+                     <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium">
+                             🛑 Doctor is on Leave Today
+                                </span>
+                       @else
                         <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full font-medium">❌ Not
                             Available</span>
                     @endif
@@ -101,13 +110,14 @@
                         </ul>
 
 
-                        @if($isAvailableToday == 1)
+                        @if($isAvailableToday && !$onLeaveToday)
+                            {{-- Check if the doctor is available today and not on leave --}}
                             <a href="{{ route('bookAppointment', $doctor->user_id) }}"
                                 class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
                                 Book Appointment
                             </a>
                         @else
-                            <a 
+                            <a
                                 class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
                                 Not Available Today
                             </a>

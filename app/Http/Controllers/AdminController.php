@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
 use App\Models\Information;
+use App\Models\Leave;
 use App\Models\Seeting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -172,6 +173,7 @@ class AdminController extends Controller
     }
     public function adminDashboard()
     {
+
         return view('admin.adminDashboard');
     }
     //doctor manage logic 
@@ -401,6 +403,23 @@ class AdminController extends Controller
             ]);
         }
         return back()->with('success', 'Information saved successfully!');
+    }
+
+    public function viewLeave()
+    {
+        $leaves = Leave::with('doctor.user')->latest()->get();
+        return view('admin.view-leaves', compact('leaves'));
+    }
+
+    public function updateLeaveStatus(Request $request, $id)
+    {
+         $leave = Leave::findOrFail($id);
+        $request->validate([
+            'status' => 'required|in:approved,rejected',
+        ]);
+        $leave->status = $request->status;
+        $leave->save();
+        return redirect()->back()->with('success', 'Leave status updated successfully!');
     }
 
 

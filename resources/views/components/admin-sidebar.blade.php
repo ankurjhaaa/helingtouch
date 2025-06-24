@@ -27,6 +27,13 @@
                         Manage Doctors
                     </a>
                 </li>
+                    <li>
+                    <a href="{{ route('admin.docleave') }}" class="flex items-center px-6 py-3 hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-info-circle text-white-600 me-2"></i>
+
+                          Doctors leaves info
+                    </a>
+                </li>
                  <li>
                     <a href="{{ route('admin.gallery') }}" class="flex items-center px-6 py-3 hover:bg-blue-700 transition-colors">
                          <i class="fas fa-images me-2"></i>

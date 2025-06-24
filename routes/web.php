@@ -69,6 +69,8 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/seeting', 'seetings')->name('admin.seeting');
     Route::post('/admin/seeting/store', 'saveSeetings')->name('admin.seeting.store');
     Route::post('/admin/seeting/information', 'information')->name('admin.seeting.information');
+    Route::get('/admin/leave', 'viewLeave')->name('admin.docleave');
+    Route::put('/admin/leaves/{id}', 'updateLeaveStatus')->name('admin.leave.approve');
 
 
 });
@@ -79,6 +81,8 @@ Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)-
     Route::get('/doc/profile', 'doctorprofile')->name('doctor.profile');
     Route::get('/doc/patient/{id}', 'patient')->name('doctor.patient');
     Route::post('/doc/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
+    Route::get('/doc/leave', 'showLeaveForm')->name('doctor.leave');
+    Route::post('/doc/leave/store', 'submitLeave')->name('doctor.leave.store');
 
 });
 
