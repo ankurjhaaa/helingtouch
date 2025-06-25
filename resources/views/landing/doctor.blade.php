@@ -23,20 +23,20 @@
                         <p><strong>Department:</strong> {{ $doctor->department->name ?? 'N/A' }}</p>
 
                         @php
-                             use Carbon\Carbon;
-                              $today = Carbon::today()->toDateString();
-                               $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday'
+                            use Carbon\Carbon;
+                            $tomorrow = Carbon::tomorrow()->toDateString();
+                            $todayDay = strtolower(Carbon::tomorrow()->format('l')); // e.g., 'monday'
 
                             $isAvailableToday = $doctor->$todayDay ?? 0;
 
 
                             //check if doctor is in leave today
-                            $onLeaveToday = \App\Models\Leave::where('doctor_id', $doctor->id)->where('leave_date', $today)->where('status', 'approved')->exists();
+                            $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $doctor->id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
 
 
 
                             $availability = collect(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
-                                ->filter(fn($day) => $doctor->$day)
+                                
                                 ->map(fn($d) => ucfirst($d))
                                 ->implode(', ');
 
@@ -54,14 +54,14 @@
 
                 <!-- Status -->
                 <div class="text-white text-sm mt-3">
-                    @if($isAvailableToday && !$onLeaveToday)
+                    @if($isAvailableToday && !$onLeavetomorrow)
                         <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">✅ Available
                             for Appointments</span>
-                    @elseif($onLeaveToday)
-                     <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium">
-                             🛑 Doctor is on Leave Today
-                                </span>
-                       @else
+                    @elseif($onLeavetomorrow)
+                        <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium">
+                            🛑 Doctor is on Leave Tomorrow
+                        </span>
+                    @else
                         <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full font-medium">❌ Not
                             Available</span>
                     @endif
@@ -110,7 +110,7 @@
                         </ul>
 
 
-                        @if($isAvailableToday && !$onLeaveToday)
+                        @if($isAvailableToday && !$onLeavetomorrow)
                             {{-- Check if the doctor is available today and not on leave --}}
                             <a href="{{ route('bookAppointment', $doctor->user_id) }}"
                                 class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
@@ -119,7 +119,7 @@
                         @else
                             <a
                                 class="w-full block text-center bg-[#7f5a2b] text-white py-2 rounded-md hover:bg-[#68471f] transition">
-                                Not Available Today
+                                Not Available Tomorrow
                             </a>
                         @endif
 

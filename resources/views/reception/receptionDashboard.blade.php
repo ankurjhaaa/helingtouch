@@ -250,9 +250,12 @@
                     $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
                     $todayDay = strtolower(Carbon::today()->format('l')); // e.g., 'monday', 'sunday'
                     $isAvailableToday = $availableDay->$todayDay ?? 0;
+
+                    $todayabs = Carbon::today()->toDateString();
+                    $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
                 @endphp
 
-                @if ($isAvailableToday == 1)
+                @if ($isAvailableToday && !$onLeavetomorrow)
                     <a href="{{ route('receptionist.addappointment', $doctor->id) }}" class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
                         <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
                             alt="Doctor Image" class="w-10 h-10 rounded-full object-cover mr-3">

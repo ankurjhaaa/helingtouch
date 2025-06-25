@@ -55,11 +55,11 @@ class HomeController extends Controller
     }
     public function doctorprofile($id)
     {
-        $today = Carbon::today()->toDateString();
+       
        
         $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
-        $onLeave = $doctor->leaves()->where('leave_date', $today)->exists();
-        return view('landing.doctor', compact('doctor', 'onLeave'));
+        
+        return view('landing.doctor', compact('doctor'));
     }
     public function doctorprofileview($id)
     {

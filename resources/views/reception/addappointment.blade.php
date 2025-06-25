@@ -110,9 +110,13 @@
                             $todayDay = strtolower(Carbon::now()->format('l')); // e.g., 'monday', 'sunday'
                             // Column se value nikalna (dynamic column name)
                             $isAvailableToday = $doctor->$todayDay ?? 0;
+
+                            $availableDay = \App\Models\Doctor::where('user_id', $doctor->user_id)->first();
+                            $todayabs = Carbon::today()->toDateString();
+                            $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
                         @endphp
 
-                        @if ($isAvailableToday == 1)
+                        @if ($isAvailableToday && !$onLeavetomorrow)
                             <span>Appointments for: <span class="text-[#9b714a]">{{ Carbon::today()->format('j F') }}
                                     (Today)</span></span>
                         @else
@@ -273,7 +277,7 @@
                                 <option value="">Is Paid</option>
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
-                                
+
                             </select>
                             @error('ispaid')
                                 <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
@@ -301,7 +305,7 @@
                             <span>Back</span>
                         </a>
 
-                        @if ($isAvailableToday == 1)
+                        @if ($isAvailableToday && !$onLeavetomorrow)
                             <button type="submit"
                                 class="bg-indigo-500 hover:bg-indigo-700 text-white px-6 py-2 rounded flex items-center space-x-1">
                                 <span>Next</span>

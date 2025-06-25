@@ -121,6 +121,7 @@
                 @foreach ($doctors as $doctor)
                     @php
                         $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
+
                     @endphp
                     <div class="bg-[#f8efe4] rounded-xl p-5 flex flex-col justify-between shadow-md hover:shadow-lg transition">
                         <div class="flex items-center gap-4">
@@ -169,29 +170,29 @@
                                 $todayDay = strtolower(Carbon::tomorrow()->format('l')); // e.g., 'monday', 'sunday'
                                 // Column se value nikalna (dynamic column name)
                                 $isAvailableToday = $availableDay->$todayDay ?? 0;
+
+                                $tomorrow = Carbon::tomorrow()->toDateString();
+                                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
                             @endphp
                             <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
-                            @if ($isAvailableToday == 1)
+                            @if($isAvailableToday && !$onLeavetomorrow)
                                 <a href="{{ route('bookAppointment', $doctor->id) }}"
                                     class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                    Select Doctor
+                                   🟢 Select Doctor
                                 </a>
+                            @elseif($onLeavetomorrow)
+                                <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
+                                   🛑 On Leave
+                                </button>
                             @else
                                 <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                    Select Doctor
+                                   🛑 Absent Today
                                 </button>
                             @endif
+                            
 
                         </div>
-                        @if ($isAvailableToday == 1)
-                            <div class="mt-2 text-sm font-medium text-green-600">
-                                Doctor available tomorrow
-                            </div>
-                        @else
-                            <div class="mt-2 text-sm font-medium text-red-500">
-                                Doctor absent tomorrow
-                            </div>
-                        @endif
+
                     </div>
                 @endforeach
             </div>
