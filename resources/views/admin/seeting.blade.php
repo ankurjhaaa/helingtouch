@@ -7,7 +7,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-6">
-        <div class="max-w-2xl mx-auto space-y-8">
+        <div class="max-w-2xl ms-[350px] space-y-8">
             <!-- Success and Error Messages -->
             @if (session('success'))
                 <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-lg shadow-md transition-all duration-300">
@@ -143,4 +143,67 @@
         </div>
     </main>
 </div>
+ <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            offset: 100,
+        });
+
+        // File Preview
+        document.getElementById('fileUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const filePreview = document.getElementById('filePreview');
+            const imagePreview = document.getElementById('imagePreview');
+            const videoPreview = document.getElementById('videoPreview');
+            const videoSource = document.getElementById('videoSource');
+
+            // Reset previews
+            imagePreview.classList.add('hidden');
+            videoPreview.classList.add('hidden');
+            filePreview.classList.add('hidden');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (file.type.startsWith('image/')) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        filePreview.classList.remove('hidden');
+                    } else if (file.type === 'video/mp4') {
+                        videoSource.src = e.target.result;
+                        videoPreview.load();
+                        videoPreview.classList.remove('hidden');
+                        filePreview.classList.remove('hidden');
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form Submission (Client-side demo)
+        document.getElementById('galleryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitButton = document.getElementById('submitButton');
+            const spinner = submitButton.querySelector('.fa-spinner');
+            submitButton.disabled = true;
+            spinner.classList.remove('hidden');
+
+            // Simulate form submission
+            setTimeout(() => {
+                submitButton.disabled = false;
+                spinner.classList.add('hidden');
+                alert('Gallery updated successfully! (Demo)');
+            }, 1500);
+        });
+
+        // Hide loading overlay after page load
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => overlay.remove(), 500);
+        });
+    </script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
@@ -9,6 +10,7 @@ use App\Models\Information;
 use App\Models\Leave;
 use App\Models\Seeting;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
@@ -173,8 +175,13 @@ class AdminController extends Controller
     }
     public function adminDashboard()
     {
+        $doctorCount = Doctor::count();
+        $countReceptionst = User::where('role', 'receptionist')->count();
+        $totalUsers = User::whereIn('role', ['admin', 'doctor', 'receptionist'])->count();
+        $countApointments = Appointment::whereDate('created_at', Carbon::today())->count();
+        $totalDepartments = Department::count();
 
-        return view('admin.adminDashboard');
+        return view('admin.adminDashboard', compact('doctorCount', 'countReceptionst', 'totalUsers', 'countApointments', 'totalDepartments'));
     }
     //doctor manage logic 
     public function manageDoctor()
@@ -420,6 +427,13 @@ class AdminController extends Controller
         $leave->status = $request->status;
         $leave->save();
         return redirect()->back()->with('success', 'Leave status updated successfully!');
+    }
+
+    //admin profile work 
+    public function viewAdminProfile(){
+        return view('admin.admin-profile');
+
+
     }
 
 

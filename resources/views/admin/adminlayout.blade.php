@@ -7,6 +7,72 @@
     @vite('resources/css/app.css')
     <!-- Font Awesome CDN (Latest v6.5.2) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+     <!-- AOS Library CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <!-- Custom CSS for Animations and Scrollbar -->
+    <style>
+        /* Custom Scrollbar */
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #1e40af;
+            border-radius: 10px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background-color: #dbeafe;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out;
+        }
+
+        /* Loader Animation */
+        .loader {
+            border-top-color: #2563eb;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+      <!-- Custom CSS -->
+    <style>
+        /* Custom Scrollbar */
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #1e40af;
+            border-radius: 10px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background-color: #dbeafe;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out;
+        }
+
+        /* Loader Animation */
+        .loader {
+            border-top-color: #2563eb;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
     <!-- Top Navbar -->
@@ -31,7 +97,7 @@
 
             <!-- Dropdown Menu -->
             <div id="user-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 z-50 border  border-gray-100">
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors duration-200">
+                <a href="{{ route('admin.profile') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors duration-200">
                     <i class="fas fa-user mr-2 text-blue-600"></i> Profile
                 </a>
                 <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors duration-200">
