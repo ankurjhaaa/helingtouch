@@ -31,7 +31,7 @@
             <li><a href="{{ route('landing.gallery') }}" class="hover:text-yellow-600">Gallery</a></li>
             <li><a href="{{ route('landing.hospital-contact') }}" class="hover:text-yellow-600">Contact</a></li>
             <li class="relative group">
-                <a href="#" class="hover:text-yellow-600">More</a>
+                <a href="#" class="hover:text-yellow-600">Dashboard</a>
 
                 <!-- Dropdown Menu -->
                 <ul
@@ -52,8 +52,10 @@
                                     class="block px-4 py-2 hover:bg-gray-100 text-sm">Doctor
                                     Dashboard</a>
                             @elseif(auth()->user()->role === 'user')
-                                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">User
+                                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
                                     Dashboard</a>
+                                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
+                                    History</a>
                             @elseif(auth()->user()->role === 'receptionist')
                                 <a href="{{ route('receptionist.Dashboard') }}"
                                     class="block px-4 py-2 hover:bg-gray-100 text-sm">receptionist
@@ -61,12 +63,10 @@
 
                             @endif
                         </li>
-                        <li>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 text-sm">Dashboard</a>
-                        </li>
+                        
                         <li>
 
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 text-sm text-red-600">Logout</a>
+                            <a href="{{ route('auth.logout') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm text-red-600">Logout</a>
                         </li>
                     @else
                         <!-- User is not logged in -->

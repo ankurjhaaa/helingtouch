@@ -23,8 +23,11 @@ Route::controller(PublicController::class)->group(function () {
     Route::post('/register/userlogin', 'userLogin')->name('userlogin');
 });
 Route::middleware(['auth', 'role:user'])->controller(UserappointmentController::class)->group(function () {
-    Route::get('/userappointment', 'UserAppointment')->name('userappointment');
-});
+    Route::get('/dashboard', 'dashboard')->name('landing.dashboard');
+    Route::get('/userhistory', 'userhistory')->name('landing.userhistory');
+    Route::post('/insertuserhistory', 'insertuserhistory')->name('landing.insertuserhistory');
+
+}); 
 
 Route::get('/appointmentrecipt/{id}', [AppointmentController::class, 'downloadReceipt'])->name('receipt.download');
 
@@ -83,6 +86,7 @@ Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)-
     Route::post('/doc/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
     Route::get('/doc/leave', 'showLeaveForm')->name('doctor.leave');
     Route::post('/doc/leave/store', 'submitLeave')->name('doctor.leave.store');
+    Route::post('/doc/insertuserhistory', 'insertuserhistory')->name('doctor.insertuserhistory');
 
 });
 
@@ -96,6 +100,7 @@ Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistControl
     Route::post('/appointments/{id}/check-in', 'markCheckedIn')->name('appointments.checkin');
     Route::post('/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
     Route::post('/appointments/{id}/pay', 'markPaid')->name('appointments.pay');
+    Route::post('/appointments/{id}/resedule', 'resedule')->name('reception.resedule');
 
 
 });

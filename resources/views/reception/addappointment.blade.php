@@ -365,6 +365,7 @@
                                 $slotCounts[$slot] = Appointment::where('doctor_id', $doctor->user_id)
                                     ->whereDate('date', $tomorrow)
                                     ->where('time', $slot)
+                                    ->whereNotIn('status', ['cancelled', 'rejected', 'rescheduled'])
                                     ->count();
                             }
 

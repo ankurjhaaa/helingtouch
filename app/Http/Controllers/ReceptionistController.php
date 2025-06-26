@@ -11,26 +11,27 @@ use Illuminate\Http\Request;
 class ReceptionistController extends Controller
 {
     public function land()
-    {
-        $doctors = User::where('role', 'doctor')->get();
+{
+    $doctors = User::where('role', 'doctor')->get();
 
+    $appointments = Appointment::with('doctor') // ← Yeh line add kari
+        ->whereDate('date', Carbon::today())
+        ->orderBy('id', 'desc')
+        ->get();
 
-        $appointments = Appointment::whereDate('date', Carbon::today())
-            ->orderBy('id', 'desc')
-            ->get();
+    $todaypatient = Appointment::whereDate('date', Carbon::today())->count();
 
-        $todaypatient = Appointment::whereDate('date', Carbon::today())->count();
+    $completedappointment = Appointment::whereDate('date', Carbon::today())
+        ->where('status', 'completed')
+        ->count();
 
-        $completedappointment = Appointment::whereDate('date', Carbon::today())
-            ->where('status', 'completed')
-            ->count();
+    $unpaidToday = Appointment::whereDate('date', Carbon::today())
+        ->where('ispaid', 0)
+        ->count();
 
-        $unpaidToday = Appointment::whereDate('date', Carbon::today())
-            ->where('ispaid', 0)
-            ->count();
+    return view('reception.receptionDashboard', compact('doctors', 'appointments', 'todaypatient', 'completedappointment', 'unpaidToday'));
+}
 
-        return view('reception.receptionDashboard', compact('doctors', 'appointments', 'todaypatient', 'completedappointment','unpaidToday'));
-    }
 
     public function recptionprofile()
     {
@@ -132,6 +133,15 @@ class ReceptionistController extends Controller
         $appointment->save();
 
         return redirect()->back()->with('success', 'Payment marked successfully!');
+    }
+    public function resedule($id , Request $request)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->status = 'rescheduled';
+        $appointment->date = $request->date;
+        $appointment->save();
+
+        return redirect()->back()->with('success', 'Appointment rescheduled marked as Completed!');
     }
 
 }

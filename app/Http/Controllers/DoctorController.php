@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Department;
+use App\Models\History;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 
@@ -24,38 +25,53 @@ class DoctorController extends Controller
     public function patient($id)
     {
         $patientappointdetail = Appointment::findOrFail($id);
-        return view('doctor.patient',compact('patientappointdetail'));
+        return view('doctor.patient', compact('patientappointdetail'));
     }
 
     public function markCompleted($id)
-{
-    $appointment = \App\Models\Appointment::findOrFail($id);
+    {
+        $appointment = \App\Models\Appointment::findOrFail($id);
 
-    $appointment->status = 'completed';
-    $appointment->save();
+        $appointment->status = 'completed';
+        $appointment->save();
 
-    return back()->with('success', 'Appointment marked as completed.');
-}
-public function showLeaveForm(){
-    $doctor = auth()->user()->doctor; // Assuming the user is authenticated and has a doctor profile
-    $leaves = Leave::where('doctor_id', $doctor->id)->orderByDesc('leave_date')->get();
+        return back()->with('success', 'Appointment marked as completed.');
+    }
+    public function showLeaveForm()
+    {
+        $doctor = auth()->user()->doctor; // Assuming the user is authenticated and has a doctor profile
+        $leaves = Leave::where('doctor_id', $doctor->id)->orderByDesc('leave_date')->get();
 
-    return view('doctor.leave-form', compact( 'leaves'));
-}
-public function submitLeave(Request $request){
-    $request->validate([
-        'leave_date' => 'required|date',
-        'reason' => 'nullable|string|max:255',
-    ]);
+        return view('doctor.leave-form', compact('leaves'));
+    }
+    public function submitLeave(Request $request)
+    {
+        $request->validate([
+            'leave_date' => 'required|date',
+            'reason' => 'nullable|string|max:255',
+        ]);
 
-    Leave::create([
-        'doctor_id' => auth()->user()->doctor->id, // Assuming the user is authenticated and has a doctor profile
-        'leave_date' => $request->leave_date,
-        'reason' => $request->reason,
-        'status' => 'pending', // Default status
-    ]);
-      return back()->with('success', 'Leave applied successfully. Waiting for admin approval.');
-}
+        Leave::create([
+            'doctor_id' => auth()->user()->doctor->id, // Assuming the user is authenticated and has a doctor profile
+            'leave_date' => $request->leave_date,
+            'reason' => $request->reason,
+            'status' => 'pending', // Default status
+        ]);
+        return back()->with('success', 'Leave applied successfully. Waiting for admin approval.');
+    }
+
+    public function insertuserhistory(Request $request)
+    {
+        $request->validate([
+            'chat' => 'required',
+        ]);
+        History::create([
+            'chat' => $request->chat,
+            'doctorid' => $request->doctorid,
+            'useremail' => $request->useremail,
+        ]);
+        return back();
+    }
 
 
 }

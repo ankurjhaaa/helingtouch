@@ -95,6 +95,20 @@
 
                     </div>
                 </div>
+                <div class="mt-6">
+                    <p class="text-gray-600 text-sm mb-1">Add Note To Patient </p>
+                    <form action="{{ route('doctor.insertuserhistory') }}" method="post" class="  flex gap-2">
+                        @csrf
+                        <input type="hidden" name="doctorid" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="useremail" value="{{ $patientappointdetail->email }}">
+                        <input type="text" name="chat" placeholder="Type your message..."
+                            class="flex-1 border border-orange-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring focus:ring-orange-200">
+                        <button type="submit"
+                            class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+                            Add Note
+                        </button>
+                    </form>
+                </div>
 
                 <div class="mt-6 flex justify-end gap-4 flex-wrap">
                     <form action="{{ url('/doc/appointments/' . $patientappointdetail->id . '/complete') }}" method="POST"
@@ -110,7 +124,8 @@
 
 
                     <!-- Back to List Button -->
-                    <a href="{{ route('doctor.dashboard') }}" class="inline-block bg-[#015551] text-white px-5 py-2 rounded hover:bg-[#01403f] transition">
+                    <a href="{{ route('doctor.dashboard') }}"
+                        class="inline-block bg-[#015551] text-white px-5 py-2 rounded hover:bg-[#01403f] transition">
                         Back to List
                     </a>
                 </div>

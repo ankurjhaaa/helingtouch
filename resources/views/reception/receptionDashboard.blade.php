@@ -45,158 +45,243 @@
                 </button>
             </div>
         </div>
-@if(session('success'))
-    <div class="bg-green-100 text-green-800 px-4 py-2 rounded mt-2">
-        {{ session('success') }}
-    </div>
-@endif
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 px-4 py-2 rounded mt-2">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <!-- Appointment List -->
-<div class="w-full mx-auto ">
+        <div class="w-full mx-auto ">
 
-    <!-- Search Input -->
-    <div class="mb-4">
-        <input type="text" id="searchAppointment"
-            onkeyup="filterAppointmentTable()"
-            placeholder="Search by Patient Name or ID..."
-            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#015551] text-sm"
-        />
-    </div>
+            <!-- Search Input -->
+            <div class="mb-4">
+                <input type="text" id="searchAppointment" onkeyup="filterAppointmentTable()"
+                    placeholder="Search by Patient Name or ID..."
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#015551] text-sm" />
+            </div>
 
-    <!-- Table -->
-    <div class="overflow-x-auto bg-white rounded shadow">
-        <h2 class="text-lg font-semibold p-4 border-b">Upcoming Appointments</h2>
+            <!-- Table -->
+            <div class="overflow-x-auto bg-white rounded shadow">
+                <h2 class="text-lg font-semibold p-4 border-b">Upcoming Appointments</h2>
 
-        <div class="max-h-[500px] overflow-y-auto">
-            <table class="min-w-full text-sm" id="appointmentTable">
-                <thead class="bg-gray-100 text-left sticky top-0 z-10">
-                    <tr>
-                        <th class="px-4 py-3 whitespace-nowrap">#</th>
-                        <th class="px-4 py-3 whitespace-nowrap">Patient</th>
-                        <th class="px-4 py-3 whitespace-nowrap">Doctor</th>
-                        <th class="px-4 py-3 whitespace-nowrap">Time</th>
-                        <th class="px-4 py-3 whitespace-nowrap">Status</th>
-                        <th class="px-4 py-3 whitespace-nowrap">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($appointments as $appointment)
-                        <tr class="border-t appointment-row"
-                            data-id="{{ $appointment->id }}"
-                            data-name="{{ strtolower($appointment->name) }}">
-                            <td class="px-4 py-2">{{ $appointment->id }}</td>
-                            <td class="px-4 py-2">{{ $appointment->name }}</td>
-                            <td class="px-4 py-2">Dr. Neha</td>
-                            <td class="px-4 py-2">{{ $appointment->time }}</td>
-                            @php
-                                $status = $appointment->status;
-                                $paidstatus = $appointment->ispaid;
-                            @endphp
+                <div class="max-h-[500px] overflow-y-auto">
+                    <table class="min-w-full text-sm" id="appointmentTable">
+                        <thead class="bg-gray-100 text-left sticky top-0 z-10">
+                            <tr>
+                                <th class="px-4 py-3 whitespace-nowrap">#</th>
+                                <th class="px-4 py-3 whitespace-nowrap">Patient</th>
+                                <th class="px-4 py-3 whitespace-nowrap">Doctor</th>
+                                <th class="px-4 py-3 whitespace-nowrap">Time</th>
+                                <th class="px-4 py-3 whitespace-nowrap">Status</th>
+                                <th class="px-4 py-3 whitespace-nowrap">Actions</th>
+                                <th class="px-4 py-3 whitespace-nowrap">Re-Shedule</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($appointments as $appointment)
+                                <tr class="border-t appointment-row" data-id="{{ $appointment->id }}"
+                                    data-name="{{ strtolower($appointment->name) }}">
+                                    <td class="px-4 py-2">{{ $appointment->id }}</td>
+                                    <td class="px-4 py-2">{{ $appointment->name }}</td>
+                                    <td class="px-4 py-2">Dr. Neha</td>
+                                    <td class="px-4 py-2">{{ $appointment->time }}</td>
+                                    @php
+                                        $status = $appointment->status;
+                                        $paidstatus = $appointment->ispaid;
+                                    @endphp
 
-@if($status === 'pending')
-    <td class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-    <form action="{{ route('appointments.approve', $appointment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to approve this appointment?')">
-        @csrf
-        <button type="submit" class="text-blue-600 hover:underline">To -  Approve</button>
-    </form>
-</td>
+                                    @if($status === 'pending')
+                                        <td class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                            {{ $appointment->status }}</td>
+                                        <td class="px-4 py-2">
+                                            <form action="{{ route('appointments.approve', $appointment->id) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure you want to approve this appointment?')">
+                                                @csrf
+                                                <button type="submit" class="text-blue-600 hover:underline">To - Approve</button>
+                                            </form>
+                                        </td>
 
-@elseif($status === 'approved')
-    <td class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-                                @if($paidstatus === 0)
-<form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" onsubmit="return confirm('Confirm payment?')">
-    @csrf
-    <button type="submit" class="text-blue-600 hover:underline">Make Payment</button>
-</form>
+                                    @elseif($status === 'approved')
+                                        <td class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">{{ $appointment->status }}
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            @if($paidstatus === 0)
+                                                <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST"
+                                                    onsubmit="return confirm('Confirm payment?')">
+                                                    @csrf
+                                                    <button type="submit" class="text-blue-600 hover:underline">Make Payment</button>
+                                                </form>
 
-                                @else
+                                            @else
 
-<form action="{{ route('appointments.in_progress', $appointment->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as In Progress?')">
-        @csrf
-        <button type="submit" class="text-blue-600 hover:underline">To - In Progress</button>
-    </form>
-                                @endif
-    
-</td>
+                                                <form action="{{ route('appointments.in_progress', $appointment->id) }}" method="POST"
+                                                    onsubmit="return confirm('Mark this appointment as In Progress?')">
+                                                    @csrf
+                                                    <button type="submit" class="text-blue-600 hover:underline">To - In
+                                                        Progress</button>
+                                                </form>
+                                            @endif
 
-@elseif($status === 'completed')
-    <td class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-                                <h2 class="text-blue-600 ">Ab Kuchh Nahi Karna</h2>
-                            </td>
-@elseif($status === 'cancelled')
-    <td class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 ">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-                                <button class="text-blue-600 hover:underline">Check-in</button>
-                            </td>
-@elseif($status === 'rescheduled')
-    <td class="px-2 py-1 text-xs rounded bg-purple-100 text-purple-700">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-                                <button class="text-blue-600 hover:underline">Check-in</button>
-                            </td>
-@elseif($status === 'in_progress')
-    <td class="px-2 py-1 text-xs rounded bg-indigo-100 text-indigo-700">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-    <form action="{{ route('appointments.checkin', $appointment->id) }}" method="POST" onsubmit="return confirm('Mark as checked-in?')">
-        @csrf
-        <button type="submit" class="text-blue-600 hover:underline">Check-in</button>
-    </form>
-</td>
+                                        </td>
 
-@elseif($status === 'checked_in')
-    <td class="px-2 py-1 text-xs rounded bg-teal-100 text-teal-700 ">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-    <form action="{{ route('appointments.complete', $appointment->id) }}" method="POST" onsubmit="return confirm('Mark this appointment as completed?')">
-        @csrf
-        <button type="submit" class="text-blue-600 hover:underline">Complete</button>
-    </form>
-</td>
+                                    @elseif($status === 'completed')
+                                        <td class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">{{ $appointment->status }}
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <h2 class="text-blue-600 ">Ab Kuchh Nahi Karna</h2>
+                                        </td>
+                                    @elseif($status === 'cancelled')
+                                        <td class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 ">{{ $appointment->status }}
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <button class="text-blue-600 hover:underline">Check-in</button>
+                                        </td>
+                                    @elseif($status === 'rescheduled')
+                                        <td class="px-2 py-1 text-xs rounded bg-purple-100 text-purple-700">
+                                            {{ $appointment->status }}</td>
+                                        <td class="px-4 py-2">
+                                            <button class="text-blue-600 hover:underline">Check-in</button>
+                                        </td>
+                                    @elseif($status === 'in_progress')
+                                        <td class="px-2 py-1 text-xs rounded bg-indigo-100 text-indigo-700">
+                                            {{ $appointment->status }}</td>
+                                        <td class="px-4 py-2">
+                                            <form action="{{ route('appointments.checkin', $appointment->id) }}" method="POST"
+                                                onsubmit="return confirm('Mark as checked-in?')">
+                                                @csrf
+                                                <button type="submit" class="text-blue-600 hover:underline">Check-in</button>
+                                            </form>
+                                        </td>
 
-@elseif($status === 'no_show')
-    <td class="px-2 py-1 text-xs rounded bg-gray-200 text-gray-700 ">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-                                <button class="text-blue-600 hover:underline">Check-in</button>
-                            </td>
-@elseif($status === 'rejected')
-    <td class="px-2 py-1 text-xs rounded bg-rose-100 text-rose-700">{{ $appointment->status }}</td>
-                            <td class="px-4 py-2">
-                                <button class="text-blue-600 hover:underline">Check-in</button>
-                            </td>
-@else
-    <span class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-600 capitalize">{{ $status }}</span>
-@endif
+                                    @elseif($status === 'checked_in')
+                                        <td class="px-2 py-1 text-xs rounded bg-teal-100 text-teal-700 ">{{ $appointment->status }}
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <form action="{{ route('appointments.complete', $appointment->id) }}" method="POST"
+                                                onsubmit="return confirm('Mark this appointment as completed?')">
+                                                @csrf
+                                                <button type="submit" class="text-blue-600 hover:underline">Complete</button>
+                                            </form>
+                                        </td>
 
-                            
-                        </tr>
-                    @endforeach
-                       
-                </tbody>
-            </table>
+                                    @elseif($status === 'no_show')
+                                        <td class="px-2 py-1 text-xs rounded bg-gray-200 text-gray-700 ">{{ $appointment->status }}
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <button class="text-blue-600 hover:underline">Check-in</button>
+                                        </td>
+                                    @elseif($status === 'rejected')
+                                        <td class="px-2 py-1 text-xs rounded bg-rose-100 text-rose-700">{{ $appointment->status }}
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <button class="text-blue-600 hover:underline">Check-in</button>
+                                        </td>
+                                    @else
+                                        <span
+                                            class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-600 capitalize">{{ $status }}</span>
+                                    @endif
+
+                                    <!-- Re-Schedule Button -->
+            <td>
+                <button type="button"
+                onclick="toggleModal({{ $appointment->id }}, true)"
+                class="text-blue-600 hover:underline">
+                Re-Schedule
+            </button>
+            </td>
+            <!-- Modal -->
+    <div id="modal-{{ $appointment->id }}"
+        class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md">
+            <h2 class="text-lg font-bold mb-4 text-center">Choose a New Date</h2>
+
+            <form action="{{ route('reception.resedule', $appointment->id) }}" method="POST">
+                @csrf
+
+                <!-- Date Buttons -->
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    @php
+                        $dayKeys = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+                        $today = now();
+                    @endphp
+
+                    @for($i = 0; $i < 15; $i++)
+                        @php
+                            $date = $today->copy()->addDays($i);
+                            $dayName = strtolower($date->format('l'));
+                            $label = $date->format('d M');
+                            $value = $date->format('Y-m-d');
+                            $isAvailable = optional($appointment->doctor)?->{$dayName} ?? 0;
+                        @endphp
+
+                        @if($isAvailable)
+                            <button type="submit" name="date" value="{{ $value }}"
+                                class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+                                {{ $label }}
+                            </button>
+                        @else
+                            <button type="button"
+                                class="px-3 py-2 bg-gray-200 text-gray-500 rounded cursor-not-allowed text-sm"
+                                disabled>
+                                {{ $label }} (Absent)
+                            </button>
+                        @endif
+                    @endfor
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button"
+                        onclick="toggleModal({{ $appointment->id }}, false)"
+                        class="px-4 py-2 border rounded mr-2">
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-<script>
-    function filterAppointmentTable() {
-        const input = document.getElementById("searchAppointment").value.toLowerCase();
-        const rows = document.querySelectorAll(".appointment-row");
-
-        rows.forEach(row => {
-            const name = row.dataset.name;
-            const id = row.dataset.id;
-
-            if (name.includes(input) || id.includes(input)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
+    <script>
+    function toggleModal(id, show) {
+        const modal = document.getElementById('modal-' + id);
+        if (show) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
     }
 </script>
 
-    
-   
+
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            function filterAppointmentTable() {
+                const input = document.getElementById("searchAppointment").value.toLowerCase();
+                const rows = document.querySelectorAll(".appointment-row");
+
+                rows.forEach(row => {
+                    const name = row.dataset.name;
+                    const id = row.dataset.id;
+
+                    if (name.includes(input) || id.includes(input)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+        </script>
+
+
+
 
 
         <!-- Notifications -->
@@ -225,86 +310,85 @@
 
 
     <!-- Modal Backdrop -->
-<div id="doctorModal" class="fixed inset-0 z-50 bg-black/30 bg-opacity-50 items-center justify-center hidden">
-    <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative">
+    <div id="doctorModal" class="fixed inset-0 z-50 bg-black/30 bg-opacity-50 items-center justify-center hidden">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative">
 
-        <!-- Close Button -->
-        <button onclick="toggleDoctorModal(false)"
-            class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
+            <!-- Close Button -->
+            <button onclick="toggleDoctorModal(false)"
+                class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
 
-        <h2 class="text-xl font-semibold mb-4">Select Doctor</h2>
+            <h2 class="text-xl font-semibold mb-4">Select Doctor</h2>
 
-        <!-- Search Input -->
-        <input type="text" id="doctorSearch" onkeyup="filterDoctors()" placeholder="Search doctors..."
-            class="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <!-- Search Input -->
+            <input type="text" id="doctorSearch" onkeyup="filterDoctors()" placeholder="Search doctors..."
+                class="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
 
-        <!-- Doctor List -->
-        <div id="doctorList" class="space-y-3 max-h-[300px] overflow-y-auto">
+            <!-- Doctor List -->
+            <div id="doctorList" class="space-y-3 max-h-[300px] overflow-y-auto">
 
-            @php 
-                use Carbon\Carbon;
+                @php 
+                    use Carbon\Carbon;
+                @endphp
+        @foreach($doctors as $doctor)
+            @php
+                $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
+                $todayDay = strtolower(Carbon::today()->format('l')); // e.g., 'monday', 'sunday'
+                $isAvailableToday = $availableDay->$todayDay ?? 0;
+
+                $todayabs = Carbon::today()->toDateString();
+                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
             @endphp
 
-            @foreach($doctors as $doctor)
-                @php
-                    $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
-                    $todayDay = strtolower(Carbon::today()->format('l')); // e.g., 'monday', 'sunday'
-                    $isAvailableToday = $availableDay->$todayDay ?? 0;
+                           @if ($isAvailableToday && !$onLeavetomorrow)
+                            <a href="{{ route('receptionist.addappointment', $doctor->id) }}" class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
+                                <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
+                                    alt="Doctor Image" class="w-10 h-10 rounded-full object-cover mr-3">
+                                <div>
+                                    <p class="font-medium">{{ $doctor->name }}</p>
+                                    <p class="text-sm text-gray-600">ortho</p>
+                                    </div>
+                            </a>
+                        @else
+                        <a href="#"
+                            class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
+                            <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
+                                alt="Doctor Image" class="w-10 h-10 rounded-full object-cover mr-3">
+                            <div>
+                                <p class="font-medium">{{ $doctor->name }}</p>
+                                <p class="text-sm text-gray-600">ortho</p>
+                                <p class="text-sm text-red-500">Doctor Absent Today</p>
+                                </div>
+                                </a>
+                    @endif
 
-                    $todayabs = Carbon::today()->toDateString();
-                    $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
-                @endphp
-
-                @if ($isAvailableToday && !$onLeavetomorrow)
-                    <a href="{{ route('receptionist.addappointment', $doctor->id) }}" class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
-                        <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
-                            alt="Doctor Image" class="w-10 h-10 rounded-full object-cover mr-3">
-                        <div>
-                            <p class="font-medium">{{ $doctor->name }}</p>
-                            <p class="text-sm text-gray-600">ortho</p>
-                        </div>
-                    </a>
-                @else
-                    <a href="#"
-                        class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
-                        <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}"
-                            alt="Doctor Image" class="w-10 h-10 rounded-full object-cover mr-3">
-                        <div>
-                            <p class="font-medium">{{ $doctor->name }}</p>
-                            <p class="text-sm text-gray-600">ortho</p>
-                            <p class="text-sm text-red-500">Doctor Absent Today</p>
-                        </div>
-                    </a>
-                @endif
-
-            @endforeach
+        @endforeach
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    function toggleDoctorModal(show) {
-        const modal = document.getElementById('doctorModal');
-        if (show) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        } else {
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
+    <script>
+        function toggleDoctorModal(show) {
+            const modal = document.getElementById('doctorModal');
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
         }
-    }
 
-    function filterDoctors() {
-        const input = document.getElementById('doctorSearch');
-        const filter = input.value.toLowerCase();
-        const doctorList = document.getElementById('doctorList');
-        const items = doctorList.getElementsByTagName('a');
+        function filterDoctors() {
+            const input = document.getElementById('doctorSearch');
+            const filter = input.value.toLowerCase();
+            const doctorList = document.getElementById('doctorList');
+            const items = doctorList.getElementsByTagName('a');
 
-        for (let i = 0; i < items.length; i++) {
-            const text = items[i].textContent.toLowerCase();
-            items[i].style.display = text.includes(filter) ? '' : 'none';
+            for (let i = 0; i < items.length; i++) {
+                const text = items[i].textContent.toLowerCase();
+                items[i].style.display = text.includes(filter) ? '' : 'none';
+            }
         }
-    }
-</script>
+    </script>
 
 @endsection
