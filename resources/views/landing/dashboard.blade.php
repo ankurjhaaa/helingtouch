@@ -20,7 +20,7 @@
             </div>
             <nav class="flex flex-col space-y-2">
                 <a href="{{ route('landing.dashboard') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Dashboard</a>
-                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
+                <a href="{{ route('landing.myappointment') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
                 <a href="{{ route('landing.userhistory') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Medical
                     Records</a>
                 <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Prescriptions</a>

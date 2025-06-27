@@ -10,6 +10,7 @@ use App\Models\History;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,15 +22,25 @@ class HomeController extends Controller
     }
     public function appointment()
     {
-        $departments = Department::all(); // latest first + pagination
+        $departments = Department::all(); 
         $doctors = User::where('role', 'doctor')->get();
         return view('landing.appointment', compact('departments', 'doctors'));
     }
-    public function manageappointments()
+    public function manageappointments(Request $request)
     {
-        $allappointments = Appointment::all();
+        $allappointments = collect(); 
+
+        if ($request->has('findappointment')) {
+            $search = $request->input('findappointment');
+
+            $allappointments = Appointment::where('email', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->get();
+        }
+
         return view('landing.manage-appointments', compact('allappointments'));
     }
+
     public function successappointment()
     {
         return view('landing.success-appointment');
@@ -125,5 +136,16 @@ class HomeController extends Controller
     {
         $galleryItems = Gallery::latest()->get();
         return view('landing.our-gallery', compact('galleryItems'));
+    }
+    
+    public function myappointment()
+    {
+        
+        $useremail = Auth::user()->email;
+    
+        $allappointments = Appointment::where('email',  "$useremail")->get();
+    
+
+        return view('landing.myappointment', compact('allappointments'));
     }
 }

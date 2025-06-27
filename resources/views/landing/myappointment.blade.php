@@ -1,81 +1,55 @@
 @extends('landing.publiclayout')
-@section('title', 'Our Doctors')
+@section('title', 'Home')
 
 @section('content')
 
-    <div class="mt-24 px-2 md:px-6 lg:px-10">
-        <div class="max-w-8xl mx-auto py-5 ">
-            <div class="bg-gradient-to-tr from-[#c9a27e] to-[#a77c52] px-6 sm:p-8 rounded-md shadow-xl text-white ">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-
-                    <!-- Text Content -->
-                    <div class="p-3">
-                        <h2 class="text-2xl sm:text-3xl font-bold mb-1 tracking-wide">Search Your Appointment Here</h2>
-                        <p class="text-sm sm:text-base text-white/90">View, reschedule, or create appointments effortlessly
-                        </p>
-                    </div>
-
-
-
-                </div>
+    <!-- Sidebar -->
+    <div class="flex h-screen mt-18 ">
+        <div id="sidebar"
+            class="bg-yellow-900 text-white w-72 space-y-6 py-7 px-4 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out ">
+            <div class="flex justify-between items-center mb-6 mt-14 md:mt-0">
+                <a href="{{ route('landing.dashboard') }}">
+                    <h1 class="text-2xl font-bold ">🏥 Patient Panel</h1>
+                </a>
+                <button onclick="toggleSidebar()" class="md:hidden focus:outline-none ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
+            <nav class="flex flex-col space-y-2">
+                <a href="{{ route('landing.dashboard') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Dashboard</a>
+                <a href="{{ route('landing.myappointment') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
+                <a href="{{ route('landing.userhistory') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Medical
+                    Records</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Prescriptions</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Messages</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Settings</a>
+                <a href="{{ route('auth.logout') }}" class="px-4 py-2 hover:bg-yellow-800 rounded text-red-300">Logout</a>
+            </nav>
         </div>
 
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow p-4 flex justify-between items-center md:hidden">
+                <button onclick="toggleSidebar()" class="text-yellow-900 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <span class="font-bold text-yellow-900">Patient Dashboard</span>
+            </header>
 
+            <main class="flex-1 overflow-y-auto p-6">
+                <h2 class="text-2xl font-semibold text-yellow-900 mb-4">Welcome, Patient!</h2>
+                <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 xl:col-span-2 border border-[#d5bfa5]">
+                <h2 class="text-xl md:text-2xl font-bold text-[#5a3921] mb-6"> Your Appointment</h2>
 
-
-        <div class="max-w-8xl mx-auto  grid grid-cols-1 xl:grid-cols-3 gap-6 font-sans ">
-
-            <!-- Left Panel -->
-            <div
-                class="bg-white rounded-2xl shadow-md p-6 sm:p-8 xl:col-span-1 flex flex-col justify-between border border-[#d5bfa5]">
-                <div class="space-y-6 text-center">
-                    <div
-                        class="mx-auto w-20 h-20 bg-gradient-to-br from-[#a77c52] to-[#c9a27e] rounded-full flex items-center justify-center shadow-inner">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3m8 4V3m-9 8h10m-7 4h4m5-10H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2z" />
-                        </svg>
-                    </div>
-                    <h2 class="text-xl md:text-2xl font-bold text-[#5a3921]">Schedule Your Visit</h2>
-                    <p class="text-[#7d5a3d] text-sm">Plan your appointment with top specialists in just a few clicks.</p>
-                    <button
-                        class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] text-white px-6 py-2 rounded-full shadow hover:scale-105 transition-transform text-sm md:text-base">
-                        + Book Appointment
-                    </button>
-                </div>
-
-                <div class="mt-10 bg-[#fffaf2] border border-[#e0c9aa] rounded-xl p-4 shadow-sm">
-                    <h3 class="text-sm font-semibold text-[#5a3921] mb-2">Why Choose Us?</h3>
-                    <ul class="space-y-2 text-sm text-[#7d5a3d] list-disc list-inside">
-                        <li>Experienced & trusted doctors</li>
-                        <li>Premium wooden-themed interface</li>
-                        <li>Seamless online booking experience</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Right Panel -->
-            <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 xl:col-span-2 border border-[#d5bfa5]">
-                <h2 class="text-xl md:text-2xl font-bold text-[#5a3921] mb-6">Find Your Appointment</h2>
-
-                <form action="" method="get">
-                    <!-- Search Controls -->
-                    <div class="flex flex-col sm:flex-row sm:items-end gap-4 mb-6">
-                        <div class="flex-grow relative">
-                            <input type="text" name="findappointment"
-                                class="w-full border border-[#d5bfa5] bg-[#fff8ee] text-[#5a3921] rounded-md py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-[#a77c52] placeholder-[#a78b6d]"
-                                placeholder="Enter phone or email...">
-                        </div>
-                        <button type="submit"
-                            class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] text-white px-5 py-2 rounded-md shadow hover:scale-105 transition-transform text-sm md:text-base">
-                            Search
-                        </button>
-                    </div>
-                </form>
+                
                 <!-- Appointment Table -->
-                <div class="overflow-auto rounded-lg border border-[#d5bfa5] max-h-[350px]">
+                <div class="overflow-auto rounded-lg border border-[#d5bfa5] max-h-[650px]">
                     <table class="w-full min-w-[600px] text-sm text-left text-[#5a3921]">
                         <thead class="bg-[#f5e8d9] text-sm">
                             <tr>
@@ -95,8 +69,7 @@
                             @forelse ($allappointments as $allappointment)
                                 <tr data-phone="{{ $allappointment->phone }}" data-email="{{ $allappointment->email }}">
 
-                                    <td hidden>{{ $allappointment->phone }}</td>
-                                    <td hidden>{{ $allappointment->email }}</td>
+                                    
                                     <td class="px-4 py-3">#{{ $allappointment->id }}</td>
                                     <td class="px-4 py-3">{{ $allappointment->date }}<br><span
                                             class="text-xs text-[#a78b6d]">{{ $allappointment->time }}</span></td>
@@ -281,6 +254,7 @@
                     </table>
                 </div>
             </div>
+            </main>
         </div>
     </div>
 

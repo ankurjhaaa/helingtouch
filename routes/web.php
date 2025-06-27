@@ -45,6 +45,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/doctor/{id}', 'doctorprofile')->name('landing.doctor');
     Route::get('/doctor-profile/{id}', 'doctorprofileview')->name('landing.doctor-profile');
     Route::get('/gallery', 'ourGallery')->name('landing.gallery');
+    Route::get('/myappointment', 'myappointment')->name('landing.myappointment');
 });
 Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->group(function () {
     Route::get('/admin/addrole', 'showform')->name('admin.addrole');
