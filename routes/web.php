@@ -75,6 +75,7 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/leave', 'viewLeave')->name('admin.docleave');
     Route::put('/admin/leaves/{id}', 'updateLeaveStatus')->name('admin.leave.approve');
     Route::get('/admin/profile', 'viewAdminProfile')->name('admin.profile');
+    Route::get('/admin/,anageappointments', 'manageAppointment')->name('admin.manageappointments');
 
 });
 

@@ -437,5 +437,30 @@ class AdminController extends Controller
 
     }
 
+    //admin manage appointment work
+  public function manageAppointment(Request $request)
+{
+    $doctors = Doctor::with('user')->get();
+
+    $appointments = Appointment::query()
+        ->when($request->doctor_id, function ($query) use ($request) {
+            $query->where('doctor_id', $request->doctor_id);
+        })
+        ->when($request->status, function ($query) use ($request) {
+            $query->where('status', $request->status);
+        })
+        ->when($request->date, function ($query) use ($request) {
+            $query->whereDate('date', $request->date); 
+        })
+        ->with(['doctor.user'])
+        ->latest()
+        ->paginate(15);
+   
+
+
+    return view('admin.manage-appointment', compact('doctors', 'appointments'));
+}
+
+
 
 }
