@@ -180,8 +180,9 @@ class AdminController extends Controller
         $totalUsers = User::whereIn('role', ['admin', 'doctor', 'receptionist'])->count();
         $countApointments = Appointment::whereDate('created_at', Carbon::today())->count();
         $totalDepartments = Department::count();
+        $appointments = Appointment::with('doctor.user')->latest()->take(20)->get();
 
-        return view('admin.adminDashboard', compact('doctorCount', 'countReceptionst', 'totalUsers', 'countApointments', 'totalDepartments'));
+        return view('admin.adminDashboard', compact('doctorCount', 'countReceptionst', 'totalUsers', 'countApointments', 'totalDepartments', 'appointments'));
     }
     //doctor manage logic 
     public function manageDoctor()

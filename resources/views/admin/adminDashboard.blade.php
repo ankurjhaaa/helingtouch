@@ -10,155 +10,166 @@
         <!-- Sidebar -->
         <x-admin-sidebar />
 
-        <!-- Main Content -->
-        <main class="flex-1 p-6 space-y-8 ml-64 transition-all duration-500 animate-fade-in">
+        <!-- Sidebar Toggle Button (Mobile) -->
+        <button id="sidebar-toggle" class="sm:hidden fixed top-4 left-4 z-50 text-white bg-blue-600 p-2 rounded-md">
+            <i class="fas fa-bars"></i>
+        </button>
+
+      <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 space-y-8 ml-0 sm:ml-64 transition-all duration-300">
             <!-- Overview Cards -->
-            <section data-aos="fade-up" data-aos-duration="800">
-                <h2 class="text-2xl font-bold text-blue-900 mb-4">Overview</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="100">
-                        <div class="text-3xl font-bold text-blue-700 count transition-all duration-1000 ease-out"
-                            data-target="{{ $doctorCount }}">0</div>
-                        <div class="text-sm text-gray-600">Doctors</div>
+            <section>
+                <h2 class="text-xl sm:text-2xl font-bold text-blue-900 mb-4">Overview</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-blue-700 count" data-target="{{ $doctorCount }}">0</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Doctors</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="200">
-                        <div class="text-3xl font-bold text-green-600 count" data-target="{{ $countReceptionst }}">0</div>
-                        <div class="text-sm text-gray-600">Receptionists</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-green-600 count" data-target="{{ $countReceptionst }}">0</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Receptionists</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="300">
-                        <div class="text-3xl font-bold text-purple-600 count" data-target="{{ $totalUsers }}">0</div>
-                        <div class="text-sm text-gray-600">Support Staff</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-purple-600 count" data-target="{{ $totalUsers }}">0</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Support Staff</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="400">
-                        <div class="text-3xl font-bold text-yellow-600 count" data-target="{{ $countApointments }}">0</div>
-                        <div class="text-sm text-gray-600">Appointments Today</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-yellow-600 count" data-target="{{ $countApointments }}">0</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Appointments Today</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="500">
-                        <div class="text-3xl font-bold text-red-600 count" data-target="0">₹0</div>
-                        <div class="text-sm text-gray-600">Today's Revenue</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-red-600 count" data-target="0">₹0</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Today's Revenue</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="600">
-                        <div class="text-3xl font-bold text-indigo-600 count" data-target="{{ $totalDepartments }}">0</div>
-                        <div class="text-sm text-gray-600">Departments</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-indigo-600 count" data-target="{{ $totalDepartments }}">0</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Departments</div>
                     </div>
                 </div>
             </section>
 
             <!-- Chart Placeholder -->
-            <section data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                <h2 class="text-2xl font-bold text-blue-900 mb-4">Monthly Revenue</h2>
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="text-center text-gray-400 italic">[ Chart will be placed here - use Chart.js or similar ]
-                    </div>
+            <section>
+                <h2 class="text-xl sm:text-2xl font-bold text-blue-900 mb-4">Monthly Revenue</h2>
+                <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+                    <div class="text-center text-gray-400 italic">[ Chart will be placed here - use Chart.js or similar ]</div>
                 </div>
             </section>
 
-            <!-- Patients Stats -->
-            <section data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-                <h2 class="text-2xl font-bold text-blue-900 mb-4">Patient Statistics</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="100">
-                        <div class="text-3xl font-bold text-green-700">458</div>
-                        <div class="text-sm text-gray-600">Total Patients</div>
+            <!-- Patient Statistics -->
+            <section>
+                <h2 class="text-xl sm:text-2xl font-bold text-blue-900 mb-4">Patient Statistics</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-green-700">458</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Total Patients</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="200">
-                        <div class="text-3xl font-bold text-orange-600">38</div>
-                        <div class="text-sm text-gray-600">New Patients Today</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-orange-600">38</div>
+                        <div class="text-xs sm:text-sm text-gray-600">New Patients Today</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="300">
-                        <div class="text-3xl font-bold text-blue-600">78%</div>
-                        <div class="text-sm text-gray-600">Satisfaction Rate</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-blue-600">78%</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Satisfaction Rate</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300"
-                        data-aos="zoom-in" data-aos-delay="400">
-                        <div class="text-3xl font-bold text-red-500">12</div>
-                        <div class="text-sm text-gray-600">Critical Cases</div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl sm:text-3xl font-bold text-red-500">12</div>
+                        <div class="text-xs sm:text-sm text-gray-600">Critical Cases</div>
                     </div>
                 </div>
             </section>
 
             <!-- Recent Appointments Table -->
-            <section data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
-                <h2 class="text-2xl font-bold text-blue-900 mb-4">Recent Appointments</h2>
+            <section>
+                <h2 class="text-xl sm:text-2xl font-bold text-blue-900 mb-4">Recent Appointments</h2>
                 <div class="bg-white shadow-lg rounded-xl overflow-x-auto">
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-xs sm:text-sm">
                         <thead class="bg-blue-100 text-left text-blue-900">
                             <tr>
-                                <th class="px-4 py-3 font-semibold">#</th>
-                                <th class="px-4 py-3 font-semibold">Patient Name</th>
-                                <th class="px-4 py-3 font-semibold">Doctor</th>
-                                <th class="px-4 py-3 font-semibold">Date</th>
-                                <th class="px-4 py-3 font-semibold">Time</th>
-                                <th class="px-4 py-3 font-semibold">Status</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 font-semibold">#</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 font-semibold">Patient Name</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 font-semibold">Doctor</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 font-semibold">Date</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 font-semibold">Time</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 font-semibold">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-t hover:bg-blue-50 hover:shadow-inner transition-all duration-200"
-                                data-aos="fade-right" data-aos-delay="100">
-                                <td class="px-4 py-3">1</td>
-                                <td class="px-4 py-3">Rahul Mehta</td>
-                                <td class="px-4 py-3">Dr. Sinha</td>
-                                <td class="px-4 py-3">11 June 2025</td>
-                                <td class="px-4 py-3">10:00 AM</td>
-                                <td class="px-4 py-3 text-green-600 font-medium">Confirmed</td>
+                            @foreach ( $appointments as $index => $appointment )
+                             <tr class="border-t hover:bg-blue-50 transition-all duration-200">
+                                <td class="px-2 sm:px-4 py-2 sm:py-3">{{ $index + 1 }}</td>
+                                <td class="px-2 sm:px-4 py-2 sm:py-3">{{ $appointment->name }}</td>
+                                <td class="px-2 sm:px-4 py-2 sm:py-3">{{ $appointment->doctor->user->name }}</td>
+                                <td class="px-2 sm:px-4 py-2 sm:py-3">{{ \Carbon\Carbon::parse($appointment->date)->format('d M Y') }}</td>
+                                <td class="px-2 sm:px-4 py-2 sm:py-3">{{ \carbon\Carbon::parse($appointment->time)->format('h:i A') }}</td>
+                                <td class="px-2 sm:px-4 py-2 sm:py-3 text-green-600 font-medium">
+                                    @if ($appointment->status == 'approved') 
+                                        <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs">Confirmed</span>
+                                        @elseif ($appointment->status == 'pending')
+                                         <span class="bg-yellow-100 text-tellow-600 px-2 py-1 rounded-full text-xs">Pending</span>
+                                        @elseif ($appointment->status == 'cancelled')
+                                            <span class="bg-red-100 text-red-600 px-2 py-1 rounded-full text-xs">Cancelled</span>
+                                        @elseif ($appointment->status == 'rescheduled')
+                                            <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">Rescheduled</span>
+
+                                         
+                                    
+                                    @endif
+
+
+
+
+                                </td>
                             </tr>
-                            <tr class="border-t hover:bg-blue-50 hover:shadow-inner transition-all duration-200"
-                                data-aos="fade-right" data-aos-delay="200">
-                                <td class="px-4 py-3">2</td>
-                                <td class="px-4 py-3">Sneha Kumari</td>
-                                <td class="px-4 py-3">Dr. Ajay</td>
-                                <td class="px-4 py-3">11 June 2025</td>
-                                <td class="px-4 py-3">11:30 AM</td>
-                                <td class="px-4 py-3 text-yellow-600 font-medium">Pending</td>
-                            </tr>
-                            <tr class="border-t hover:bg-blue-50 hover:shadow-inner transition-all duration-200"
-                                data-aos="fade-right" data-aos-delay="300">
-                                <td class="px-4 py-3">3</td>
-                                <td class="px-4 py-3">Amit Kumar</td>
-                                <td class="px-4 py-3">Dr. Verma</td>
-                                <td class="px-4 py-3">11 June 2025</td>
-                                <td class="px-4 py-3">12:00 PM</td>
-                                <td class="px-4 py-3 text-red-600 font-medium">Cancelled</td>
-                            </tr>
+                            
+                            @endforeach 
+                            
+                               
+                          
+                            
                         </tbody>
                     </table>
                 </div>
             </section>
 
             <!-- Footer -->
-            <footer class="mt-10 text-center text-sm text-gray-500" data-aos="fade-up" data-aos-duration="800">
+            <footer class="mt-8 text-center text-xs sm:text-sm text-gray-500">
                 © 2025 Healing Touch Hospital. All rights reserved.
             </footer>
         </main>
     </div>
     <!-- AOS Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- JavaScript -->
     <script>
-        // Initialize AOS
-        AOS.init({
-            once: true,
-            offset: 100,
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.getElementById('sidebar-toggle');
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Dropdown Toggle
+        const userBtn = document.getElementById('user-menu-button');
+        const dropdown = document.getElementById('user-dropdown');
+        document.addEventListener('click', (e) => {
+            if (userBtn.contains(e.target)) {
+                dropdown.classList.toggle('hidden');
+            } else {
+                dropdown.classList.add('hidden');
+            }
         });
 
         // Counter Animation
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", () => {
             const counters = document.querySelectorAll('.count');
             counters.forEach(counter => {
                 const isRupee = counter.innerText.includes('₹');
                 const targetAttr = counter.getAttribute('data-target');
                 const target = targetAttr ? parseFloat(targetAttr) : 0;
                 let count = 0;
-                const duration = 2000; // Animation duration in ms
-                const increment = target / (duration / 16); // 60 FPS
+                const duration = 2000;
+                const increment = target / (duration / 16);
 
                 const updateCount = () => {
                     if (count < target) {
@@ -174,7 +185,6 @@
                     }
                 };
 
-                // Start counter when element is in viewport
                 const observer = new IntersectionObserver(entries => {
                     if (entries[0].isIntersecting) {
                         updateCount();
@@ -184,7 +194,7 @@
                 observer.observe(counter);
             });
 
-            // Hide loading overlay after page load
+            // Hide loading overlay
             window.addEventListener('load', () => {
                 const overlay = document.getElementById('loading-overlay');
                 overlay.classList.add('opacity-0');
