@@ -192,11 +192,11 @@
             </td>
             <!-- Modal -->
     <div id="modal-{{ $appointment->id }}"
-        class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden items-center justify-center">
+        class="fixed inset-0 bg-black/30 bg-opacity-40 z-50 hidden items-center justify-center">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-bold mb-4 text-center">Choose a New Date</h2>
 
-            <form action="{{ route('reception.resedule', $appointment->id) }}" method="POST">
+            <form action="{{ route('reception.resedule', $appointment->id) }}" method="POST" onsubmit="return confirm('Ok To Re Sedule ?')">
                 @csrf
 
                 <!-- Date Buttons -->
@@ -240,6 +240,7 @@
             </form>
         </div>
     </div>
+    
     <script>
     function toggleModal(id, show) {
         const modal = document.getElementById('modal-' + id);
@@ -252,7 +253,6 @@
         }
     }
 </script>
-
 
                                 </tr>
                             @endforeach

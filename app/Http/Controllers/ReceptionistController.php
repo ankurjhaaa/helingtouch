@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Models\History;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,8 +47,6 @@ class ReceptionistController extends Controller
     }
     public function insertAppointment(Request $request)
     {
-
-
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
@@ -65,7 +64,6 @@ class ReceptionistController extends Controller
             'fee' => ['required', 'numeric'],
             'ispaid' => ['required'],
         ]);
-
         $appointment = Appointment::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -85,6 +83,12 @@ class ReceptionistController extends Controller
             'ispaid' => $request->ispaid,
             'status' => 'approved',
 
+        ]);
+        
+        History::create([
+            'chat' => $appointment->id ,
+            'doctorid' => '0',
+            'useremail' => $request->email,
         ]);
 
         // Redirect to confirmation page with session data

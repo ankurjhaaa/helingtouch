@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class History extends Model
 {
     protected $fillable = [
-        'chat', 'useremail','doctorid'
+        'chat', 'useremail','doctorid','image'
     ];
 
     public function user()

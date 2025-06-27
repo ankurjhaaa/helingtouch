@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
+use App\Models\History;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -55,10 +56,10 @@ class HomeController extends Controller
     }
     public function doctorprofile($id)
     {
-       
-       
+
+
         $doctor = Doctor::with('user')->where('user_id', $id)->firstOrFail();
-        
+
         return view('landing.doctor', compact('doctor'));
     }
     public function doctorprofileview($id)
@@ -74,11 +75,11 @@ class HomeController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'phone' => ['required', 'regex:/^[6-9]\d{9}$/'], 
-            'gender' => ['required'], 
+            'phone' => ['required', 'regex:/^[6-9]\d{9}$/'],
+            'gender' => ['required'],
             'age' => ['required', 'integer', 'min:1', 'max:120'],
             'address' => ['required', 'string', 'max:500'],
-            'pincode' => ['required', 'digits:6'], 
+            'pincode' => ['required', 'digits:6'],
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'time' => ['required'],
@@ -109,6 +110,11 @@ class HomeController extends Controller
             'state' => $request->state,
 
 
+        ]);
+        History::create([
+            'chat' => $appointment->id,
+            'doctorid' => '0',
+            'useremail' => $request->email,
         ]);
 
         // Redirect to confirmation page with session data

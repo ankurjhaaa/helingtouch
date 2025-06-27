@@ -65,10 +65,16 @@ class DoctorController extends Controller
         $request->validate([
             'chat' => 'required',
         ]);
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('dp', 'public');
+        }
         History::create([
             'chat' => $request->chat,
             'doctorid' => $request->doctorid,
             'useremail' => $request->useremail,
+            'image' => $imagePath,
         ]);
         return back();
     }

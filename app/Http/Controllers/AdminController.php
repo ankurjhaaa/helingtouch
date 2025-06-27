@@ -113,7 +113,7 @@ class AdminController extends Controller
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
             $imagePath = $image->store('dp', 'public');
-        }
+        } 
 
         // Create User
         User::create([

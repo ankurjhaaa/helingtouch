@@ -94,8 +94,8 @@
     <div class="header">
       <h1>HealingTouch Hospital</h1>
       <p class="sub-header">Excellence in Healthcare</p>
-      <p class="sub-header">Appointment ID: 202506200085</p>
-      <div class="status">Confirmed</div>
+      <p class="sub-header">Appointment ID: {{ $appointment->id }}</p>
+      <div class="status">{{ $appointment->status }}</div>
     </div>
 
     <!-- Patient Info -->
@@ -104,7 +104,7 @@
       <table class="info-table">
         <tr>
           <td><strong>Appointment Number:</strong></td>
-          <td>202506200085</td>
+          <td>{{ $appointment->id }}</td>
         </tr>
         <tr>
           <td><strong>Amount Paid:</strong></td>
@@ -112,19 +112,19 @@
         </tr>
         <tr>
           <td><strong>Full Name:</strong></td>
-          <td>Sadique Hussain</td>
+          <td>{{ $appointment->name }}</td>
         </tr>
         <tr>
-          <td><strong>Patient ID:</strong></td>
-          <td>#1</td>
+          <td><strong>Patient Email:</strong></td>
+          <td>#{{ $appointment->email }}</td>
         </tr>
         <tr>
           <td><strong>Gender:</strong></td>
-          <td>Male</td>
+          <td>{{ $appointment->gender }}</td>
         </tr>
         <tr>
           <td><strong>Contact:</strong></td>
-          <td>9546805580</td>
+          <td>{{ $appointment->phone }}</td>
         </tr>
       </table>
     </div>
@@ -135,7 +135,7 @@
       <table class="info-table">
         <tr>
           <td><strong>Doctor:</strong></td>
-          <td>Dr. Charly Kumar Sinha</td>
+          <td>Dr. {{ $appointment->doctor_id }}</td>
         </tr>
         <tr>
           <td><strong>Department:</strong></td>
@@ -147,7 +147,7 @@
         </tr>
         <tr>
           <td><strong>Date:</strong></td>
-          <td>20 June 2025</td>
+          <td>{{ $appointment->date }}</td>
         </tr>
         <tr>
           <td><strong>Day:</strong></td>
@@ -155,11 +155,11 @@
         </tr>
         <tr>
           <td><strong>Reporting Time:</strong></td>
-          <td>12:30 PM</td>
+          <td>{{ $appointment->time }}</td>
         </tr>
         <tr>
           <td><strong>Queue Number:</strong></td>
-          <td>#001</td>
+          <td>#{{ $appointment->id }}</td>
         </tr>
       </table>
     </div>

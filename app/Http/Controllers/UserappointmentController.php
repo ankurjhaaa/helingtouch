@@ -24,10 +24,15 @@ class UserappointmentController extends Controller
         $request->validate([
             'chat' => 'required',
         ]);
-
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('dp', 'public');
+        }
         History::create([
             'chat' => $request->chat,
-            'useremail' => Auth::user()->email, 
+            'image' => $imagePath,
+            'useremail' => Auth::user()->email,
         ]);
 
 

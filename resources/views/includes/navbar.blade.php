@@ -52,9 +52,9 @@
                                     class="block px-4 py-2 hover:bg-gray-100 text-sm">Doctor
                                     Dashboard</a>
                             @elseif(auth()->user()->role === 'user')
-                                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
+                                <a href="{{ route('landing.dashboard') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
                                     Dashboard</a>
-                                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
+                                <a href="{{ route('landing.userhistory') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
                                     History</a>
                             @elseif(auth()->user()->role === 'receptionist')
                                 <a href="{{ route('receptionist.Dashboard') }}"

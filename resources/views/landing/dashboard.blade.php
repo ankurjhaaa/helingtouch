@@ -3,48 +3,64 @@
 
 @section('content')
 
-
-    <div class="mt-24 p-10">
-        
-
-<ol class="relative border-s border-gray-200 dark:border-gray-700">                  
-    <li class="mb-10 ms-6">            
-        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-            <img class="rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/>
-        </span>
-        <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:flex dark:bg-gray-700 dark:border-gray-600">
-            <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">just now</time>
-            <div class="text-sm font-normal text-gray-500 dark:text-gray-300">Bonnie moved <a href="#" class="font-semibold text-blue-600 dark:text-blue-500 hover:underline">Jese Leos</a> to <span class="bg-gray-100 text-gray-800 text-xs font-normal me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-600 dark:text-gray-300">Funny Group</span></div>
-        </div>
-    </li>
-    <li class="mb-10 ms-6">
-        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-            <img class="rounded-full shadow-lg" src="/docs/images/people/profile-picture-5.jpg" alt="Thomas Lean image"/>
-        </span>
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs dark:bg-gray-700 dark:border-gray-600">
-            <div class="items-center justify-between mb-3 sm:flex">
-                <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">2 hours ago</time>
-                <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">Thomas Lean commented on  <a href="#" class="font-semibold text-gray-900 dark:text-white hover:underline">Flowbite Pro</a></div>
+    <!-- Sidebar -->
+    <div class="flex h-screen mt-18 ">
+        <div id="sidebar"
+            class="bg-yellow-900 text-white w-72 space-y-6 py-7 px-4 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out ">
+            <div class="flex justify-between items-center mb-6 mt-14 md:mt-0">
+                <a href="{{ route('landing.dashboard') }}">
+                    <h1 class="text-2xl font-bold ">🏥 Patient Panel</h1>
+                </a>
+                <button onclick="toggleSidebar()" class="md:hidden focus:outline-none ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-            <div class="p-3 text-xs italic font-normal text-gray-500 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300">Hi ya'll! I wanted to share a webinar zeroheight is having regarding how to best measure your design system! This is the second session of our new webinar series on #DesignSystems discussions where we'll be speaking about Measurement.</div>
+            <nav class="flex flex-col space-y-2">
+                <a href="{{ route('landing.dashboard') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Dashboard</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
+                <a href="{{ route('landing.userhistory') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Medical
+                    Records</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Prescriptions</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Messages</a>
+                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Settings</a>
+                <a href="{{ route('auth.logout') }}" class="px-4 py-2 hover:bg-yellow-800 rounded text-red-300">Logout</a>
+            </nav>
         </div>
-    </li>
-    <li class="ms-6">
-        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-            <img class="rounded-full shadow-lg" src="/docs/images/people/profile-picture-1.jpg" alt="Jese Leos image"/>
-        </span>
-        <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:flex dark:bg-gray-700 dark:border-gray-600">
-            <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">1 day ago</time>
-            <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">Jese Leos has changed <a href="#" class="font-semibold text-blue-600 dark:text-blue-500 hover:underline">Pricing page</a> task status to  <span class="font-semibold text-gray-900 dark:text-white">Finished</span></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow p-4 flex justify-between items-center md:hidden">
+                <button onclick="toggleSidebar()" class="text-yellow-900 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <span class="font-bold text-yellow-900">Patient Dashboard</span>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6">
+                <h2 class="text-2xl font-semibold text-yellow-900 mb-4">Welcome, Patient!</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-4 rounded-lg shadow border border-yellow-100">
+                        <h3 class="text-lg font-semibold text-yellow-800 mb-2">Upcoming Appointment</h3>
+                        <p class="text-gray-700 text-sm">Next appointment with Dr. Sharma on 28 June at 10:00 AM.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow border border-yellow-100">
+                        <h3 class="text-lg font-semibold text-yellow-800 mb-2">Medical History</h3>
+                        <p class="text-gray-700 text-sm">View your past checkups and test reports in one place.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow border border-yellow-100">
+                        <h3 class="text-lg font-semibold text-yellow-800 mb-2">Prescriptions</h3>
+                        <p class="text-gray-700 text-sm">Download or print the latest prescriptions shared by your doctor.
+                        </p>
+                    </div>
+                </div>
+            </main>
         </div>
-    </li>
-</ol>
-
-
-
-
-
-
     </div>
 
 

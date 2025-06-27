@@ -97,17 +97,72 @@
                 </div>
                 <div class="mt-6">
                     <p class="text-gray-600 text-sm mb-1">Add Note To Patient </p>
-                    <form action="{{ route('doctor.insertuserhistory') }}" method="post" class="  flex gap-2">
+                    
+                    <!-- 📎 Upload Form -->
+                    <form action="{{ route('doctor.insertuserhistory') }}" method="post" enctype="multipart/form-data"
+                        class=" flex gap-2 p-3 z-50">
                         @csrf
                         <input type="hidden" name="doctorid" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="useremail" value="{{ $patientappointdetail->email }}">
+                        <!-- File Upload -->
+                        <label for="image-upload" class="cursor-pointer text-orange-500 hover:text-orange-700 z-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.586-6.586a4 4 0 10-5.656-5.656l-6.586 6.586" />
+                            </svg>
+                            <input type="file" name="image" id="image-upload" class="hidden" accept="image/*"
+                                onchange="previewImage(event)">
+                        </label>
+
+                        <!-- Text -->
                         <input type="text" name="chat" placeholder="Type your message..."
-                            class="flex-1 border border-orange-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring focus:ring-orange-200">
+                            class="flex-1 border border-orange-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring focus:ring-orange-200 z-50">
+
+                        <!-- Submit -->
                         <button type="submit"
-                            class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
-                            Add Note
+                            class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition z-50">
+                            Add
                         </button>
                     </form>
+
+                    <!-- ✅ Image Modal -->
+                    <div id="image-modal" class="fixed inset-0 bg-black/60 z-10 hidden items-center justify-center">
+                        <div class="relative max-w-sm w-full p-4 bg-white rounded-lg shadow-lg">
+                            <!-- ❌ Close Button -->
+                            <button type="button" onclick="closeImageModal()"
+                                class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold">
+                                &times;
+                            </button>
+                            <img id="preview" src="#" alt="Preview" class="w-full max-h-[80vh] object-contain rounded">
+                            
+                        </div>
+                    </div>
+
+                    <!-- ✅ JavaScript -->
+                    <script>
+                        function previewImage(event) {
+                            const file = event.target.files[0];
+                            const preview = document.getElementById('preview');
+                            const modal = document.getElementById('image-modal');
+
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    preview.src = e.target.result;
+                                    modal.classList.remove('hidden');
+                                    modal.classList.add('flex'); // ✅ show modal
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }
+
+                        function closeImageModal() {
+                            const modal = document.getElementById('image-modal');
+                            modal.classList.add('hidden');
+                            modal.classList.remove('flex'); // ✅ hide modal
+                        }
+                    </script>
                 </div>
 
                 <div class="mt-6 flex justify-end gap-4 flex-wrap">
