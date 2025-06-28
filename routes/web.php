@@ -76,7 +76,15 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/leave', 'viewLeave')->name('admin.docleave');
     Route::put('/admin/leaves/{id}', 'updateLeaveStatus')->name('admin.leave.approve');
     Route::get('/admin/profile', 'viewAdminProfile')->name('admin.profile');
-    Route::get('/admin/,anageappointments', 'manageAppointment')->name('admin.manageappointments');
+    Route::get('/admin/manageappointments', 'manageAppointment')->name('admin.manageappointments');
+    Route::post('/admin/manageappointments/{id}/upsate-status', 'updateStatus')->name('admin.updatestatus');
+    Route::get('/admin/{id}/edit-appointment', 'editAppointments')->name('admin.editappointments');
+    Route::put('/admin/{id}/updateappointment', 'updateAppointment')->name('admin.updateappointments');
+    Route::delete('/admin/{id}/deleteappointments', 'destroyAppointments')->name('admin.deleteappointments');
+    Route::get('/admin/{id}/apppointments-recipts', 'generateRecipt')->name('admin.appointments-receipt');
+    Route::get('/admin/staff-list', 'staffIndex')->name('admin.stafflist');
+    Route::post('/admin/storestaff', 'storeStaff')->name('admin.storestaff');
+    Route::delete('/admin/{id}/staff-delete', 'destroyStaff')->name('admin.staff-delete');
 
 });
 

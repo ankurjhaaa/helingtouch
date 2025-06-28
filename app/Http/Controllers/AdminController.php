@@ -9,7 +9,9 @@ use App\Models\Gallery;
 use App\Models\Information;
 use App\Models\Leave;
 use App\Models\Seeting;
+use App\Models\Staff;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -113,7 +115,7 @@ class AdminController extends Controller
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
             $imagePath = $image->store('dp', 'public');
-        } 
+        }
 
         // Create User
         User::create([
@@ -421,7 +423,7 @@ class AdminController extends Controller
 
     public function updateLeaveStatus(Request $request, $id)
     {
-         $leave = Leave::findOrFail($id);
+        $leave = Leave::findOrFail($id);
         $request->validate([
             'status' => 'required|in:approved,rejected',
         ]);
@@ -431,36 +433,141 @@ class AdminController extends Controller
     }
 
     //admin profile work 
-    public function viewAdminProfile(){
+    public function viewAdminProfile()
+    {
         return view('admin.admin-profile');
 
 
     }
 
     //admin manage appointment work
-  public function manageAppointment(Request $request)
-{
-    $doctors = Doctor::with('user')->get();
+    public function manageAppointment(Request $request)
+    {
 
-    $appointments = Appointment::query()
-        ->when($request->doctor_id, function ($query) use ($request) {
-            $query->where('doctor_id', $request->doctor_id);
-        })
-        ->when($request->status, function ($query) use ($request) {
-            $query->where('status', $request->status);
-        })
-        ->when($request->date, function ($query) use ($request) {
-            $query->whereDate('date', $request->date); 
-        })
-        ->with(['doctor.user'])
-        ->latest()
-        ->paginate(15);
-   
+        $doctors = Doctor::with('user')->get();
+
+        $appointments = Appointment::query()
+            ->when($request->doctor_id, function ($query) use ($request) {
+                $query->where('doctor_id', $request->doctor_id);
+            })
+            ->when($request->status, function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when($request->date, function ($query) use ($request) {
+                $query->whereDate('date', $request->date);
+            })
+            ->with(['doctor.user'])
+            ->latest()
+            ->paginate(15);
 
 
-    return view('admin.manage-appointment', compact('doctors', 'appointments'));
-}
 
+
+
+        return view('admin.manage-appointment', compact('doctors', 'appointments'));
+    }
+    //update appointment status 
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:approved,pending,confirmed,cancelled',
+        ]);
+        $appointments = Appointment::findOrFail($id);
+        $appointments->status = $request->status;
+        $appointments->save();
+
+        return redirect()->back()->with('success', 'Appointment status updated successfully.');
+    }
+
+    public function editAppointments($id)
+    {
+        $appointments = Appointment::findOrFail($id);
+        $doctors = User::where('role', 'doctor')->get();
+        return view('admin.editappointments', compact('appointments', 'doctors'));
+    }
+
+    public function updateAppointment(Request $request, $id)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'doctor_id' => 'required|exists:users,id',
+            'status' => 'required|in:pending,approved,cancelled,rescheduled'
+
+        ]);
+
+        $appointment = Appointment::findOrFail($id);
+        $appointment->update([
+            'date' => $request->date,
+            'doctor_id' => $request->doctor_id,
+            'status' => $request->status
+        ]);
+        return redirect()->route('admin.manageappointments')->with('success', 'Appointment updated successfully!');
+    }
+
+    public function destroyAppointments($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->delete();
+        return redirect()->route('admin.manageappointments')->with('success', 'Appointment Delete Successfully');
+    }
+    public function generateRecipt($id)
+    {
+        $appoinments = Appointment::with('doctor')->findOrFail($id);
+        $pdf = Pdf::loadView('admin.appointment-receipt', compact('appoinments'));
+        return $pdf->download('Appointment_Receipt_' . $appoinments->id . '.pdf');
+    }
+
+    public function staffIndex()
+    {
+        $staffs = Staff::latest()->paginate(15);
+        return view('admin.staff-list', compact('staffs'));
+    }
+
+    public function storeStaff(Request $request)
+    {
+        $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:50',
+                'regex:/^[a-zA-Z\s]+$/', // Only letters and spaces
+            ],
+            'position' => [
+                'required',
+                'string',
+                'min:2',
+                'max:50',
+            ],
+            'gender' => [
+                'required',
+                'in:Male,Female,Other',
+            ],
+            'phone' => [
+                'required',
+                'regex:/^[0-9]{10,15}$/',
+                'unique:staff,phone', // optional: ensure no duplicate phones
+            ],
+            'joining_date' => [
+                'nullable',
+                'date',
+                'before_or_equal:today',
+            ],
+        ]);
+
+        Staff::create($request->all());
+        return redirect()->back()->with('success', 'Staff added successfully!');
+
+
+    }
+
+    public function destroyStaff($id)
+    {
+        $staff = Staff::findOrFail($id);
+        $staff->delete();
+        return redirect()->back()->with('success', 'Staff Delete Successfully');
+
+    }
 
 
 }

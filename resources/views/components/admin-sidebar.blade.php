@@ -46,6 +46,12 @@
                             Manage Appointments
                         </a>
                     </li>
+                     <li>
+                        <a href="{{ route('admin.stafflist') }}" class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200 gap-1">
+                            
+                            <i class="fas fa-users text-white-600 text-lg"></i>  Staff List
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('admin.seeting') }}" class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
