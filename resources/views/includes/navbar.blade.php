@@ -4,7 +4,7 @@
         <a href="{{ route('home') }}">
             <div class="flex items-center space-x-3">
                 <!-- Square Image -->
-                <img src="{{ asset('storage/images.jpg') }}" alt="Logo" class="w-10 h-10 object-cover" />
+                <img src="{{ asset('storage/logo/logo4.png') }}" alt="Logo" class="w-10 h-10 rounded-3xl object-cover" />
 
                 <!-- Text -->
                 <div>

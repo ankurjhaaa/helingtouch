@@ -14,7 +14,7 @@
 
         <!-- Logo -->
         <div class="flex justify-center">
-            <img src="https://i.ibb.co/1QZL4gY/logo.png" alt="logo" class="w-16 h-16 rounded-full border" />
+            <img src="{{ asset('storage/logo/logo4.png') }}" alt="logo" class="w-16 h-16 rounded-full border" />
         </div>
 
         <!-- Heading -->
