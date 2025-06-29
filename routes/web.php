@@ -105,6 +105,8 @@ Route::middleware(['auth', 'role:doctor'])->controller(DoctorController::class)-
 Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistController::class)->group(function () {
     Route::get('/recption/home', 'land')->name('receptionist.Dashboard');
     Route::get('/recption/profile', 'recptionprofile')->name('receptionist.profile');
+    Route::get('/recption/attendance', 'attendance')->name('receptionist.attendance');
+    Route::post('/recption/makeattendance', 'makeattendance')->name('receptionist.makeattendance');
     Route::get('/recption/addappointment/{id}', 'addappointment')->name('receptionist.addappointment');
     Route::post('/recption/insert-appointment', 'insertAppointment')->name('recption.insertAppointment');
     Route::post('/appointments/{id}/approve', 'approve')->name('appointments.approve');

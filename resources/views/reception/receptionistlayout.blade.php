@@ -58,6 +58,7 @@
                 <a href="{{ route('receptionist.Dashboard') }}"
                     class="px-4 py-2 hover:bg-indigo-700 rounded">Dashboard</a>
                 <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Appointments</a>
+                <a href="{{ route('receptionist.attendance') }}" class="px-4 py-2 hover:bg-indigo-700 rounded">Attandense</a>
                 <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Patients</a>
                 <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Messages</a>
                 <a href="{{ route('auth.logout') }}"

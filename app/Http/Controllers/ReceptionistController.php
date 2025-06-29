@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Attendance;
 use App\Models\Doctor;
 use App\Models\History;
+use App\Models\Staff;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,31 +14,49 @@ use Illuminate\Http\Request;
 class ReceptionistController extends Controller
 {
     public function land()
-{
-    $doctors = User::where('role', 'doctor')->get();
+    {
+        $doctors = User::where('role', 'doctor')->get();
 
-    $appointments = Appointment::with('doctor') // ← Yeh line add kari
-        ->whereDate('date', Carbon::today())
-        ->orderBy('id', 'desc')
-        ->get();
+        $appointments = Appointment::with('doctor') // ← Yeh line add kari
+            ->whereDate('date', Carbon::today())
+            ->orderBy('id', 'desc')
+            ->get();
 
-    $todaypatient = Appointment::whereDate('date', Carbon::today())->count();
+        $todaypatient = Appointment::whereDate('date', Carbon::today())->count();
 
-    $completedappointment = Appointment::whereDate('date', Carbon::today())
-        ->where('status', 'completed')
-        ->count();
+        $completedappointment = Appointment::whereDate('date', Carbon::today())
+            ->where('status', 'completed')
+            ->count();
 
-    $unpaidToday = Appointment::whereDate('date', Carbon::today())
-        ->where('ispaid', 0)
-        ->count();
+        $unpaidToday = Appointment::whereDate('date', Carbon::today())
+            ->where('ispaid', 0)
+            ->count();
 
-    return view('reception.receptionDashboard', compact('doctors', 'appointments', 'todaypatient', 'completedappointment', 'unpaidToday'));
-}
+        return view('reception.receptionDashboard', compact('doctors', 'appointments', 'todaypatient', 'completedappointment', 'unpaidToday'));
+    }
 
 
     public function recptionprofile()
     {
         return view('reception.receptionprofile');
+    }
+    public function attendance()
+    {
+        $allworkers = Staff::all();
+        return view('reception.attendance', compact('allworkers'));
+    }
+    public function makeattendance(Request $request)
+    {
+        $request->validate([
+            'staffid' => 'required',
+            'attmaker' => 'required',
+        ]);
+        Attendance::create([
+            'staffid' => $request->staffid,
+            'attmaker' => $request->attmaker,
+        ]);
+        return back()->with('success','Attendence successfully done');
+
     }
 
     public function addappointment($id)
@@ -84,9 +104,9 @@ class ReceptionistController extends Controller
             'status' => 'approved',
 
         ]);
-        
+
         History::create([
-            'chat' => $appointment->id ,
+            'chat' => $appointment->id,
             'doctorid' => '0',
             'useremail' => $request->email,
         ]);
@@ -138,7 +158,7 @@ class ReceptionistController extends Controller
 
         return redirect()->back()->with('success', 'Payment marked successfully!');
     }
-    public function resedule($id , Request $request)
+    public function resedule($id, Request $request)
     {
         $appointment = Appointment::findOrFail($id);
         $appointment->status = 'rescheduled';
