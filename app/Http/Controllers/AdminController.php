@@ -569,5 +569,47 @@ class AdminController extends Controller
 
     }
 
+    public function editStaff($id)
+    {
+        $staff = Staff::findOrFail($id);
+        return view('admin.edit-staff', compact('staff'));
+    }
+    public function updateStaff(Request $request, $id)
+    {
+        $staff = Staff::findOrFail($id);
+        $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:50',
+                'regex:/^[a-zA-Z\s]+$/', // Only letters and spaces
+            ],
+            'position' => [
+                'required',
+                'string',
+                'min:2',
+                'max:50',
+            ],
+            'gender' => [
+                'required',
+                'in:Male,Female,Other',
+            ],
+            'phone' => [
+                'required',
+                'regex:/^[0-9]{10,15}$/',
+                'unique:staff,phone,' . $staff->id, // Ignore current ID
+            ],
+            'joining_date' => [
+                'nullable',
+                'date',
+                'before_or_equal:today',
+            ],
+        ]);
+
+        $staff->update($request->all());
+        return redirect()->route('admin.stafflist')->with('success', 'Staff Update Successfully');
+    }
+
 
 }

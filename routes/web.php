@@ -85,6 +85,8 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::get('/admin/staff-list', 'staffIndex')->name('admin.stafflist');
     Route::post('/admin/storestaff', 'storeStaff')->name('admin.storestaff');
     Route::delete('/admin/{id}/staff-delete', 'destroyStaff')->name('admin.staff-delete');
+    Route::get('/admin/{id}/edit-Staff', 'editStaff')->name('admin.edit-staff');
+    Route::put('/admin/{id}/upadet-staff', 'updateStaff')->name('admin.staff-update');
 
 });
 

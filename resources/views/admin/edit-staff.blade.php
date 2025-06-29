@@ -10,7 +10,7 @@
             <div class="w-full max-w-full sm:ml-64 lg:max-w-3xl lg:mx-auto">
                 <h2 class="text-lg sm:text-xl font-bold text-blue-900 mb-3 sm:mb-4 flex items-center space-x-2">
                     <i class="fas fa-users text-white-600 text-lg"></i>
-                    <span> Add Staff </span>
+                    <span> Edit {{ $staff->name }} Data </span>
                 </h2>
 
                 <!-- Success and Error Messages -->
@@ -29,9 +29,10 @@
 
                 <!-- Add Doctor Form -->
                 <div class="bg-white rounded-xl shadow-xl p-3 sm:p-4 mb-4 sm:mb-6">
-                    <form action="{{ route('admin.storestaff') }}" method="POST"
+                    <form action="{{ route('admin.staff-update', $staff->id) }}" method="POST"
                         class="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                         @csrf
+                        @method('PUT')
 
 
 
@@ -39,7 +40,7 @@
                         <!-- Qualification -->
                         <div>
                             <label class="block text-xs font-medium text-gray-700 mb-1">Name</label>
-                            <input type="text" name="name" value="{{ old('name') }}"
+                            <input type="text" name="name" value="{{ $staff->name }}"
                                 class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200"
                                 placeholder="enter staff name">
                             @error('name')
@@ -50,7 +51,7 @@
                         <!-- Experience -->
                         <div>
                             <label class="block text-xs font-medium text-gray-700 mb-1">Position</label>
-                            <input type="text" name="position" value="{{ old('position') }}"
+                            <input type="text" name="position" value="{{ $staff->position }}"
                                 class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200"
                                 placeholder="enter position name">
                             @error('position')
@@ -64,9 +65,9 @@
                             <select name="gender"
                                 class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200">
                                 <option value="">Select Gender</option>
-                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
-                                <option value="Other" {{ old('Other') == 'Other' ? 'selected' : '' }}>Other</option>
+                                <option value="Male" {{ old('gender', $staff->gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ old('gender', $staff->gender) == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Other" {{ old('Other', $staff->gender) == 'Other' ? 'selected' : '' }}>Other</option>
 
                             </select>
                             @error('gender')
@@ -77,7 +78,7 @@
                         <!-- Consultation Fee -->
                         <div>
                             <label class="block text-xs font-medium text-gray-700 mb-1">Phone Number</label>
-                            <input type="phone" name="phone" value="{{ old('phone') }}"
+                            <input type="phone" name="phone" value="{{ $staff->phone }}"
                                 class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200"
                                 placeholder="eg:- 9999999999">
                             @error('phone')
@@ -88,7 +89,7 @@
                         <!-- Specialist -->
                         <div>
                             <label class="block text-xs font-medium text-gray-700 mb-1">Joining Date</label>
-                            <input type="date" name="joining_date" value="{{ old('joining_date') }}"
+                            <input type="date" name="joining_date" value="{{ $staff->joining_date }}"
                                 class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200">
                             @error('joining_date')
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
@@ -108,102 +109,7 @@
                     </form>
                 </div>
 
-                <!-- Doctor List -->
-                <div class="mt-4 sm:mt-6">
-                    <h2 class="text-lg sm:text-xl font-bold text-blue-900 mb-3 flex items-center space-x-2">
-                        <i class="fas fa-users text-white-600 text-lg"></i>
-                        <span>Staff List</span>
-                    </h2>
-
-                    @if(session('success'))
-                        <div
-                            class="bg-green-50 border border-green-200 text-green-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <div
-                        class="overflow-x-auto overflow-y-auto max-h-[400px] bg-white shadow-xl rounded-xl w-full max-w-full lg:max-w-3xl mx-auto">
-                        <table class="min-w-full divide-y divide-gray-200 text-xs">
-                            <thead class="bg-blue-100 text-blue-900 sticky top-0 z-10">
-                                <tr>
-                                    <th class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm">#</th>
-                                    <th class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm">Name
-                                    </th>
-                                    <th class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm">
-                                        Position</th>
-                                    <th
-                                        class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm hidden md:table-cell">
-                                        Gender</th>
-                                    <th
-                                        class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm hidden lg:table-cell">
-                                        Phone Number</th>
-                                    <th class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm">Joining
-                                        Date</th>
-
-                                    <th class="px-1 py-1 sm:px-2 sm:py-1 text-center font-semibold text-xs sm:text-sm ">
-                                        Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                @foreach ($staffs as $index => $staff)
-                                    <tr class="hover:bg-blue-50 transition-colors duration-200">
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">{{ $index + 1  }}</td>
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 font-medium text-gray-800 text-xs sm:text-sm">
-                                            {{ $staff->name }}
-                                        </td>
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">position</td>
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm hidden md:table-cell">
-                                            {{ $staff->gender }}
-                                        </td>
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm hidden lg:table-cell">
-                                            {{ $staff->phone }}
-                                        </td>
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">
-                                            {{ $staff->joining_date ? \Carbon\Carbon::parse($staff->joining_date)->format('d M Y') : 'N/A' }}
-                                        </td>
-
-
-
-
-                                        <td
-                                            class="px-1 py-1 mt-2 sm:px-2 sm:py-1 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2">
-                                            <!-- Edit Button -->
-                                            <a href="{{ route('admin.edit-staff', $staff->id) }}"
-                                          
-                                                class="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition duration-200 shadow text-sm">
-                                                Edit
-                                            </a>
-                                            <form action="{{ route('admin.staff-delete', $staff->id) }}" method="POST"
-                                                class="inline-block" onsubmit="return confirm('Are you sure?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="bg-red-600 text-white px-3 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-red-700 transition duration-200 shadow-md text-sm min-w-[60px] text-center hover:cursor-pointer">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                       
-                                    </tr>
-
-                                @endforeach
-
-
-
-
-
-                            </tbody>
-                        </table>
-                        <div class="mt-4">
-                            {{ $staffs->links() }}
-                        </div>
-
-
-
-
-                    </div>
-                </div>
+                
             </div>
 
             <!-- JavaScript for User Selection -->
