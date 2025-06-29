@@ -86,12 +86,12 @@
                             @enderror
                         </div>
 
-                        <!-- Specialist -->
+                        <!-- fee -->
                         <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Joining Date</label>
-                            <input type="date" name="joining_date" value="{{ $staff->joining_date }}"
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Fee</label>
+                            <input type="number" name="fee" value="{{ $staff->fee }}"
                                 class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200">
-                            @error('joining_date')
+                            @error('fee')
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -103,7 +103,7 @@
                         <div class="sm:col-span-2">
                             <button type="submit"
                                 class="mt-2 w-full sm:w-auto bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-1 rounded-lg shadow-md hover:bg-blue-700 transition duration-200 font-medium hover:shadow-lg text-xs sm:text-sm">
-                                Add Staff
+                                Update Staff Detail
                             </button>
                         </div>
                     </form>

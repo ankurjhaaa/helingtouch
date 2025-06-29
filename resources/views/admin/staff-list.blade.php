@@ -125,6 +125,16 @@
                             @enderror
                         </div>
 
+                        <!-- fee -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">fee</label>
+                            <input type="number" name="fee" value="{{ old('fee') }}"
+                                class="w-full px-1 py-1 sm:px-2 sm:py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200">
+                            @error('fee')
+                                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
 
 
@@ -216,6 +226,7 @@
                                         Phone Number</th>
                                     <th class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm">Joining
                                         Date</th>
+                                    <th class="px-1 py-1 sm:px-2 sm:py-1 text-left font-semibold text-xs sm:text-sm">Fee</th>
 
                                     <th class="px-1 py-1 sm:px-2 sm:py-1 text-center font-semibold text-xs sm:text-sm ">
                                         Actions</th>
@@ -237,6 +248,9 @@
                                         </td>
                                         <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">
                                             {{ $staff->joining_date ? \Carbon\Carbon::parse($staff->joining_date)->format('d M Y') : 'N/A' }}
+                                        </td>
+                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">
+                                            {{ $staff->fee }}
                                         </td>
 
 

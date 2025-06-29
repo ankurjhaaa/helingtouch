@@ -559,6 +559,11 @@ class AdminController extends Controller
                 'date',
                 'before_or_equal:today',
             ],
+            'fee' => [
+                'required',
+                
+            ],
+            
         ]);
 
         Staff::create($request->all());
@@ -607,10 +612,9 @@ class AdminController extends Controller
                 'regex:/^[0-9]{10,15}$/',
                 'unique:staff,phone,' . $staff->id, // Ignore current ID
             ],
-            'joining_date' => [
-                'nullable',
-                'date',
-                'before_or_equal:today',
+            'fee' => [
+                'required',
+                
             ],
         ]);
 
