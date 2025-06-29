@@ -179,12 +179,14 @@ class AdminController extends Controller
     {
         $doctorCount = Doctor::count();
         $countReceptionst = User::where('role', 'receptionist')->count();
-        $totalUsers = User::whereIn('role', ['admin', 'doctor', 'receptionist'])->count();
+    
         $countApointments = Appointment::whereDate('created_at', Carbon::today())->count();
         $totalDepartments = Department::count();
         $appointments = Appointment::with('doctor.user')->latest()->take(20)->get();
+        $staff = Staff::count();
+        
 
-        return view('admin.adminDashboard', compact('doctorCount', 'countReceptionst', 'totalUsers', 'countApointments', 'totalDepartments', 'appointments'));
+        return view('admin.adminDashboard', compact('doctorCount', 'countReceptionst', 'staff', 'countApointments', 'totalDepartments', 'appointments'));
     }
     //doctor manage logic 
     public function manageDoctor()
@@ -517,10 +519,14 @@ class AdminController extends Controller
         return $pdf->download('Appointment_Receipt_' . $appoinments->id . '.pdf');
     }
 
-    public function staffIndex()
+    public function staffIndex(Request $request)
+
     {
-        $staffs = Staff::latest()->paginate(15);
-        return view('admin.staff-list', compact('staffs'));
+         $position = Staff::select('position')->distinct()->pluck('position');
+        $filter = $request->get('position');
+        $search = $request->get('search');
+        $staffs = Staff::query()->when($filter, fn($q) => $q->where('position', $filter))->when($search, fn($q) => $q->where('name', 'like', '%'.$search.'%'))->latest()->paginate(15);
+        return view('admin.staff-list', compact('staffs', 'position', 'filter', 'search'));
     }
 
     public function storeStaff(Request $request)
@@ -571,6 +577,7 @@ class AdminController extends Controller
 
     public function editStaff($id)
     {
+      
         $staff = Staff::findOrFail($id);
         return view('admin.edit-staff', compact('staff'));
     }

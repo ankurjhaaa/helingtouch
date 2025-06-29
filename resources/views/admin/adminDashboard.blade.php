@@ -35,7 +35,7 @@
                     </div>
                     <div
                         class="bg-white p-4 rounded-xl shadow-lg text-center transform hover:scale-105 transition-all duration-300">
-                        <div class="text-2xl sm:text-3xl font-bold text-purple-600 count" data-target="{{ $totalUsers }}">0
+                        <div class="text-2xl sm:text-3xl font-bold text-purple-600 count" data-target="{{  $staff }}">0
                         </div>
                         <div class="text-xs sm:text-sm text-gray-600">Support Staff</div>
                     </div>

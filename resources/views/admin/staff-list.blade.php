@@ -6,26 +6,56 @@
         <x-admin-sidebar />
 
         <!-- Main Content -->
-        <main class="flex-1 p-2 sm:p-3 md:p-4 lg:ms-[350px] sm:w-[70%] overflow-x-hidden">
+        <main class="flex-1 p-2  sm:p-3 md:p-4 lg:ms-[350px] sm:w-[70%] overflow-x-hidden">
             <div class="w-full max-w-full sm:ml-64 lg:max-w-3xl lg:mx-auto">
-                <h2 class="text-lg sm:text-xl font-bold text-blue-900 mb-3 sm:mb-4 flex items-center space-x-2">
+                <h2 class="text-lg mt-7   sm:text-xl font-bold text-blue-900 mb-3 sm:mb-4 flex items-center space-x-2">
+
+
+
+
+
                     <i class="fas fa-users text-white-600 text-lg"></i>
                     <span> Add Staff </span>
-                </h2>
 
-                <!-- Success and Error Messages -->
-                @if (session('success'))
-                    <div
-                        class="bg-green-50 border border-green-200 text-green-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                @if (session('error'))
-                    <div
-                        class="bg-red-50 border border-red-200 text-red-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm">
-                        {{ session('error') }}
-                    </div>
-                @endif
+
+                </h2>
+               
+
+
+
+
+             <!-- Success Message -->
+@if (session('success'))
+    <div 
+        x-data="{ show: true }" 
+        x-init="setTimeout(() => show = false, 4000)" 
+        x-show="show"
+        x-transition
+        class="bg-green-50 border border-green-200 text-green-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm relative"
+    >
+        <span>{{ session('success') }}</span>
+        <button @click="show = false" class="absolute top-1 right-2 text-green-700 hover:text-red-500 text-sm">
+            &times;
+        </button>
+    </div>
+@endif
+
+<!-- Error Message -->
+@if (session('error'))
+    <div 
+        x-data="{ show: true }" 
+        x-init="setTimeout(() => show = false, 4000)" 
+        x-show="show"
+        x-transition
+        class="bg-red-50 border border-red-200 text-red-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm relative"
+    >
+        <span>{{ session('error') }}</span>
+        <button @click="show = false" class="absolute top-1 right-2 text-red-700 hover:text-red-900 text-sm">
+            &times;
+        </button>
+    </div>
+@endif
+
 
                 <!-- Add Doctor Form -->
                 <div class="bg-white rounded-xl shadow-xl p-3 sm:p-4 mb-4 sm:mb-6">
@@ -114,13 +144,59 @@
                         <i class="fas fa-users text-white-600 text-lg"></i>
                         <span>Staff List</span>
                     </h2>
+                     <div class="w-full p-2 text-center bg-pink-100 border border-pink-300 rounded-lg  sm:p-4 dark:bg-gray-800 dark:border-gray-700 mb-3 shadow-sm">
+                    <form method="GET" class="max-w-3xl mx-auto">
+                        <div class="flex flex-wrap sm:flex-nowrap w-full items-center justify-center">
+                            <!-- Dropdown -->
+                            <select name="position"
+                                class="text-center flex align-center justify-center w-40 py-2.5 px-4 text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500 ">
+                                <option value="" class="text-center">All Positions</option>
+                                @foreach ( $position as $pos )
+                                 <option value="{{ $pos }} {{ $filter == $pos ? 'selected' : '' }}"  class="text-center">{{ ucfirst($pos) }}</option>
+                                
+                                @endforeach
+                               
+                               
+                               
+                               
+                            </select>
 
-                    @if(session('success'))
-                        <div
-                            class="bg-green-50 border border-green-200 text-green-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm">
-                            {{ session('success') }}
+                            <!-- Search Input -->
+                            <input type="text" name="search" placeholder="Search by name"
+                                class="block p-2.5 w-full sm:w-80 text-sm text-gray-900 bg-gray-50 border-t border-b border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"  value="{{ $search }}" />
+
+                            <!-- Search Button -->
+                            <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-4 py-2 border border-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Search
+                            </button>
+
+                            <!-- Reset Button -->
+                            <a href="{{ route('admin.stafflist') }}"
+                                class="text-gray-800 bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-4 py-2 rounded-e-lg border border-gray-300 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 dark:focus:ring-gray-500">
+                                Reset
+                            </a>
                         </div>
-                    @endif
+                    </form>
+                </div>
+
+                           @if(session('success'))
+                                <div 
+                                    x-data="{ show: true }" 
+                                    x-init="setTimeout(() => show = false, 4000)" 
+                                    x-show="show"
+                                    x-transition
+                                    class="bg-green-50 border border-green-200 text-green-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg                             shadow-md mb-3 sm:mb-4 transition-all duration-300 text-xs sm:text-sm relative"
+                                >
+                                    <span>{{ session('success') }}</span>
+                                    
+                                    <!-- Dismiss Button -->
+                                    <button @click="show = false" class="absolute top-1 right-2 text-green-700 hover:text-red-500                             text-sm">
+                                        &times;
+                                    </button>
+                                </div>
+                           @endif
+
 
                     <div
                         class="overflow-x-auto overflow-y-auto max-h-[400px] bg-white shadow-xl rounded-xl w-full max-w-full lg:max-w-3xl mx-auto">
@@ -146,13 +222,13 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                @foreach ($staffs as $index => $staff)
+                                @forelse ($staffs as $index => $staff)
                                     <tr class="hover:bg-blue-50 transition-colors duration-200">
                                         <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">{{ $index + 1  }}</td>
                                         <td class="px-1 py-1 sm:px-2 sm:py-1 font-medium text-gray-800 text-xs sm:text-sm">
                                             {{ $staff->name }}
                                         </td>
-                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">position</td>
+                                        <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm">{{ $staff->position }}</td>
                                         <td class="px-1 py-1 sm:px-2 sm:py-1 text-xs sm:text-sm hidden md:table-cell">
                                             {{ $staff->gender }}
                                         </td>
@@ -170,7 +246,6 @@
                                             class="px-1 py-1 mt-2 sm:px-2 sm:py-1 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2">
                                             <!-- Edit Button -->
                                             <a href="{{ route('admin.edit-staff', $staff->id) }}"
-                                          
                                                 class="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition duration-200 shadow text-sm">
                                                 Edit
                                             </a>
@@ -184,12 +259,19 @@
                                                 </button>
                                             </form>
                                         </td>
-                                       
+
                                     </tr>
 
-                                @endforeach
+                                    @empty
+                                     <tr>
+                                         <td colspan="7" class="text-center py-4 text-gray-500 text-sm">
+                                             <i class="fas fa-user-slash text-red-500 mr-2"></i> No staff found.
+                                         </td>
+                                     </tr>
 
+                                @endforelse
 
+                              
 
 
 
