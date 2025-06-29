@@ -119,25 +119,7 @@
 
     <!-- AOS Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({
-            once: true,
-            offset: 100,
-        });
-
-        // Dropdown Toggle
-        const userBtn = document.getElementById('user-menu-button');
-        const dropdown = document.getElementById('user-dropdown');
-
-        document.addEventListener('click', (e) => {
-            if (userBtn.contains(e.target)) {
-                dropdown.classList.toggle('hidden');
-            } else {
-                dropdown.classList.add('hidden');
-            }
-        });
-    </script>
+    
         <!-- JavaScript -->
     <script>
         // Sidebar Toggle
