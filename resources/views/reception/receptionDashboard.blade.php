@@ -183,13 +183,14 @@
                                     @endif
 
                                     <!-- Re-Schedule Button -->
-            <td>
-                <button type="button"
-                onclick="toggleModal({{ $appointment->id }}, true)"
-                class="text-blue-600 hover:underline">
-                Re-Schedule
-            </button>
-            </td>
+                                         <td>
+                                          <button type="button"
+                                             onclick="toggleModal('{{ $appointment->id }}', true)"
+                                             class="text-blue-600 hover:underline">
+                                             Re-Schedule
+                                           </button>
+
+                                           </td>
             <!-- Modal -->
     <div id="modal-{{ $appointment->id }}"
         class="fixed inset-0 bg-black/30 bg-opacity-40 z-50 hidden items-center justify-center">
@@ -231,11 +232,12 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="button"
-                        onclick="toggleModal({{ $appointment->id }}, false)"
-                        class="px-4 py-2 border rounded mr-2">
-                        Cancel
-                    </button>
+                  <button type="button"
+    onclick="toggleModal('{{ $appointment->id }}', false)"
+    class="px-4 py-2 border rounded mr-2">
+    Cancel
+</button>
+
                 </div>
             </form>
         </div>
