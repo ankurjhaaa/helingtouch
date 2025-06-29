@@ -124,7 +124,7 @@
                     <div class="sm:col-span-2">
                         <label class="block text-xs font-medium text-gray-700 mb-1">Bio</label>
                         <textarea name="bio" rows="3"
-                            class="w-full px-1 py-1 sm:px-2 sm:py-1 border @error('bio') border-red-500 @enderror border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200">{{ old('bio') }}</textarea>
+                            class="w-full px-1 py-1 sm:px-2 sm:py-1 border @error('bio')  @enderror border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-gray-50 text-gray-700 text-xs transition duration-200">{{ old('bio') }}</textarea>
                         @error('bio')
                             <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                         @enderror
