@@ -7,6 +7,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HoscontactController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\UserappointmentController;
 use Illuminate\Support\Facades\Route;
@@ -87,6 +88,8 @@ Route::middleware(['auth', 'role:admin'])->controller(AdminController::class)->g
     Route::delete('/admin/{id}/staff-delete', 'destroyStaff')->name('admin.staff-delete');
     Route::get('/admin/{id}/edit-Staff', 'editStaff')->name('admin.edit-staff');
     Route::put('/admin/{id}/upadet-staff', 'updateStaff')->name('admin.staff-update');
+    Route::get('/admin/givesalary', 'givesalary')->name('admin.givesalary');
+    Route::post('/admin/insertgivesalary', 'insertgivesalary')->name('admin.insertgivesalary');
 
 });
 
@@ -127,3 +130,6 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
+
+// --------------------------- razorpay ka route ----------------------------------------
+Route::post('/payment', [RazorpayController::class, 'payment'])->name('payment');

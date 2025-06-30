@@ -82,7 +82,7 @@ class ReceptionistController extends Controller
             'doctor_id' => ['required', 'exists:doctors,user_id'],
             'date' => ['required', 'date'],
             'fee' => ['required', 'numeric'],
-            'ispaid' => ['required'],
+            
         ]);
         $appointment = Appointment::create([
             'name' => $request->name,
@@ -100,7 +100,7 @@ class ReceptionistController extends Controller
             'pincode' => $request->pincode,
             'city' => $request->city,
             'state' => $request->state,
-            'ispaid' => $request->ispaid,
+            'ispaid' => 0,
             'status' => 'approved',
 
         ]);

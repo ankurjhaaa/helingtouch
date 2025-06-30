@@ -145,7 +145,7 @@
                                                     </svg> Delete
                                                 </button>
                                             </form>
-                                             <a href="{{ route('admin.appointments-receipt', $a->id) }}" target="_blank"
+                                             <a href="{{ route('receipt.download', $a->id) }}" target="_blank"
                                             class="bg-blue-600 text-white text-xs px-3 py-1 rounded hover:bg-blue-700 transition">
                                             PDF Receipt
                                         </a>

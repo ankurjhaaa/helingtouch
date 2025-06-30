@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Gallery;
 use App\Models\History;
+use App\Models\Revenue;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -120,12 +121,20 @@ class HomeController extends Controller
             'city' => $request->city,
             'state' => $request->state,
 
-
         ]);
         History::create([
             'chat' => $appointment->id,
             'doctorid' => '0',
             'useremail' => $request->email,
+        ]);
+        Revenue::create([
+            'amount' => $appointment->fee,
+            'email' => $appointment->email,
+            'status' => 'success',
+            'paymenttype' => 'debit',
+            'paymentid' => 'ertryvgbhnj',
+            'paymentmode' => 'online',
+            'description' => 'ezdxrcfgvhbjkn',
         ]);
 
         // Redirect to confirmation page with session data

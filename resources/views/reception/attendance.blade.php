@@ -44,7 +44,7 @@
                                     $today = Carbon::today();
                                     $isPresent = Attendance::where('staffid', $allworker->id)
                                         ->whereDate('created_at', $today)
-                                        ->exists();
+                                        ->exists();  
                                 @endphp
 
                                 <tr class="border-t hover:bg-blue-50 transition-all duration-200">

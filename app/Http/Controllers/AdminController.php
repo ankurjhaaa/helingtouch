@@ -8,6 +8,7 @@ use App\Models\Doctor;
 use App\Models\Gallery;
 use App\Models\Information;
 use App\Models\Leave;
+use App\Models\Revenue;
 use App\Models\Seeting;
 use App\Models\Staff;
 use App\Models\User;
@@ -179,12 +180,12 @@ class AdminController extends Controller
     {
         $doctorCount = Doctor::count();
         $countReceptionst = User::where('role', 'receptionist')->count();
-    
+
         $countApointments = Appointment::whereDate('created_at', Carbon::today())->count();
         $totalDepartments = Department::count();
         $appointments = Appointment::with('doctor.user')->latest()->take(20)->get();
         $staff = Staff::count();
-        
+
 
         return view('admin.adminDashboard', compact('doctorCount', 'countReceptionst', 'staff', 'countApointments', 'totalDepartments', 'appointments'));
     }
@@ -520,12 +521,11 @@ class AdminController extends Controller
     }
 
     public function staffIndex(Request $request)
-
     {
-         $position = Staff::select('position')->distinct()->pluck('position');
+        $position = Staff::select('position')->distinct()->pluck('position');
         $filter = $request->get('position');
         $search = $request->get('search');
-        $staffs = Staff::query()->when($filter, fn($q) => $q->where('position', $filter))->when($search, fn($q) => $q->where('name', 'like', '%'.$search.'%'))->latest()->paginate(15);
+        $staffs = Staff::query()->when($filter, fn($q) => $q->where('position', $filter))->when($search, fn($q) => $q->where('name', 'like', '%' . $search . '%'))->latest()->paginate(15);
         return view('admin.staff-list', compact('staffs', 'position', 'filter', 'search'));
     }
 
@@ -561,9 +561,9 @@ class AdminController extends Controller
             ],
             'fee' => [
                 'required',
-                
+
             ],
-            
+
         ]);
 
         Staff::create($request->all());
@@ -582,7 +582,7 @@ class AdminController extends Controller
 
     public function editStaff($id)
     {
-      
+
         $staff = Staff::findOrFail($id);
         return view('admin.edit-staff', compact('staff'));
     }
@@ -614,7 +614,7 @@ class AdminController extends Controller
             ],
             'fee' => [
                 'required',
-                
+
             ],
         ]);
 
@@ -623,4 +623,27 @@ class AdminController extends Controller
     }
 
 
+    public function givesalary()
+    {
+        $Allstaffs = Staff::all();
+        return view('admin.givesalary',compact('Allstaffs'));
+    }
+    public function insertgivesalary(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required',
+            'email' => 'required',
+            
+        ]);
+        
+        Revenue::create([
+            'amount' => $request->amount,
+            'email' => $request->email,
+            'status' => 'success',
+            'paymenttype' => 'debit',
+            'paymentmode' => 'offline',
+            'description' => $request->description,
+        ]);
+        return back()->with('success','payment successfull');
+    }
 }

@@ -110,6 +110,9 @@
 
                                 <div class="text-[#a77c52] font-medium">Doctor</div>
                                 <div class="text-[#5b3920] font-bold">Dr. {{ session('appointment')->name }}</div>
+
+                                <div class="text-[#a77c52] font-medium">Payment Status</div>
+                                <div class="text-[#5b3920] font-bold">Unpaid</div>
                             </div>
                         </div>
 
@@ -119,13 +122,10 @@
                                 class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] hover:from-[#916538] hover:to-[#b98960] text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base shadow-lg hover:scale-105 transition">
                                 Download Receipt
                             </a>
-                            
-                            
-                                <a href="{{ route('home') }}"
-                                    class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">
-                                    Back To Home
-                                </a>
-                            
+                            <a href="{{ route('home') }}"
+                                class="border-2 border-[#a77c52] text-[#a77c52] hover:bg-[#a77c52] hover:text-white px-6 py-2 rounded-md font-medium text-sm sm:text-base transition shadow-lg">
+                                Back To Home
+                            </a>
                         </div>
                     </div>
                 </div>

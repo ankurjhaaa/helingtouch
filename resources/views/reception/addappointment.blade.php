@@ -269,20 +269,7 @@
                                 <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div>
-                            <label class="block font-medium text-gray-700 mb-1">Is Paid </label>
-                            <select name="ispaid"
-                                class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#015551] "
-                                value="{{ old('ispaid') }}">
-                                <option value="">Is Paid</option>
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-
-                            </select>
-                            @error('ispaid')
-                                <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
-                            @enderror
-                        </div>
+                        
                         <div class="md:col-span-2">
                             <label class="block font-medium text-gray-700 mb-1">Notes for Doctor (डॉक्टर के लिए नोट्स) <span
                                     class="text-sm text-gray-500">(Optional) (वैकल्पिक)</span></label>

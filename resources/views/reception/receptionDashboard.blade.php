@@ -107,11 +107,87 @@
                                         </td>
                                         <td class="px-4 py-2">
                                             @if($paidstatus === 0)
-                                                <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST"
-                                                    onsubmit="return confirm('Confirm payment?')">
-                                                    @csrf
-                                                    <button type="submit" class="text-blue-600 hover:underline">Make Payment</button>
-                                                </form>
+                                                <!-- Trigger Button -->
+                                                <button onclick="openPaymentModal()" class="text-blue-600 hover:underline">Make Payment</button>
+
+                                                <!-- Payment Modal -->
+                                                <div id="paymentModal" class="fixed inset-0 bg-black/30 bg-opacity-50 z-50 hidden" style="display: none;">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center">
+            <h3 class="text-lg font-semibold mb-4">Choose Payment Method</h3>
+
+            <!-- Offline Payment Form -->
+            <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" class="mb-3">
+                @csrf
+                <button type="submit"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition">
+                    Pay Offline
+                </button>
+            </form>
+
+            <!-- Online Payment -->
+            <button id="rzp-button1"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition mb-2">
+                Pay Online
+            </button>
+                        <form action="{{ route('payment') }}" method="POST" hidden id="payment-form">
+                            @csrf
+                            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                            
+                            <input type="hidden" name="description" value="{{ $appointment->id }}">
+                            <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+                        </form>
+        <script>
+        var options = {
+            "key": "{{ env('RAZORPAY_KEY') }}",
+            "amount": {{ $appointment->fee * 100 }}, // Laravel me ₹ ko paise me convert karke bhej rahe
+            "currency": "INR",
+            "name": "E-Class",
+            "description": "Course Purchase - {{ $appointment->name }}",
+            "image": "https://picsum.photos/80?random=2",
+            "handler": function (response) {
+                document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                document.getElementById('payment-form').submit();
+            },
+            "theme": {
+                "color": "#6366f1"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button1').onclick = function (e) {
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+            <!-- Cancel Button -->
+            <button onclick="closePaymentModal()"
+                class="text-gray-500 hover:text-red-600 text-sm mt-2">
+                Cancel
+            </button>
+        </div>
+    </div>
+                                                </div>
+
+                                                <!-- Scripts -->
+                                                <script>
+    function openPaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        modal.style.display = 'block';
+    }
+
+    function closePaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        modal.style.display = 'none';
+    }
+
+    function handleOnlinePayment() {
+        closePaymentModal();
+        alert("Redirecting to online payment gateway...");
+        Optionally: window.location.href = "{{ route('appointments.pay', $appointment->id) }}";
+    }
+                                                </script>
+
 
                                             @else
 
@@ -191,8 +267,8 @@
                                            </button>
 
                                            </td>
-            <!-- Modal -->
-    <div id="modal-{{ $appointment->id }}"
+                                    <!-- Modal -->
+                                    <div id="modal-{{ $appointment->id }}"
         class="fixed inset-0 bg-black/30 bg-opacity-40 z-50 hidden items-center justify-center">
         <div class="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 class="text-lg font-bold mb-4 text-center">Choose a New Date</h2>
@@ -241,9 +317,9 @@
                 </div>
             </form>
         </div>
-    </div>
+                                    </div>
     
-    <script>
+                                    <script>
     function toggleModal(id, show) {
         const modal = document.getElementById('modal-' + id);
         if (show) {
@@ -254,7 +330,7 @@
             modal.classList.remove('flex');
         }
     }
-</script>
+                                    </script>
 
                                 </tr>
                             @endforeach

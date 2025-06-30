@@ -21,6 +21,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('admin.givesalary') }}" class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
+                            <i class="fas fa-building mr-3"></i>
+                            Give Salary
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.manageDoctor') }}" class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                             <i class="fas fa-user-md mr-3"></i>
                             Manage Doctors
