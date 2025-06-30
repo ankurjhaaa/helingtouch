@@ -84,7 +84,7 @@
                                     data-name="{{ strtolower($appointment->name) }}">
                                     <td class="px-4 py-2">{{ $appointment->id }}</td>
                                     <td class="px-4 py-2">{{ $appointment->name }}</td>
-                                    <td class="px-4 py-2">Dr. Neha</td>
+                                    <td class="px-4 py-2">{{ $appointment->doctor->user->name }}</td>
                                     <td class="px-4 py-2">{{ $appointment->time }}</td>
                                     @php
                                         $status = $appointment->status;
