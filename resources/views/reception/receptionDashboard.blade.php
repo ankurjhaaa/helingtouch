@@ -142,8 +142,8 @@
             "key": "{{ env('RAZORPAY_KEY') }}",
             "amount": {{ $appointment->fee * 100 }}, // Laravel me ₹ ko paise me convert karke bhej rahe
             "currency": "INR",
-            "name": "E-Class",
-            "description": "Course Purchase - {{ $appointment->name }}",
+            "name": "Healing Touch",
+            "description": "For Appoint - {{ $appointment->name }}",
             "image": "https://picsum.photos/80?random=2",
             "handler": function (response) {
                 document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
