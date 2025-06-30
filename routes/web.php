@@ -118,12 +118,12 @@ Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistControl
     Route::post('/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
     Route::post('/appointments/{id}/pay', 'markPaid')->name('appointments.pay');
     Route::post('/appointments/{id}/resedule', 'resedule')->name('reception.resedule');
-
+    
 
 });
 
 
-Route::controller(AuthController::class)->group(function () {
+    Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login')->name('login.submit');
     Route::get('/logout', 'logoutUser')->name('auth.logout');
