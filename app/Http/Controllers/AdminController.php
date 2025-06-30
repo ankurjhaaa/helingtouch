@@ -640,7 +640,7 @@ class AdminController extends Controller
             'amount' => $request->amount,
             'email' => $request->email,
             'status' => 'success',
-            'paymenttype' => 'debit',
+            'paymenttype' => 'debit', 
             'paymentmode' => 'offline',
             'description' => $request->description,
         ]);

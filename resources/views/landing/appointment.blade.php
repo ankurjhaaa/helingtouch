@@ -182,11 +182,11 @@
                                 </a>
                             @elseif($onLeavetomorrow)
                                 <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                   🛑 On Leave
+                                   🛑 On Leave Tomorrow
                                 </button>
                             @else
                                 <button class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
-                                   🛑 Absent Today
+                                   🛑 Absent Tomorrow
                                 </button>
                             @endif
                             
