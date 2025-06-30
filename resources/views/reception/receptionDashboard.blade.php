@@ -205,7 +205,7 @@
                                         <td class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">{{ $appointment->status }}
                                         </td>
                                         <td class="px-4 py-2">
-                                            <h2 class="text-blue-600 ">Ab Kuchh Nahi Karna</h2>
+                                            <h2 class="text-blue-600 ">Done</h2>
                                         </td>
                                     @elseif($status === 'cancelled')
                                         <td class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 ">{{ $appointment->status }}
