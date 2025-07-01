@@ -12,13 +12,10 @@ return new class extends Migration {
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('doctor_id');
+            $table->integer('doctor_id'); 
             $table->date('leave_date');
             $table->string('reason')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-           
-
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
             $table->timestamps();
         });
     }

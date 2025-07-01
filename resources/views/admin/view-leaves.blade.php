@@ -60,7 +60,7 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Dr. {{ $leave->doctor->user->name }}
+                                        Dr. {{ $leave->doctor_id }}
                                     </th>
                                     <td class="px-6 py-4">
                                         {{  $leave->leave_date  }}

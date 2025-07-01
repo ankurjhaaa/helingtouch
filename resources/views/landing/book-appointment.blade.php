@@ -177,7 +177,7 @@
                         $isAvailableToday = $doctor->$todayDay ?? 0;
 
                         $tomorrow = Carbon::tomorrow()->toDateString();
-                        $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $doctor->id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
+                        $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $doctor->user_id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
                     @endphp
 
                     @if ($isAvailableToday && !$onLeavetomorrow)

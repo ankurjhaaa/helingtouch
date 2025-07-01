@@ -63,7 +63,7 @@
 
             <!-- Table -->
             <div class="overflow-x-auto bg-white rounded shadow">
-                <h2 class="text-lg font-semibold p-4 border-b">Upcoming Appointments</h2>
+                <h2 class="text-lg font-semibold p-4 border-b">Upcoming Appointments Today</h2>
 
                 <div class="max-h-[500px] overflow-y-auto">
                     <table class="min-w-full text-sm" id="appointmentTable">
@@ -71,11 +71,12 @@
                             <tr>
                                 <th class="px-4 py-3 whitespace-nowrap">#</th>
                                 <th class="px-4 py-3 whitespace-nowrap">Patient</th>
+                                <th class="px-4 py-3 whitespace-nowrap">email</th>
                                 <th class="px-4 py-3 whitespace-nowrap">Doctor</th>
                                 <th class="px-4 py-3 whitespace-nowrap">Time</th>
                                 <th class="px-4 py-3 whitespace-nowrap">Status</th>
                                 <th class="px-4 py-3 whitespace-nowrap">Actions</th>
-                                <th class="px-4 py-3 whitespace-nowrap">Re-Shedule</th>
+                                <!-- <th class="px-4 py-3 whitespace-nowrap">Re-Shedule</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -84,254 +85,15 @@
                                     data-name="{{ strtolower($appointment->name) }}">
                                     <td class="px-4 py-2">{{ $appointment->id }}</td>
                                     <td class="px-4 py-2">{{ $appointment->name }}</td>
+                                    <td class="px-4 py-2">{{ $appointment->email }}</td>
                                     <td class="px-4 py-2">{{ $appointment->doctor->user->name }}</td>
                                     <td class="px-4 py-2">{{ $appointment->time }}</td>
-                                    @php
-                                        $status = $appointment->status;
-                                        $paidstatus = $appointment->ispaid;
-                                    @endphp
-
-                                    @if($status === 'pending')
-                                        <td class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
-                                            {{ $appointment->status }}</td>
-                                        <td class="px-4 py-2">
-                                            <form action="{{ route('appointments.approve', $appointment->id) }}" method="POST"
-                                                onsubmit="return confirm('Are you sure you want to approve this appointment?')">
-                                                @csrf
-                                                <button type="submit" class="text-blue-600 hover:underline">To - Approve</button>
-                                            </form>
-                                        </td>
-
-                                    @elseif($status === 'approved')
-                                        <td class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">{{ $appointment->status }}
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            @if($paidstatus === 0)
-                                                <!-- Trigger Button -->
-                                                <button onclick="openPaymentModal()" class="text-blue-600 hover:underline">Make Payment</button>
-
-                                                <!-- Payment Modal -->
-                                                <div id="paymentModal" class="fixed inset-0 bg-black/30 bg-opacity-50 z-50 hidden" style="display: none;">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center">
-            <h3 class="text-lg font-semibold mb-4">Choose Payment Method</h3>
-
-            <!-- Offline Payment Form -->
-            <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" class="mb-3">
-                @csrf
-                <button type="submit"
-                    class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition">
-                    Pay Offline
-                </button>
-            </form>
-
-            <!-- Online Payment -->
-            <button id="rzp-button1"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition mb-2">
-                Pay Online
-            </button>
-                        <form action="{{ route('payment') }}" method="POST" hidden id="payment-form">
-                            @csrf
-                            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
-                            
-                            <input type="hidden" name="description" value="{{ $appointment->id }}">
-                            <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
-                        </form>
-        <script>
-        var options = {
-            "key": "{{ env('RAZORPAY_KEY') }}",
-            "amount": {{ $appointment->fee * 100 }}, // Laravel me ₹ ko paise me convert karke bhej rahe
-            "currency": "INR",
-            "name": "Healing Touch",
-            "description": "For Appoint - {{ $appointment->name }}",
-            "image": "https://picsum.photos/80?random=2",
-            "handler": function (response) {
-                document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
-                document.getElementById('payment-form').submit();
-            },
-            "theme": {
-                "color": "#6366f1"
-            }
-        };
-
-        var rzp1 = new Razorpay(options);
-        document.getElementById('rzp-button1').onclick = function (e) {
-            rzp1.open();
-            e.preventDefault();
-        }
-    </script>
-            <!-- Cancel Button -->
-            <button onclick="closePaymentModal()"
-                class="text-gray-500 hover:text-red-600 text-sm mt-2">
-                Cancel
-            </button>
-        </div>
-    </div>
-                                                </div>
-
-                                                <!-- Scripts -->
-                                                <script>
-    function openPaymentModal() {
-        const modal = document.getElementById('paymentModal');
-        modal.style.display = 'block';
-    }
-
-    function closePaymentModal() {
-        const modal = document.getElementById('paymentModal');
-        modal.style.display = 'none';
-    }
-
-    function handleOnlinePayment() {
-        closePaymentModal();
-        alert("Redirecting to online payment gateway...");
-        Optionally: window.location.href = "{{ route('appointments.pay', $appointment->id) }}";
-    }
-                                                </script>
-
-
-                                            @else
-
-                                                <form action="{{ route('appointments.in_progress', $appointment->id) }}" method="POST"
-                                                    onsubmit="return confirm('Mark this appointment as In Progress?')">
-                                                    @csrf
-                                                    <button type="submit" class="text-blue-600 hover:underline">To - In
-                                                        Progress</button>
-                                                </form>
-                                            @endif
-
-                                        </td>
-
-                                    @elseif($status === 'completed')
-                                        <td class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">{{ $appointment->status }}
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <h2 class="text-blue-600 ">Done</h2>
-                                        </td>
-                                    @elseif($status === 'cancelled')
-                                        <td class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 ">{{ $appointment->status }}
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <button class="text-blue-600 hover:underline">Check-in</button>
-                                        </td>
-                                    @elseif($status === 'rescheduled')
-                                        <td class="px-2 py-1 text-xs rounded bg-purple-100 text-purple-700">
-                                            {{ $appointment->status }}</td>
-                                        <td class="px-4 py-2">
-                                            <button class="text-blue-600 hover:underline">Check-in</button>
-                                        </td>
-                                    @elseif($status === 'in_progress')
-                                        <td class="px-2 py-1 text-xs rounded bg-indigo-100 text-indigo-700">
-                                            {{ $appointment->status }}</td>
-                                        <td class="px-4 py-2">
-                                            <form action="{{ route('appointments.checkin', $appointment->id) }}" method="POST"
-                                                onsubmit="return confirm('Mark as checked-in?')">
-                                                @csrf
-                                                <button type="submit" class="text-blue-600 hover:underline">Check-in</button>
-                                            </form>
-                                        </td>
-
-                                    @elseif($status === 'checked_in')
-                                        <td class="px-2 py-1 text-xs rounded bg-teal-100 text-teal-700 ">{{ $appointment->status }}
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <form action="{{ route('appointments.complete', $appointment->id) }}" method="POST"
-                                                onsubmit="return confirm('Mark this appointment as completed?')">
-                                                @csrf
-                                                <button type="submit" class="text-blue-600 hover:underline">Complete</button>
-                                            </form>
-                                        </td>
-
-                                    @elseif($status === 'no_show')
-                                        <td class="px-2 py-1 text-xs rounded bg-gray-200 text-gray-700 ">{{ $appointment->status }}
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <button class="text-blue-600 hover:underline">Check-in</button>
-                                        </td>
-                                    @elseif($status === 'rejected')
-                                        <td class="px-2 py-1 text-xs rounded bg-rose-100 text-rose-700">{{ $appointment->status }}
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <button class="text-blue-600 hover:underline">Check-in</button>
-                                        </td>
-                                    @else
-                                        <span
-                                            class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-600 capitalize">{{ $status }}</span>
-                                    @endif
-
-                                    <!-- Re-Schedule Button -->
-                                         <td>
-                                          <button type="button"
-                                             onclick="toggleModal('{{ $appointment->id }}', true)"
-                                             class="text-blue-600 hover:underline">
-                                             Re-Schedule
-                                           </button>
-
-                                           </td>
-                                    <!-- Modal -->
-                                    <div id="modal-{{ $appointment->id }}"
-        class="fixed inset-0 bg-black/30 bg-opacity-40 z-50 hidden items-center justify-center">
-        <div class="bg-white p-6 rounded-lg w-full max-w-md">
-            <h2 class="text-lg font-bold mb-4 text-center">Choose a New Date</h2>
-
-            <form action="{{ route('reception.resedule', $appointment->id) }}" method="POST" onsubmit="return confirm('Ok To Re Sedule ?')">
-                @csrf
-
-                <!-- Date Buttons -->
-                <div class="grid grid-cols-3 gap-3 mb-4">
-                    @php
-                        $dayKeys = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-                        $today = now();
-                    @endphp
-
-                    @for($i = 0; $i < 15; $i++)
-                        @php
-                            $date = $today->copy()->addDays($i);
-                            $dayName = strtolower($date->format('l'));
-                            $label = $date->format('d M');
-                            $value = $date->format('Y-m-d');
-                            $isAvailable = optional($appointment->doctor)?->{$dayName} ?? 0;
-                        @endphp
-
-                        @if($isAvailable)
-                            <button type="submit" name="date" value="{{ $value }}"
-                                class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
-                                {{ $label }}
-                            </button>
-                        @else
-                            <button type="button"
-                                class="px-3 py-2 bg-gray-200 text-gray-500 rounded cursor-not-allowed text-sm"
-                                disabled>
-                                {{ $label }} (Absent)
-                            </button>
-                        @endif
-                    @endfor
-                </div>
-
-                <div class="flex justify-end">
-                  <button type="button"
-    onclick="toggleModal('{{ $appointment->id }}', false)"
-    class="px-4 py-2 border rounded mr-2">
-    Cancel
-</button>
-
-                </div>
-            </form>
-        </div>
-                                    </div>
-    
-                                    <script>
-    function toggleModal(id, show) {
-        const modal = document.getElementById('modal-' + id);
-        if (show) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        } else {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-    }
-                                    </script>
-
+                                    <td class="px-4 py-2">{{ $appointment->status }}</td>
+                                    <td class="px-4 py-2">
+                                        <a href="{{ route('reception.appointmentview',$appointment->id) }}" class="text-red-600 text-lg hover:underline">
+                                            View
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -408,14 +170,14 @@
                     use Carbon\Carbon;
                 @endphp
         @foreach($doctors as $doctor)
-            @php
+                        @php
                 $availableDay = \App\Models\Doctor::where('user_id', $doctor->id)->first();
                 $todayDay = strtolower(Carbon::today()->format('l')); // e.g., 'monday', 'sunday'
                 $isAvailableToday = $availableDay->$todayDay ?? 0;
 
                 $todayabs = Carbon::today()->toDateString();
-                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
-            @endphp
+                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->user_id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
+                        @endphp
 
                            @if ($isAvailableToday && !$onLeavetomorrow)
                             <a href="{{ route('receptionist.addappointment', $doctor->id) }}" class="flex items-center p-3 bg-gray-100 rounded hover:bg-gray-200 transition">
@@ -435,14 +197,15 @@
                                 <p class="font-medium">{{ $doctor->name }}</p>
                                 <p class="text-sm text-gray-600">ortho</p>
                                 <p class="text-sm text-red-500">Doctor Absent Today</p>
-                                </div>
-                                </a>
-                    @endif
+                            </div>
+                        </a>
+                        @endif
 
         @endforeach
             </div>
         </div>
     </div>
+    
 
     <script>
         function toggleDoctorModal(show) {

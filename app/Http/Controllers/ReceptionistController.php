@@ -55,7 +55,7 @@ class ReceptionistController extends Controller
             'staffid' => $request->staffid,
             'attmaker' => $request->attmaker,
         ]);
-        return back()->with('success','Attendence successfully done');
+        return back()->with('success', 'Attendence successfully done');
 
     }
 
@@ -82,7 +82,7 @@ class ReceptionistController extends Controller
             'doctor_id' => ['required', 'exists:doctors,user_id'],
             'date' => ['required', 'date'],
             'fee' => ['required', 'numeric'],
-            
+
         ]);
         $appointment = Appointment::create([
             'name' => $request->name,
@@ -112,7 +112,7 @@ class ReceptionistController extends Controller
         ]);
 
         // Redirect to confirmation page with session data
-        return redirect()->route('successappointment')->with('appointment', $appointment);
+        return redirect()->route('reception.appointmentview', $appointment->id);
     }
 
     public function approve($id)
@@ -149,6 +149,14 @@ class ReceptionistController extends Controller
 
         return redirect()->back()->with('success', 'Appointment marked as Completed!');
     }
+    public function cancle($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->status = 'cancelled';
+        $appointment->save();
+
+        return redirect()->back()->with('success', 'Appointment marked as Cancle!');
+    }
 
     public function markPaid($id)
     {
@@ -163,9 +171,42 @@ class ReceptionistController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->status = 'rescheduled';
         $appointment->date = $request->date;
+        $appointment->time = $request->time;
         $appointment->save();
 
         return redirect()->back()->with('success', 'Appointment rescheduled marked as Completed!');
+    }
+    public function followup($id, Request $request)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment = Appointment::create([
+            'name' => $appointment->name,
+            'email' => $appointment->email,
+            'phone' => $appointment->phone,
+            'doctor_id' => $appointment->doctor_id,
+            'date' => $request->date,
+            'message' => $appointment->message,
+            'time' => $request->time,
+
+            'fee' => $appointment->fee,
+            'gender' => $appointment->gender,
+            'age' => $appointment->age,
+            'address' => $appointment->address,
+            'pincode' => $appointment->pincode,
+            'city' => $appointment->city,
+            'state' => $appointment->state,
+            'ispaid' => 2,
+            'status' => 'no_show',
+
+        ]);
+
+        return redirect()->route('reception.appointmentview', $appointment->id)->with('success', 'Your New Followed Up Receipt , Please Print Out To Not Dikkat Hoga Doctor ko dikhane Me !');
+    }
+
+    public function appointmentview($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        return view('reception.appointmentview', compact('appointment'));
     }
 
 }

@@ -112,12 +112,15 @@ Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistControl
     Route::post('/recption/makeattendance', 'makeattendance')->name('receptionist.makeattendance');
     Route::get('/recption/addappointment/{id}', 'addappointment')->name('receptionist.addappointment');
     Route::post('/recption/insert-appointment', 'insertAppointment')->name('recption.insertAppointment');
+    Route::get('/recption/appointmentview/{id}', 'appointmentview')->name('reception.appointmentview');
     Route::post('/appointments/{id}/approve', 'approve')->name('appointments.approve');
     Route::post('/appointments/{id}/in-progress', 'markInProgress')->name('appointments.in_progress');
     Route::post('/appointments/{id}/check-in', 'markCheckedIn')->name('appointments.checkin');
     Route::post('/appointments/{id}/complete', 'markCompleted')->name('appointments.complete');
     Route::post('/appointments/{id}/pay', 'markPaid')->name('appointments.pay');
     Route::post('/appointments/{id}/resedule', 'resedule')->name('reception.resedule');
+    Route::post('/appointments/{id}/followup', 'followup')->name('reception.followup');
+    Route::post('/appointments/{id}/cancle', 'cancle')->name('appointments.cancle');
     
 
 });

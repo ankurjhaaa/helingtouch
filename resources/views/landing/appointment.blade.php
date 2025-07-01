@@ -172,7 +172,7 @@
                                 $isAvailableToday = $availableDay->$todayDay ?? 0;
 
                                 $tomorrow = Carbon::tomorrow()->toDateString();
-                                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
+                                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->user_id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
                             @endphp
                             <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
                             @if($isAvailableToday && !$onLeavetomorrow)

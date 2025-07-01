@@ -113,14 +113,14 @@
 
                             $availableDay = \App\Models\Doctor::where('user_id', $doctor->user_id)->first();
                             $todayabs = Carbon::today()->toDateString();
-                            $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
+                            $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->user_id)->where('leave_date', $todayabs)->where('status', 'approved')->exists();
                         @endphp
 
                         @if ($isAvailableToday && !$onLeavetomorrow)
                             <span>Appointments for: <span class="text-[#9b714a]">{{ Carbon::today()->format('j F') }}
                                     (Today)</span></span>
                         @else
-                            <span>Doctor is Absent Tomorrow <span class="text-[#9b714a]">
+                            <span>Doctor is Absent Today <span class="text-[#9b714a]">
                                     | Change Doctor</span></span>
                         @endif
 
@@ -269,7 +269,7 @@
                                 <small class="text-red-500 text-sm mt-1">{{ $message }}</small>
                             @enderror
                         </div>
-                        
+
                         <div class="md:col-span-2">
                             <label class="block font-medium text-gray-700 mb-1">Notes for Doctor (डॉक्टर के लिए नोट्स) <span
                                     class="text-sm text-gray-500">(Optional) (वैकल्पिक)</span></label>

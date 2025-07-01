@@ -30,7 +30,7 @@ class DoctorController extends Controller
 
     public function markCompleted($id)
     {
-        $appointment = \App\Models\Appointment::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
         $appointment->status = 'completed';
         $appointment->save();
@@ -40,7 +40,7 @@ class DoctorController extends Controller
     public function showLeaveForm()
     {
         $doctor = auth()->user()->doctor; // Assuming the user is authenticated and has a doctor profile
-        $leaves = Leave::where('doctor_id', $doctor->id)->orderByDesc('leave_date')->get();
+        $leaves = Leave::where('doctor_id', $doctor->user_id)->orderByDesc('leave_date')->get();
 
         return view('doctor.leave-form', compact('leaves'));
     }
@@ -52,7 +52,7 @@ class DoctorController extends Controller
         ]);
 
         Leave::create([
-            'doctor_id' => auth()->user()->doctor->id, // Assuming the user is authenticated and has a doctor profile
+            'doctor_id' => auth()->user()->doctor->user_id, // Assuming the user is authenticated and has a doctor profile
             'leave_date' => $request->leave_date,
             'reason' => $request->reason,
             'status' => 'pending', // Default status

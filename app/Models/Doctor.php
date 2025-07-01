@@ -7,28 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Doctor extends Model
 {
     protected $fillable = [
-    'user_id',
-    'department_id',
-    'qualification',
-    'experience',
-    'bio',
-    'photo',
-    'status',
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-    'fee',
-    'specialist'
-];
+        'user_id',
+        'department_id',
+        'qualification',
+        'experience',
+        'bio',
+        'photo',
+        'status',
+        'sunday',
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'fee',
+        'specialist'
+    ];
 
 
     public function user()
     {
-        return $this->belongsTo(User::class , 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function department()
@@ -40,8 +40,12 @@ class Doctor extends Model
     {
         return $this->hasMany(Appointment::class);
     }
-    public function leaves()
+    // In Doctor.php
+public function leaves()
 {
-    return $this->hasMany(Leave::class);
+    return $this->hasMany(Leave::class, 'doctor_id', 'user_id'); // doctor ka real ID
 }
+
+
+    
 }

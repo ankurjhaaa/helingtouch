@@ -31,6 +31,7 @@ class RazorpayController extends Controller
                 
             ]);
             Appointment::where('id', $appointmentid)->update(['ispaid' => 1]);
+            Appointment::where('id', $appointmentid)->update(['status' => 'in_progress']);
             History::create([
             'chat' => $appointmentid,
             'doctorid' => '0',

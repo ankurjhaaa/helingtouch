@@ -418,7 +418,7 @@ class AdminController extends Controller
         return back()->with('success', 'Information saved successfully!');
     }
 
-    public function viewLeave()
+    public function viewLeave() 
     {
         $leaves = Leave::with('doctor.user')->latest()->get();
         return view('admin.view-leaves', compact('leaves'));

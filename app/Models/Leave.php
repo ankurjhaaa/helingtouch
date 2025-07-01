@@ -12,8 +12,11 @@ class Leave extends Model
         'reason',
         'status',
     ];
+    // app/Models/Appointment.php
+
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->hasOne(\App\Models\Doctor::class, 'user_id', 'doctor_id');
     }
+
 }
