@@ -120,7 +120,7 @@ class AdminController extends Controller
 
         // Create User
         User::create([
-            'name' => $request->name,
+            'name' => $request->name, 
             'email' => $request->email,
             'password' => $request->password,
             'role' => $request->role,

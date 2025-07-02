@@ -43,6 +43,13 @@
                     <button
                         class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] text-white px-6 py-2 rounded-full shadow hover:scale-105 transition-transform text-sm md:text-base">
                         + Book Appointment
+                        @if(session('successs'))
+                            <p class="text-green-600">{{ session('successs') }}</p>
+                        @endif
+
+                        @if(session('error'))
+                            <p class="text-red-600">{{ session('error') }}</p>
+                        @endif
                     </button>
                 </div>
 
@@ -60,11 +67,11 @@
             <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 xl:col-span-2 border border-[#d5bfa5]">
                 <h2 class="text-xl md:text-2xl font-bold text-[#5a3921] mb-6">Find Your Appointment</h2>
 
-                <form action="" method="get">
+                <form action="" method="get" onsubmit="showLoader()">
                     <!-- Search Controls -->
                     <div class="flex flex-col sm:flex-row sm:items-end gap-4 mb-6">
                         <div class="flex-grow relative">
-                            <input type="text" name="findappointment"
+                            <input type="text" name="findappointment" value="{{ old('findappointment') }}"
                                 class="w-full border border-[#d5bfa5] bg-[#fff8ee] text-[#5a3921] rounded-md py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-[#a77c52] placeholder-[#a78b6d]"
                                 placeholder="Enter phone or email...">
                         </div>
@@ -88,7 +95,7 @@
                         </thead>
                         <tbody id="appointmentBody" class="bg-[#fffaf2] divide-y divide-[#ead6b9]">
 
-                        
+
 
                             <!-- Dummy rows -->
                             <!-- Row 1 -->
@@ -116,13 +123,22 @@
 
                                         <a href="{{ route('receipt.download', $allappointment->id) }}"
                                             class="text-[#7d5a3d] hover:underline">Download</a>
-                                        <button class="text-[#ff0404] hover:underline font-medium cursor-pointer transition"
-                                            onclick="openModal('otp-modal-{{ $allappointment->id }}')">
-                                            Cancel
-                                        </button>
+                                        @if ($allappointment->status != 'cancelled')
+                                            <form action="{{ route('landing.insertotp', $allappointment->id) }}" method="post"
+                                                onsubmit="showLoader()">
+                                                @csrf
+                                                <button
+                                                    class="text-[#ff0404] hover:underline font-medium cursor-pointer transition">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        @endif
+
 
                                     </td>
                                 </tr>
+
+
 
                                 <!-- ---------------------------------- niche recipt view dikha raha hu appoinment me selcted appoint ment ka ----------------------------- -->
                                 <!-- Modal -->
@@ -222,67 +238,113 @@
                                     }
                                 </script>
 
-
-                                <!-- ---------------------------------- niche otp verify dikha raha hu appoinment me selcted appoint ment ka ----------------------------- -->
-                                <div id="otp-modal-{{ $allappointment->id }}"
-                                    class="fixed inset-0 z-50 items-center justify-center bg-black/30 backdrop-blur-sm p-2"
-                                    style="display: none;">
-                                    <div
-                                        class="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative">
-
-                                        <!-- Header -->
-                                        <div class="text-center mb-6">
-                                            <h2 class="text-xl font-semibold text-red-600">Cancel Appointment</h2>
-                                            <p class="text-sm text-gray-500">Enter the OTP sent to your mobile to confirm
-                                                cancellation.</p>
-                                        </div>
-
-                                        <!-- OTP Form -->
-                                        <form>
-                                            <label for="otp" class="block text-sm font-medium text-gray-700 mb-1">Enter
-                                                OTP {{ $allappointment->id }}</label>
-                                            <input type="text" id="otp" name="otp"
-                                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-                                                placeholder="6-digit OTP">
-
-                                            <!-- Submit & Cancel -->
-                                            <div class="mt-6 flex justify-end gap-3">
-                                                <button type="button"
-                                                    onclick="closeModal('otp-modal-{{ $allappointment->id }}')"
-                                                    class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100">
-                                                    Close
-                                                </button>
-                                                <button type="submit"
-                                                    class="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-500">
-                                                    Confirm Cancel
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <script>
-                                    function openModal(id) {
-                                        const modal = document.getElementById(id);
-                                        modal.style.display = 'flex';
-                                    }
-
-                                    function closeModal(id) {
-                                        const modal = document.getElementById(id);
-                                        modal.style.display = 'none';
-                                    }
-                                </script>
-
-
                             @empty
 
                             @endforelse
 
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ---------------------------------- niche otp verify dikha raha hu appoinment me selcted appoint ment ka ----------------------------- -->
+    @if(session('success'))
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <div class="bg-white/90 backdrop-blur-lg border border-gray-200 shadow-2xl rounded-2xl w-full max-w-sm p-6">
+
+                <!-- Icon -->
+                <div class="flex justify-center mb-4">
+                    <div class="bg-red-100 text-red-600 rounded-full p-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M13 16h-1v-4h-1m1-4h.01M12 9v2m0 4v.01m0 0h.01M12 20.5a8.5 8.5 0 100-17 8.5 8.5 0 000 17z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <h2 class="text-xl font-bold text-center text-gray-800 mb-2">OTP Verification {{ session('success') }}</h2>
+                <p class="text-sm text-center text-gray-600 mb-4">Enter the 6-digit OTP sent to your mobile number.</p>
+
+                <!-- Error Message -->
+                <p id="otp-error" class="text-red-500 text-center text-sm mb-3 hidden">Please enter all 4 digits</p>
+
+                <!-- OTP Form -->
+                <form action="{{ route('landing.verifyotp', session('success')) }}" method="POST"
+                    onsubmit="return validateOTP()">
+                    @csrf
+                    <div class="flex justify-center gap-2 mb-4">
+                        <input type="text" maxlength="1" name="otp1"
+                            class="otp-input w-10 h-12 text-center border border-gray-500 rounded-lg text-lg focus:ring-2 focus:ring-red-400 focus:outline-none" />
+                        <input type="text" maxlength="1" name="otp2"
+                            class="otp-input w-10 h-12 text-center border border-gray-500 rounded-lg text-lg focus:ring-2 focus:ring-red-400 focus:outline-none" />
+                        <input type="text" maxlength="1" name="otp3"
+                            class="otp-input w-10 h-12 text-center border border-gray-500 rounded-lg text-lg focus:ring-2 focus:ring-red-400 focus:outline-none" />
+                        <input type="text" maxlength="1" name="otp4"
+                            class="otp-input w-10 h-12 text-center border border-gray-500 rounded-lg text-lg focus:ring-2 focus:ring-red-400 focus:outline-none" />
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex justify-between items-center mt-6">
+                        <button type="button" class="text-sm text-gray-500 hover:text-gray-700 transition">Resend OTP</button>
+                        <button id="verify-btn" type="submit"
+                            class="bg-red-600 text-white px-6 py-2 rounded-lg font-medium shadow-md transition opacity-50 cursor-not-allowed"
+                            disabled>
+                            Verify
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const verifyBtn = document.getElementById('verify-btn');
+            const errorText = document.getElementById('otp-error');
+
+            otpInputs.forEach((input, idx) => {
+                input.addEventListener('input', () => {
+                    if (input.value.length === 1 && idx < otpInputs.length - 1) {
+                        otpInputs[idx + 1].focus();
+                    }
+                    checkOtpFilled();
+                });
+            });
+
+            function checkOtpFilled() {
+                let filled = 0;
+                otpInputs.forEach(inp => {
+                    if (inp.value.trim() !== '') filled++;
+                });
+
+                if (filled === 4) {
+                    verifyBtn.disabled = false;
+                    verifyBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    errorText.classList.add('hidden');
+                } else {
+                    verifyBtn.disabled = true;
+                    verifyBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+
+            function validateOTP() {
+                let complete = true;
+                otpInputs.forEach(inp => {
+                    if (inp.value.trim() === '') complete = false;
+                });
+
+                if (!complete) {
+                    errorText.classList.remove('hidden');
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
+
+    @endif
 
 @endsection

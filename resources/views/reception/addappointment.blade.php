@@ -140,7 +140,8 @@
 
 
 
-                <form method="post" action="{{ route('recption.insertAppointment') }}" class="space-y-6">
+                <form method="post" action="{{ route('recption.insertAppointment') }}" class="space-y-6"
+                    onsubmit="showLoader()">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Time Selection -->

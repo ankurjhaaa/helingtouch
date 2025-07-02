@@ -686,7 +686,7 @@
                 <h3 class="text-lg font-semibold mb-4">Choose Payment Method</h3>
 
                 <!-- Offline Payment Form -->
-                <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" class="mb-3">
+                <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" class="mb-3" onsubmit="return confirm('Mark as Payment Confirm?')">
                     @csrf
                     <button type="submit"
                         class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition">

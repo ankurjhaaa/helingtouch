@@ -40,6 +40,16 @@
 
 <body>
     @include('includes.navbar')
+    <div id="loaderOverlay" class="fixed inset-0 bg-black/30 bg-opacity-40 hidden items-center justify-center z-50">
+        <div class="loader border-4 border-white border-t-[#9b714a] rounded-full w-12 h-12 animate-spin"></div>
+    </div>
+    <script>
+        function showLoader() {
+            const overlay = document.getElementById('loaderOverlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+        }
+    </script>
     @section('content')
 
     @show

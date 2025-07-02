@@ -34,7 +34,7 @@
                         </div>
                     @endif
 
-                    <form class="space-y-4" method="POST" action="{{ route('admin.adddepartment') }}" onsubmit="disableSubmitButton()">
+                    <form class="space-y-4" method="POST" action="{{ route('admin.adddepartment') }}" onsubmit="showLoader()">
                         @csrf
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Department Name</label>

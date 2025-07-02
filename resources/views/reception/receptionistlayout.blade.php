@@ -7,12 +7,20 @@
     <title>@yield('title') | {{ env('APP_NAME') }}</title>
     @vite('resources/css/app.css')
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
-
+    <div id="loaderOverlay" class="fixed inset-0 bg-black/30 bg-opacity-40 hidden items-center justify-center z-50">
+        <div class="loader border-4 border-white border-t-[#9b714a] rounded-full w-12 h-12 animate-spin"></div>
+    </div>
+    <script>
+        function showLoader() {
+            const overlay = document.getElementById('loaderOverlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+        }
+    </script>
     <!-- Top Navbar -->
     <nav class="bg-indigo-700 shadow-md px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <!-- Left -->
@@ -27,15 +35,14 @@
         <div class="relative">
             <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
                 <span class="text-sm font-medium text-white">{{ Auth::user()->name }}</span>
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
 
             <!-- Dropdown -->
-            <div id="user-dropdown"
-                class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2 z-50">
+            <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2 z-50">
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                 <a href="{{ route('auth.logout') }}"
@@ -59,11 +66,11 @@
                 <a href="{{ route('receptionist.Dashboard') }}"
                     class="px-4 py-2 hover:bg-indigo-700 rounded">Dashboard</a>
                 <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Appointments</a>
-                <a href="{{ route('receptionist.attendance') }}" class="px-4 py-2 hover:bg-indigo-700 rounded">Attandense</a>
+                <a href="{{ route('receptionist.attendance') }}"
+                    class="px-4 py-2 hover:bg-indigo-700 rounded">Attandense</a>
                 <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Patients</a>
                 <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Messages</a>
-                <a href="{{ route('auth.logout') }}"
-                    class="px-4 py-2 hover:bg-red-700 text-red-300 rounded">Logout</a>
+                <a href="{{ route('auth.logout') }}" class="px-4 py-2 hover:bg-red-700 text-red-300 rounded">Logout</a>
             </nav>
         </aside>
 

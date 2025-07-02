@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
         'role', 
         'phone', 
-        'photo'
+        'photo',
+        'remember_token',
     ];
      public function doctor()
     {

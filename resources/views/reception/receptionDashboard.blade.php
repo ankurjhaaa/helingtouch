@@ -90,7 +90,7 @@
                                     <td class="px-4 py-2">{{ $appointment->time }}</td>
                                     <td class="px-4 py-2">{{ $appointment->status }}</td>
                                     <td class="px-4 py-2">
-                                        <a href="{{ route('reception.appointmentview',$appointment->id) }}" class="text-red-600 text-lg hover:underline">
+                                        <a href="{{ route('reception.appointmentview',$appointment->id) }}" class="text-red-600 text-lg hover:underline" >
                                             View
                                         </a>
                                     </td>
