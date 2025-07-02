@@ -17,7 +17,7 @@
                 </div>
 
                 <!-- Right Side Link -->
-                <a href="{{ route('manageappointments') }}"
+                <a href="{{ route('manageappointments') }}" onclick="showLoader()"
                     class="flex items-center gap-1 text-xs sm:text-sm hover:underline text-white justify-start sm:justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 sm:h-5 w-4 sm:w-5" fill="none" stroke="currentColor"
                         stroke-width="2" viewBox="0 0 24 24">
@@ -176,7 +176,7 @@
                             @endphp
                             <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
                             @if($isAvailableToday && !$onLeavetomorrow)
-                                <a href="{{ route('bookAppointment', $doctor->id) }}"
+                                <a href="{{ route('bookAppointment', $doctor->id) }}" onclick="showLoader()"
                                     class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
                                    🟢 Select Doctor
                                 </a>

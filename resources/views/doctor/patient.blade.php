@@ -99,7 +99,7 @@
                     <p class="text-gray-600 text-sm mb-1">Add Note To Patient </p>
                     
                     <!-- 📎 Upload Form -->
-                    <form action="{{ route('doctor.insertuserhistory') }}" method="post" enctype="multipart/form-data"
+                    <form action="{{ route('doctor.insertuserhistory') }}" method="post" enctype="multipart/form-data" onsubmit="showLoader()"
                         class=" flex gap-2 p-3 z-50">
                         @csrf
                         <input type="hidden" name="doctorid" value="{{ Auth::user()->id }}">
@@ -179,9 +179,9 @@
 
 
                     <!-- Back to List Button -->
-                    <a href="{{ route('doctor.dashboard') }}"
+                    <a href="{{ route('doctor.dashboard') }}" onclick="showLoader()"
                         class="inline-block bg-[#015551] text-white px-5 py-2 rounded hover:bg-[#01403f] transition">
-                        Back to List
+                        Back to Home
                     </a>
                 </div>
 

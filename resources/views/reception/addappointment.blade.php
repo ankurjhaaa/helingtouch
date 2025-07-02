@@ -21,7 +21,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
-                        <span><a href="{{ route('appointment') }}">Change Doctor</a></span>
+                        <span><a href="{{ route('receptionist.Dashboard') }}" onclick="showLoader()">Change Doctor</a></span>
                     </button>
                 </div>
 
@@ -285,7 +285,7 @@
                     </div>
 
                     <div class="flex justify-between mt-6">
-                        <a href="{{ route('receptionist.Dashboard') }}"
+                        <a href="{{ route('receptionist.Dashboard') }}" onclick="showLoader()"
                             class="border border-gray-300 px-6 py-2 rounded flex items-center space-x-1 text-gray-700 hover:bg-gray-100">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -302,8 +302,8 @@
                                 </svg>
                             </button>
                         @else
-                            <a href="{{ route('appointment') }}"
-                                class="bg-[#9b714a] hover:bg-[#825c3e] text-white px-6 py-2 rounded flex items-center space-x-1">
+                            <a href="{{ route('receptionist.Dashboard') }}" 
+                                class="bg-[#9b714a] hover:bg-[#825c3e] text-white px-6 py-2 rounded flex items-center space-x-1" onclick="showLoader()">
                                 <span>Change Doctor</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />

@@ -8,7 +8,7 @@
     <nav>
         <ul class="space-y-2">
             <li>
-                <a href="{{ route('admin.addrole') }}"
+                <a href="{{ route('admin.addrole') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -17,14 +17,14 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.department') }}"
+                <a href="{{ route('admin.department') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <i class="fas fa-building mr-3"></i>
                     Manage Department
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.givesalary') }}"
+                <a href="{{ route('admin.givesalary') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <i class="fas fa-money-bill-wave mr-3"></i>
 
@@ -32,28 +32,28 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.manageDoctor') }}"
+                <a href="{{ route('admin.manageDoctor') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <i class="fas fa-user-md mr-3"></i>
                     Manage Doctors
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.docleave') }}"
+                <a href="{{ route('admin.docleave') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <i class="fas fa-info-circle mr-3"></i>
                     Doctors Leaves Info
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.gallery') }}"
+                <a href="{{ route('admin.gallery') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <i class="fas fa-images mr-3"></i>
                     Manage Gallery
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.manageappointments') }}"
+                <a href="{{ route('admin.manageappointments') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -64,14 +64,14 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.stafflist') }}"
+                <a href="{{ route('admin.stafflist') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200 gap-1">
 
                     <i class="fas fa-users text-white-600 text-lg"></i> Staff List
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.seeting') }}"
+                <a href="{{ route('admin.seeting') }}" onclick="showLoader()"
                     class="flex items-center px-6 py-3 hover:bg-blue-700 hover:scale-105 transition-all duration-200">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -111,7 +111,7 @@
             </button>
             <!-- Title -->
             <div class="text-lg sm:text-xl font-extrabold flex items-center space-x-2">
-                <a href="{{ route('admin.Dashboard') }}"
+                <a href="{{ route('admin.Dashboard') }}" onclick="showLoader()"
                     class="flex items-center space-x-2 hover:text-blue-200 transition-colors duration-300">
                     <i class="fas fa-heartbeat text-blue-300 text-base sm:text-lg"></i>
                     <span>Healing Touch</span>

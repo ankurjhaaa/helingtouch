@@ -17,7 +17,7 @@
                 </div>
 
                 <!-- Right Side Link -->
-                <a href="{{ route('manageappointments') }}"
+                <a href="{{ route('manageappointments') }}" onclick="showLoader()"
                     class="flex items-center gap-1 text-xs sm:text-sm hover:underline text-white justify-start sm:justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 sm:h-5 w-4 sm:w-5" fill="none" stroke="currentColor"
                         stroke-width="2" viewBox="0 0 24 24">
@@ -82,7 +82,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
-                    <span><a href="{{ route('appointment') }}">Change Doctor</a></span>
+                    <span><a href="{{ route('appointment') }}" onclick="showLoader()">Change Doctor</a></span>
                 </button>
             </div>
 
@@ -190,7 +190,7 @@
 
 
                 </div>
-                <button class="text-sm text-[#9b714a] hover:underline">Change Doctor</button>
+                
             </div>
             @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
@@ -331,7 +331,7 @@
                 </div>
 
                 <div class="flex justify-between mt-6">
-                    <a href="{{ route('appointment') }}"
+                    <a href="{{ route('appointment') }}" onclick="showLoader()"
                         class="border border-gray-300 px-6 py-2 rounded flex items-center space-x-1 text-gray-700 hover:bg-gray-100">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />

@@ -1,7 +1,7 @@
 <nav class="bg-white shadow-md px-4 py-3 md:px-6 fixed top-0 left-0 w-full z-50">
     <div class="flex items-center justify-between">
         <!-- Left: Logo and Title -->
-        <a href="{{ route('home') }}">
+        <a href="{{ route('home') }}" onclick="showLoader()">
             <div class="flex items-center space-x-3">
                 <!-- Square Image -->
                 <img src="{{ asset('storage/logo/logo4.png') }}" alt="Logo" class="w-10 h-10 rounded-3xl object-cover" />
@@ -24,12 +24,12 @@
 
         <!-- Middle: Nav Links (Visible in Desktop) -->
         <ul class="hidden md:flex space-x-6 text-sm font-medium">
-            <li><a href="{{ route('home') }}" class="hover:text-yellow-600">Home</a></li>
-            <li><a href="#" class="hover:text-yellow-600">Services</a></li>
-            <li><a href="{{ route('landing.our-doctor') }}" class="hover:text-yellow-600">Our Doctors</a></li>
-            <li><a href="" class="hover:text-yellow-600">About Us</a></li>
-            <li><a href="{{ route('landing.gallery') }}" class="hover:text-yellow-600">Gallery</a></li>
-            <li><a href="{{ route('landing.hospital-contact') }}" class="hover:text-yellow-600">Contact</a></li>
+            <li><a href="{{ route('home') }}" class="hover:text-yellow-600" onclick="showLoader()">Home</a></li>
+            <li><a href="" class="hover:text-yellow-600" onclick="showLoader()">Services</a></li>
+            <li><a href="{{ route('landing.our-doctor') }}" class="hover:text-yellow-600" onclick="showLoader()">Our Doctors</a></li>
+            <li><a href="" class="hover:text-yellow-600" onclick="showLoader()">About Us</a></li>
+            <li><a href="{{ route('landing.gallery') }}" class="hover:text-yellow-600" onclick="showLoader()">Gallery</a></li>
+            <li><a href="{{ route('landing.hospital-contact') }}" class="hover:text-yellow-600" onclick="showLoader()">Contact</a></li>
             <li class="relative group">
                 <a href="#" class="hover:text-yellow-600">Dashboard</a>
 
@@ -88,7 +88,7 @@
         <!-- Right: Book Button + Hamburger Icon -->
         <div class="flex items-center space-x-3">
             <!-- Book Appointment Button (Always Visible) -->
-            <a href="{{ route('appointment') }}"
+            <a href="{{ route('appointment') }}" onclick="showLoader()"
                 class="bg-yellow-700 text-white px-5 py-2 rounded shadow hover:bg-yellow-800 flex items-center space-x-2 text-sm md:text-base">
                 <!-- Mobile Icon + Short Text -->
                 <span class="md:hidden flex items-center space-x-1">

@@ -48,7 +48,7 @@
                     <p class="mb-5 font-normal text-gray-500 dark:text-gray-400">Please fill out the form below to apply for
                         leave.</p>
 
-                    <form action="{{ route('doctor.leave.store') }}" method="post" class="max-w-sm mx-auto">
+                    <form action="{{ route('doctor.leave.store') }}" method="post" class="max-w-sm mx-auto" onsubmit="showLoader()">
                         @csrf
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Leave

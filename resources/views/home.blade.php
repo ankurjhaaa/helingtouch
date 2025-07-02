@@ -22,9 +22,9 @@
                 Experience world-class medical care with our team of dedicated specialists and
                 patient-centered approach. Your health is our priority.
             </p>
-            <button class="mt-6 bg-yellow-700 text-white px-6 py-3 rounded shadow hover:bg-yellow-800">
+            <a href="" class="mt-6 bg-yellow-700 text-white px-6 py-3 rounded shadow hover:bg-yellow-800">
                 Book Appointment →
-            </button>
+            </a>
 
             <div class="flex space-x-10 mt-10">
                 <div class="flex items-center space-x-3">

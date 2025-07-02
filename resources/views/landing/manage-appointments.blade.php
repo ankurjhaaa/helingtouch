@@ -3,6 +3,38 @@
 
 @section('content')
 
+    <!-- Toast Alert Without JS -->
+    @if(session('successs') || session('error'))
+        <div class="fixed top-20 right-10 z-50 space-y-3">
+
+            @if(session('successs'))
+                <div
+                    class="flex items-start bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-lg shadow-md w-72">
+                    <svg class="w-5 h-5 mr-2 mt-1 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <div class="text-sm">
+                        {{ session('successs') }}
+                    </div>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="flex items-start bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-lg shadow-md w-72">
+                    <svg class="w-5 h-5 mr-2 mt-1 text-red-600" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <div class="text-sm">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
+
+        </div>
+    @endif
+
     <div class="mt-24 px-2 md:px-6 lg:px-10">
         <div class="max-w-8xl mx-auto py-5 ">
             <div class="bg-gradient-to-tr from-[#c9a27e] to-[#a77c52] px-6 sm:p-8 rounded-md shadow-xl text-white ">
@@ -14,8 +46,6 @@
                         <p class="text-sm sm:text-base text-white/90">View, reschedule, or create appointments effortlessly
                         </p>
                     </div>
-
-
 
                 </div>
             </div>
@@ -40,17 +70,11 @@
                     </div>
                     <h2 class="text-xl md:text-2xl font-bold text-[#5a3921]">Schedule Your Visit</h2>
                     <p class="text-[#7d5a3d] text-sm">Plan your appointment with top specialists in just a few clicks.</p>
-                    <button
-                        class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] text-white px-6 py-2 rounded-full shadow hover:scale-105 transition-transform text-sm md:text-base">
+                    <a href="{{ route('appointment') }}" onclick="showLoader()"
+                        class="bg-gradient-to-r from-[#a77c52] to-[#c9a27e] text-white px-6 py-3 rounded-full shadow hover:scale-105 transition-transform text-sm md:text-base">
                         + Book Appointment
-                        @if(session('successs'))
-                            <p class="text-green-600">{{ session('successs') }}</p>
-                        @endif
 
-                        @if(session('error'))
-                            <p class="text-red-600">{{ session('error') }}</p>
-                        @endif
-                    </button>
+                    </a>
                 </div>
 
                 <div class="mt-10 bg-[#fffaf2] border border-[#e0c9aa] rounded-xl p-4 shadow-sm">
@@ -252,7 +276,7 @@
 
     <!-- ---------------------------------- niche otp verify dikha raha hu appoinment me selcted appoint ment ka ----------------------------- -->
     @if(session('success'))
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 ">
             <div class="bg-white/90 backdrop-blur-lg border border-gray-200 shadow-2xl rounded-2xl w-full max-w-sm p-6">
 
                 <!-- Icon -->
@@ -289,7 +313,7 @@
 
                     <!-- Buttons -->
                     <div class="flex justify-between items-center mt-6">
-                        <button type="button" class="text-sm text-gray-500 hover:text-gray-700 transition">Resend OTP</button>
+                        <a href="" class="text-sm text-gray-500 hover:text-gray-700 transition">Cancle</a>
                         <button id="verify-btn" type="submit"
                             class="bg-red-600 text-white px-6 py-2 rounded-lg font-medium shadow-md transition opacity-50 cursor-not-allowed"
                             disabled>

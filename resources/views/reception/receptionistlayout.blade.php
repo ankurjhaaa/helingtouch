@@ -11,6 +11,7 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- --------------------------- loder wirl Here ---------------- -->
     <div id="loaderOverlay" class="fixed inset-0 bg-black/30 bg-opacity-40 hidden items-center justify-center z-50">
         <div class="loader border-4 border-white border-t-[#9b714a] rounded-full w-12 h-12 animate-spin"></div>
     </div>
@@ -28,7 +29,7 @@
             <button id="sidebarToggle" class="md:hidden text-white focus:outline-none">
                 <i class="fas fa-bars text-lg"></i>
             </button>
-            <a href="{{ route('receptionist.Dashboard') }}">Dashboard</a>
+            <a href="{{ route('receptionist.Dashboard') }}" onclick="showLoader()">Dashboard</a>
         </div>
 
         <!-- Right -->
@@ -43,8 +44,8 @@
 
             <!-- Dropdown -->
             <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2 z-50">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                 <a href="{{ route('auth.logout') }}"
                     class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100">Logout</a>
             </div>
@@ -64,12 +65,12 @@
             </div>
             <nav class="flex flex-col space-y-2">
                 <a href="{{ route('receptionist.Dashboard') }}"
-                    class="px-4 py-2 hover:bg-indigo-700 rounded">Dashboard</a>
-                <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Appointments</a>
+                    class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Dashboard</a>
+                <a href="" class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Appointments</a>
                 <a href="{{ route('receptionist.attendance') }}"
-                    class="px-4 py-2 hover:bg-indigo-700 rounded">Attandense</a>
-                <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Patients</a>
-                <a href="#" class="px-4 py-2 hover:bg-indigo-700 rounded">Messages</a>
+                    class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Attandense</a>
+                <a href="" class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Patients</a>
+                <a href="" class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Messages</a>
                 <a href="{{ route('auth.logout') }}" class="px-4 py-2 hover:bg-red-700 text-red-300 rounded">Logout</a>
             </nav>
         </aside>

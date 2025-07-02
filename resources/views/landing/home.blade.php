@@ -142,7 +142,7 @@
                     class="w-full sm:w-[48%] lg:w-[23%] bg-white border rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 flex flex-col">
 
                     <!-- Image Link -->
-                    <a href="{{  route('landing.doctor', $doctor->id)  }}" class="block overflow-hidden">
+                    <a href="{{  route('landing.doctor', $doctor->id)  }}" class="block overflow-hidden" onclick="showLoader()">
                         <img src="{{ $doctor->photo ? asset('storage/' . $doctor->photo) : asset('default/default-user.jpg') }}" alt="Doctor"
                             class="w-full h-40 object-cover hover:scale-105 transition duration-300">
                     </a>
@@ -156,7 +156,7 @@
 
                         <!-- Appointment Button -->
 
-                        <a href="{{ route('bookAppointment', ['id' => $doctor->id]) }}"
+                        <a href="{{ route('bookAppointment', ['id' => $doctor->id]) }}" onclick="showLoader()"
                             class="w-full text-sm bg-yellow-700 text-white py-2 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all text-center block">
                             Book Appointment
                         </a>

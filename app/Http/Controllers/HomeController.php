@@ -68,7 +68,7 @@ class HomeController extends Controller
         if ($enteredOtp == $otpFromDB) {
             $verifyappoint->status = 'cancelled';
             $verifyappoint->save();
-            return redirect()->back()->with('successs', $id);
+            return redirect()->back()->with('successs', 'Your Appointment Is Cancelled');
         } else {
             return redirect()->back()->with('error', 'Invalid OTP. Please try again.');
         }

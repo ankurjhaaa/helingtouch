@@ -50,7 +50,7 @@
                                     <div class="text-sm text-gray-500">{{ $appointment->time }} •
                                         {{ $appointment->gender }} • {{ $appointment->message }}</div>
                                 </div>
-                                <a href="{{ route('doctor.patient',$appointment->id) }}" class="text-blue-600 text-sm hover:underline">View</a>
+                                <a href="{{ route('doctor.patient',$appointment->id) }}" onclick="showLoader()" class="text-blue-600 text-sm hover:underline">View</a>
                             </li>
                         @empty
                             <li class="py-6 text-center text-gray-500">
@@ -60,7 +60,7 @@
                     </ul>
 
                     <div class="mt-4 text-right">
-                        <a href="#" class="text-sm text-yellow-700 hover:underline">View All Appointments →</a>
+                        <a href="" onclick="showLoader()" class="text-sm text-yellow-700 hover:underline">View All Appointments →</a>
                     </div>
                 </div>
 
