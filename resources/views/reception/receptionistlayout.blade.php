@@ -12,7 +12,49 @@
    @vite(['resources/js/echo.js']) {{-- add this to your
 
     <head> or footer --}}
+ <style>
+        /* Center the bell icon on the page */
+        .bell-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
 
+        /* Bell icon styling */
+        .bell-icon {
+            font-size: 48px;
+            color: #f1c40f; /* Golden color for the bell */
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Shake animation */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(15deg); }
+            20% { transform: rotate(-15deg); }
+            30% { transform: rotate(10deg); }
+            40% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+            60% { transform: rotate(-5deg); }
+            70% { transform: rotate(3deg); }
+            80% { transform: rotate(-3deg); }
+            90% { transform: rotate(1deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Apply shake animation */
+        .shake {
+            animation: shake 0.8s ease-in-out;
+        }
+
+        /* Fade out effect */
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
 
     </head>
 
