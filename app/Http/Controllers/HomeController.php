@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AppointmentCreated;
 use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Doctor;
@@ -193,6 +194,9 @@ class HomeController extends Controller
                     ->subject('Appointment Confirmation');
             });
         }
+
+        // 🔴 Add this line just after appointment create
+        broadcast(new AppointmentCreated($appointment))->toOthers();
 
 
 

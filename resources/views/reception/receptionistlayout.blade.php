@@ -8,7 +8,13 @@
     @vite('resources/css/app.css')
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
-</head>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+   @vite(['resources/js/echo.js']) {{-- add this to your
+
+    <head> or footer --}}
+
+
+    </head>
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <!-- --------------------------- loder wirl Here ---------------- -->
@@ -64,14 +70,44 @@
                 </button>
             </div>
             <nav class="flex flex-col space-y-2">
-                <a href="{{ route('receptionist.Dashboard') }}"
-                    class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Dashboard</a>
+                <a href="{{ route('receptionist.Dashboard') }}" class="px-4 py-2 hover:bg-indigo-700 rounded"
+                    onclick="showLoader()">Dashboard</a>
                 <a href="" class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Appointments</a>
-                <a href="{{ route('receptionist.attendance') }}"
-                    class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Attandense</a>
+                <a href="{{ route('receptionist.attendance') }}" class="px-4 py-2 hover:bg-indigo-700 rounded"
+                    onclick="showLoader()">Attandense</a>
                 <a href="" class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Patients</a>
                 <a href="" class="px-4 py-2 hover:bg-indigo-700 rounded" onclick="showLoader()">Messages</a>
                 <a href="{{ route('auth.logout') }}" class="px-4 py-2 hover:bg-red-700 text-red-300 rounded">Logout</a>
+
+                <li class="mb-2">
+                    <a href="#" onclick="toggleNotificationPanel()"
+                        class="flex items-center space-x-2 px-4 py-2 text-white-700 hover:bg-red-700 rounded transition">
+
+                        <i class="fas fa-bell text-xl"></i>
+
+                        <span class="font-medium">Notifications</span>
+
+                        <span id="notification-count"
+                            class="ml-auto bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full hidden">
+                            0
+                        </span>
+                    </a>
+                </li>
+
+
+                <!-- Mute toggle -->
+                <button onclick="toggleMute()"
+                    class="flex items-center space-x-2 px-4 py-2 text-white hover:bg-red-700 rounded transition"><i
+                        class="fas fa-volume-mute"></i>
+                    Mute</button>
+
+                <!-- Notification panel -->
+                <div id="notification-box" class="card shadow-sm p-2"
+                    style="display: none; position: absolute; top: 60px; right: 20px; z-index: 9999; width: 300px;">
+                    <h6>📋 Latest Appointments</h6>
+                    <div id="notification-items"></div>
+                </div>
+
             </nav>
         </aside>
 
@@ -106,6 +142,18 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const count = parseInt(localStorage.getItem('notificationCount') || '0');
+            const badge = document.getElementById('notification-count');
+            if (count > 0) {
+                badge.innerText = count;
+                badge.style.display = 'inline-block';
+            }
+        });
+    </script>
+
 </body>
 
 </html>

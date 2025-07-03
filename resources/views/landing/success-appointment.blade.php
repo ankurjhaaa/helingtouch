@@ -154,6 +154,68 @@
 
     @endif
 
+    <!-- Bell icon container -->
+    <div class="bell-container">
+        <i id="bell" class="fas fa-bell bell-icon"></i>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const bell = document.getElementById('bell');
+            const audio = new Audio("{{ asset('Storage/sound/notify.mp3') }}"); // Replace with your sound file URL
+
+            // Add shake animation
+            bell.classList.add('shake');
+
+            // Play notification sound
+            audio.play().catch(error => {
+                console.error('Error playing audio:', error);
+            });
+
+            // Remove shake animation after it completes
+            setTimeout(() => {
+                bell.classList.remove('shake');
+            }, 800); // Matches animation duration
+
+            // Fade out after 3 seconds
+            setTimeout(() => {
+                bell.classList.add('fade-out');
+                // Optionally remove the element from DOM after fade-out
+                setTimeout(() => {
+                    bell.parentElement.remove();
+                }, 1000); // Matches fade-out transition duration
+            }, 3000);
+        });
+    </script>
+
+
+    <style>
+        @keyframes shake {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(10deg);
+            }
+
+            50% {
+                transform: rotate(-10deg);
+            }
+
+            75% {
+                transform: rotate(10deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+    </style>
 
 
 

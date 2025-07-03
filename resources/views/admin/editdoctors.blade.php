@@ -6,7 +6,7 @@
     <x-admin-sidebar/>
 
     <!-- Main Content -->
-    <main class="flex-1 p-4 sm:p-6 overflow-x-hidden">
+    <main class=" ms-[350px] p-4 sm:p-6 overflow-x-hidden">
         <div class="max-w-full mx-auto">
             <h2 class="text-2xl font-bold text-blue-900 mb-6 flex items-center space-x-2">
                 <i class="fas fa-user-md text-blue-600"></i>
