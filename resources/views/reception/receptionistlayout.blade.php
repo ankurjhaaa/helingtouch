@@ -61,7 +61,7 @@
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <!-- --------------------------- loder wirl Here ---------------- -->
     <div id="loaderOverlay" class="fixed inset-0 bg-black/30 bg-opacity-40 hidden items-center justify-center z-50">
-        <div class="loader border-4 border-white border-t-[#9b714a] rounded-full w-12 h-12 animate-spin"></div>
+        <div class="loader border-4 border-white border-t-[#353dac] rounded-full w-12 h-12 animate-spin"></div>
     </div>
     <script>
         function showLoader() {

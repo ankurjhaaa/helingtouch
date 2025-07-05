@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <!-- Optional: Add subtle animation for gallery items -->
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -39,24 +43,57 @@
         /* Bell icon styling */
         .bell-icon {
             font-size: 48px;
-            color: #f1c40f; /* Golden color for the bell */
+            color: #f1c40f;
+            /* Golden color for the bell */
             opacity: 1;
             transition: opacity 1s ease-in-out;
         }
 
         /* Shake animation */
         @keyframes shake {
-            0% { transform: rotate(0deg); }
-            10% { transform: rotate(15deg); }
-            20% { transform: rotate(-15deg); }
-            30% { transform: rotate(10deg); }
-            40% { transform: rotate(-10deg); }
-            50% { transform: rotate(5deg); }
-            60% { transform: rotate(-5deg); }
-            70% { transform: rotate(3deg); }
-            80% { transform: rotate(-3deg); }
-            90% { transform: rotate(1deg); }
-            100% { transform: rotate(0deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            10% {
+                transform: rotate(15deg);
+            }
+
+            20% {
+                transform: rotate(-15deg);
+            }
+
+            30% {
+                transform: rotate(10deg);
+            }
+
+            40% {
+                transform: rotate(-10deg);
+            }
+
+            50% {
+                transform: rotate(5deg);
+            }
+
+            60% {
+                transform: rotate(-5deg);
+            }
+
+            70% {
+                transform: rotate(3deg);
+            }
+
+            80% {
+                transform: rotate(-3deg);
+            }
+
+            90% {
+                transform: rotate(1deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
         }
 
         /* Apply shake animation */
@@ -94,11 +131,30 @@
             overlay.classList.add('flex');
         }
     </script>
+
+    <!-- Scroll to Top Button (Wooden Theme) -->
+    <button onclick="scrollToTop()"
+        class="fixed bottom-6 right-6 bg-[#5a3921] hover:bg-[#3e2717] text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300">
+        <!-- Up Arrow Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
     @section('content')
 
     @show
 
-
+    
 </body>
 
 </html>

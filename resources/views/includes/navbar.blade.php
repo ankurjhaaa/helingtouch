@@ -4,7 +4,8 @@
         <a href="{{ route('home') }}" onclick="showLoader()">
             <div class="flex items-center space-x-3">
                 <!-- Square Image -->
-                <img src="{{ asset('storage/logo/logo4.png') }}" alt="Logo" class="w-10 h-10 rounded-3xl object-cover" />
+                <img src="{{ asset('storage/logo/logo4.png') }}" alt="Logo"
+                    class="w-10 h-10 rounded-3xl object-cover" />
 
                 <!-- Text -->
                 <div>
@@ -24,63 +25,45 @@
 
         <!-- Middle: Nav Links (Visible in Desktop) -->
         <ul class="hidden md:flex space-x-6 text-sm font-medium">
-            <li><a href="{{ route('home') }}" class="hover:text-yellow-600" onclick="showLoader()">Home</a></li>
+            <li><a href="{{ route('home') }}"
+                    class="hover:text-yellow-600 {{ request()->routeIs('home') ? 'text-yellow-600 ' : '' }}"
+                    onclick="showLoader()">Home</a></li>
             <li><a href="" class="hover:text-yellow-600" onclick="showLoader()">Services</a></li>
-            <li><a href="{{ route('landing.our-doctor') }}" class="hover:text-yellow-600" onclick="showLoader()">Our Doctors</a></li>
+            <li><a href="{{ route('landing.our-doctor') }}"
+                    class="hover:text-yellow-600 {{ request()->routeIs('landing.our-doctor') ? 'text-yellow-600 ' : '' }}"
+                    onclick="showLoader()">Our
+                    Doctors</a></li>
             <li><a href="" class="hover:text-yellow-600" onclick="showLoader()">About Us</a></li>
-            <li><a href="{{ route('landing.gallery') }}" class="hover:text-yellow-600" onclick="showLoader()">Gallery</a></li>
-            <li><a href="{{ route('landing.hospital-contact') }}" class="hover:text-yellow-600" onclick="showLoader()">Contact</a></li>
+            <li><a href="{{ route('landing.gallery') }}"
+                    class="hover:text-yellow-600 {{ request()->routeIs('landing.gallery') ? 'text-yellow-600 ' : '' }}"
+                    onclick="showLoader()">Gallery</a></li>
+            <li><a href="{{ route('landing.hospital-contact') }}"
+                    class="hover:text-yellow-600 {{ request()->routeIs('landing.hospital-contact') ? 'text-yellow-600 ' : '' }}"
+                    onclick="showLoader()">Contact</a></li>
             <li class="relative group">
-                <a href="#" class="hover:text-yellow-600">Dashboard</a>
 
-                <!-- Dropdown Menu -->
-                <ul
-                    class="absolute left-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition duration-200 z-50 invisible group-hover:visible">
+                @auth
+                    {{-- Role-based Dashboard --}}
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.Dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('admin.Dashboard') ? 'text-yellow-600 ' : '' }}">
+                            Dashboard</a>
+                    @elseif(auth()->user()->role === 'doctor')
+                        <a href="{{ route('doctor.dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('doctor.dashboard') ? 'text-yellow-600 ' : '' }}">
+                            Dashboard</a>
+                    @elseif(auth()->user()->role === 'user')
+                        <a href="{{ route('landing.dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('landing.dashboard') ? 'text-yellow-600 ' : '' }}" >
+                            Dashboard</a>
 
-                    @auth
-                        <!-- User is logged in -->
-                        <li>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 text-sm">Hi, {{ Auth::user()->name }}</a>
-                        </li>
-                        <li>
-                            {{-- Role-based Dashboard --}}
-                            @if(auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.Dashboard') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">Admin
-                                    Dashboard</a>
-                            @elseif(auth()->user()->role === 'doctor')
-                                <a href="{{ route('doctor.dashboard') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100 text-sm">Doctor
-                                    Dashboard</a>
-                            @elseif(auth()->user()->role === 'user')
-                                <a href="{{ route('landing.dashboard') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
-                                    Dashboard</a>
-                                <a href="{{ route('landing.userhistory') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">
-                                    History</a>
-                            @elseif(auth()->user()->role === 'receptionist')
-                                <a href="{{ route('receptionist.Dashboard') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100 text-sm">receptionist
-                                    Dashboard</a>
+                    @elseif(auth()->user()->role === 'receptionist')
+                        <a href="{{ route('receptionist.Dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('receptionist.Dashboard') ? 'text-yellow-600 ' : '' }}">
+                            Dashboard</a>
+                    @endif
+                @else
+                    <a href="{{ route('home') }}/#login" class="hover:text-yellow-600 ">Login</a>
+                @endauth
 
-                            @endif
-                        </li>
-                        
-                        <li>
-
-                            <a href="{{ route('auth.logout') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm text-red-600">Logout</a>
-                        </li>
-                    @else
-                        <!-- User is not logged in -->
-                        <li>
-                            <a href="{{ route('login') }}" class="block px-4 py-2 hover:bg-gray-100 text-sm">Login</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('public.register') }}"
-                                class="block px-4 py-2 hover:bg-gray-100 text-sm">Register</a>
-                        </li>
-                    @endauth
-
-                </ul>
-            </li>
+        </ul>
+        </li>
 
 
         </ul>
@@ -119,7 +102,27 @@
     <div id="mobile-menu"
         class="absolute right-4 top-[64px] w-56 md:hidden bg-white shadow-lg rounded-md py-3 px-4 hidden transition-all duration-300 ease-out">
         <ul class="space-y-2 text-sm font-medium">
-            <li><a href="#" class="block px-2 py-2 rounded hover:bg-yellow-50">Home</a></li>
+            <li><a href="#" class="block px-2 py-2 rounded hover:bg-yellow-50">
+                    @auth
+                        {{-- Role-based Dashboard --}}
+                        @if(auth()->user()->role === 'admin')
+                            <a href="{{ route('admin.Dashboard') }}" class="hover:text-yellow-600">
+                                Dashboard</a>
+                        @elseif(auth()->user()->role === 'doctor')
+                            <a href="{{ route('doctor.dashboard') }}" class="hover:text-yellow-600">
+                                Dashboard</a>
+                        @elseif(auth()->user()->role === 'user')
+                            <a href="{{ route('landing.dashboard') }}" class="hover:text-yellow-600">
+                                Dashboard</a>
+
+                        @elseif(auth()->user()->role === 'receptionist')
+                            <a href="{{ route('receptionist.Dashboard') }}" class="hover:text-yellow-600">
+                                Dashboard</a>
+                        @endif
+                    @else
+                        <a href="{{ route('home') }}/#login" class="hover:text-yellow-600">Login</a>
+                    @endauth
+                </a></li>
             <li><a href="#" class="block px-2 py-2 rounded hover:bg-yellow-50">Services</a></li>
             <li><a href="#" class="block px-2 py-2 rounded hover:bg-yellow-50">Our Doctors</a></li>
             <li><a href="#" class="block px-2 py-2 rounded hover:bg-yellow-50">About Us</a></li>

@@ -122,7 +122,6 @@ Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistControl
     Route::post('/appointments/{id}/pay', 'markPaid')->name('appointments.pay');
     Route::post('/appointments/{id}/resedule', 'resedule')->name('reception.resedule');
     Route::post('/appointments/{id}/followup', 'followup')->name('reception.followup');
-    Route::post('/appointments/{id}/cancle', 'cancle')->name('appointments.cancle');
     
 
 });
@@ -138,3 +137,4 @@ Route::middleware(['auth', 'role:receptionist'])->controller(ReceptionistControl
 
 // --------------------------- razorpay ka route ----------------------------------------
 Route::post('/payment', [RazorpayController::class, 'payment'])->name('payment');
+Route::post('/appointments/{id}/cancle', [RazorpayController::class, 'cancle'])->name('appointments.cancle');

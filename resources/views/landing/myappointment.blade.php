@@ -8,7 +8,7 @@
         <div id="sidebar"
             class="bg-yellow-900 text-white w-72 space-y-6 py-7 px-4 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out ">
             <div class="flex justify-between items-center mb-6 mt-14 md:mt-0">
-                <a href="{{ route('landing.dashboard') }}">
+                <a href="{{ route('landing.dashboard') }}" onclick="showLoader()">
                     <h1 class="text-2xl font-bold ">🏥 Patient Panel</h1>
                 </a>
                 <button onclick="toggleSidebar()" class="md:hidden focus:outline-none ">
@@ -19,13 +19,13 @@
                 </button>
             </div>
             <nav class="flex flex-col space-y-2">
-                <a href="{{ route('landing.dashboard') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Dashboard</a>
-                <a href="{{ route('landing.myappointment') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
-                <a href="{{ route('landing.userhistory') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Medical
+                <a href="{{ route('landing.dashboard') }}" onclick="showLoader()" class="px-4 py-2 hover:bg-yellow-800 rounded">Dashboard</a>
+                <a href="{{ route('landing.myappointment') }}" onclick="showLoader()" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
+                <a href="{{ route('landing.userhistory') }}" onclick="showLoader()" class="px-4 py-2 hover:bg-yellow-800 rounded">Medical
                     Records</a>
-                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Prescriptions</a>
-                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Messages</a>
-                <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Settings</a>
+                <a href="#" onclick="showLoader()" class="px-4 py-2 hover:bg-yellow-800 rounded">Prescriptions</a>
+                <a href="#" onclick="showLoader()" class="px-4 py-2 hover:bg-yellow-800 rounded">Messages</a>
+                <a href="#" onclick="showLoader()" class="px-4 py-2 hover:bg-yellow-800 rounded">Settings</a>
                 <a href="{{ route('auth.logout') }}" class="px-4 py-2 hover:bg-yellow-800 rounded text-red-300">Logout</a>
             </nav>
         </div>

@@ -24,6 +24,8 @@ class AuthController extends Controller
                 return redirect()->route('doctor.dashboard')->with('success', 'Welcome Doctor!');
             }elseif($user->role === 'receptionist'){
                 return redirect()->route('receptionist.Dashboard')->with('success', 'Welcome Receptionist!');
+            }elseif($user->role === 'user'){
+                return redirect()->route('landing.dashboard')->with('success', 'Welcome Receptionist!');
             }
             else{
                 return redirect()->route('home')->with('error', 'Unauthorized access!');

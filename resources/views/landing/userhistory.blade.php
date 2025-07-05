@@ -6,7 +6,7 @@
 
         <!-- 🟤 Sidebar -->
         <div id="sidebar"
-            class="bg-yellow-900 text-white w-72 md:w-72 space-y-6 py-5 px-4 fixed md:static inset-y-0 left-0 z-40 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out">
+            class="bg-yellow-900 text-white w-72 md:w-72 space-y-6 py-5 px-4 fixed md:static inset-y-0 left-0 z-60 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out">
             <div class="flex justify-between items-center mb-6">
                 <a href="{{ route('landing.dashboard') }}">
                     <h1 class="text-2xl font-bold">🏥 Patient Panel</h1>
@@ -20,7 +20,8 @@
             </div>
             <nav class="flex flex-col space-y-2">
                 <a href="{{ route('landing.dashboard') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Dashboard</a>
-                <a href="{{ route('landing.myappointment') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">My Appointments</a>
+                <a href="{{ route('landing.myappointment') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">My
+                    Appointments</a>
                 <a href="{{ route('landing.userhistory') }}" class="px-4 py-2 hover:bg-yellow-800 rounded">Medical
                     Records</a>
                 <a href="#" class="px-4 py-2 hover:bg-yellow-800 rounded">Prescriptions</a>
@@ -99,7 +100,7 @@
                                             </a>
 
                                         @else
-
+                                            <div class="mt-2">{{ $userchat->chat }} || {{ $userchat->created_at }}</div>
                                         @endif
 
                                     </div>

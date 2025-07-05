@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Attendance;
 use App\Models\Doctor;
 use App\Models\History;
+use App\Models\Revenue;
 use App\Models\Staff;
 use App\Models\User;
 use Carbon\Carbon;
@@ -149,19 +150,22 @@ class ReceptionistController extends Controller
 
         return redirect()->back()->with('success', 'Appointment marked as Completed!');
     }
-    public function cancle($id)
-    {
-        $appointment = Appointment::findOrFail($id);
-        $appointment->status = 'cancelled';
-        $appointment->save();
 
-        return redirect()->back()->with('success', 'Appointment marked as Cancle!');
-    }
+
 
     public function markPaid($id)
     {
         $appointment = Appointment::findOrFail($id);
         $appointment->ispaid = 1;
+        $receptionemail = auth()->user()->email ;
+        Revenue::create([
+            'amount' => $appointment->fee * 100,
+            'status' => 'byreception',
+            'paymenttype' => 'credit',
+            'paymentmode' => 'offline',
+            'email' => $receptionemail,
+            'description' => $appointment->id,
+        ]);
         $appointment->save();
 
         return redirect()->back()->with('success', 'Payment marked successfully!');
@@ -206,7 +210,8 @@ class ReceptionistController extends Controller
     public function appointmentview($id)
     {
         $appointment = Appointment::findOrFail($id);
-        return view('reception.appointmentview', compact('appointment'));
+        $paydetail = Revenue::where('description', $id)->first();
+        return view('reception.appointmentview', compact('appointment','paydetail'));
     }
 
 }

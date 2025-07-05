@@ -60,6 +60,18 @@
                             <div>
                                 <strong>Fee:</strong> {{ $appointment->fee }}
                             </div>
+                            @if ($paydetail)
+                                <div>
+                                    <strong>Payment Mode:</strong> {{ $paydetail->paymentmode }}
+                                </div>
+                                @if ($paydetail->paymentmode == 'online')
+                                    <div>
+                                        <strong>Payment Id:</strong> {{ $paydetail->paymentid }}
+                                    </div>
+
+                                @endif
+
+                            @endif
                             <div>
                                 <strong>Status:</strong>
                                 @if ($appointment->status == 'no_show')
@@ -75,6 +87,8 @@
                                     Unpaid
                                 @elseif($appointment->ispaid == 2)
                                     Follow Up
+                                @elseif($appointment->ispaid == 3)
+                                    Refund Iniciated
                                 @else
                                     Paid
                                 @endif
@@ -82,6 +96,76 @@
                             </div>
                         </div>
                     </div>
+
+                    @if ($appointment->ispaid == 3)
+                        <!-- Refund Info -->
+                        <div class="border-b pb-4">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2">Refund Payment Info</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+                                <div>
+                                    <strong>Refund Iniciate Date:</strong> {{ $appointment->updated_at }}
+                                </div>
+
+                                <div>
+                                    <strong>Refund Amount:</strong> {{ $appointment->fee }}
+                                </div>
+                                <div>
+                                    <strong>Payment Status:</strong>
+
+                                    @if ($appointment->ispaid == 0)
+                                        Unpaid
+                                    @elseif($appointment->ispaid == 2)
+                                        Follow Up
+                                    @elseif($appointment->ispaid == 3)
+                                        Refund Iniciated
+                                    @else
+                                        Paid
+                                    @endif
+
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Note :</strong> [Amount will be credited to customer’s bank account within 5-7 working
+                            days after the refund has processed]
+                        </div>
+                    @endif
+                    @if ($appointment->ispaid == 4)
+                        <!-- Refund Info -->
+                        <div class="border-b pb-4">
+                            <!-- <h2 class="text-xl font-semibold text-gray-800 mb-2">Refund Payment Info</h2> -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+                                <div>
+                                    <strong>Refund Iniciate Date:</strong> {{ $appointment->updated_at }}
+                                </div>
+
+                                <div>
+                                    <strong>Refund Status:</strong> Success
+                                </div>
+                                <div>
+                                    <strong>Payment Mode:</strong> Offline
+                                </div>
+                                <div>
+                                    <strong>Payment Status:</strong>
+
+                                    @if ($appointment->ispaid == 0)
+                                        Unpaid
+                                    @elseif($appointment->ispaid == 2)
+                                        Follow Up
+                                    @elseif($appointment->ispaid == 3)
+                                        Refund Iniciated
+                                    @else
+                                        Paid
+                                    @endif
+
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Note :</strong> [Ye Appoint cancle ho gaya hai , kripaya aap patient ko uska fee refund kar
+                            do ]
+                        </div>
+                    @endif
 
                     <!-- Action Buttons -->
                     <div class="flex flex-wrap gap-3 pt-6 justify-end">
@@ -686,7 +770,8 @@
                 <h3 class="text-lg font-semibold mb-4">Choose Payment Method</h3>
 
                 <!-- Offline Payment Form -->
-                <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" class="mb-3" onsubmit="return confirm('Mark as Payment Confirm?')">
+                <form action="{{ route('appointments.pay', $appointment->id) }}" method="POST" class="mb-3"
+                    onsubmit="return confirm('Mark as Payment Confirm?')">
                     @csrf
                     <button type="submit"
                         class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition">
@@ -757,7 +842,7 @@
     </script>
 
 
- <!-- Bell icon container -->
+    <!-- Bell icon container -->
     <div class="bell-container">
         <i id="bell" class="fas fa-bell bell-icon"></i>
     </div>
