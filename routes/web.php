@@ -39,6 +39,7 @@ Route::controller(HomeController::class)->group(function () {
 
 
     Route::get('/manage-appointments', 'manageappointments')->name('manageappointments');
+    Route::get('/services', 'services')->name('services');
     Route::post('/manage-appointments/{id}/insertotp', 'insertotp')->name('landing.insertotp');
     Route::post('/manage-appointments/{id}/verifyotp', 'verifyotp')->name('landing.verifyotp');
     Route::get('/book-appointment/{id}', 'bookAppointment')->name('bookAppointment');

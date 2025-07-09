@@ -89,10 +89,12 @@
 
                                         <a href="{{ route('receipt.download', $allappointment->id) }}"
                                             class="text-[#7d5a3d] hover:underline">Download</a>
-                                        <button class="text-[#ff0404] hover:underline font-medium cursor-pointer transition"
-                                            onclick="openModal('otp-modal-{{ $allappointment->id }}')">
-                                            Cancel
-                                        </button>
+            
+                                        <form action="{{ route('appointments.cancle', $allappointment->id) }}" method="POST" 
+                                    onsubmit="return confirm('Are you sure you want to Cancle this appointment?')">
+                                    @csrf
+                                    <button type="submit" class="text-[#ff0404] hover:underline font-medium cursor-pointer transition" > Cancle</button>
+                                    </form>
 
                                     </td>
                                 </tr>
@@ -196,54 +198,7 @@
                                 </script>
 
 
-                                <!-- ---------------------------------- niche otp verify dikha raha hu appoinment me selcted appoint ment ka ----------------------------- -->
-                                <div id="otp-modal-{{ $allappointment->id }}"
-                                    class="fixed inset-0 z-50 items-center justify-center bg-black/30 backdrop-blur-sm p-2"
-                                    style="display: none;">
-                                    <div
-                                        class="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative">
-
-                                        <!-- Header -->
-                                        <div class="text-center mb-6">
-                                            <h2 class="text-xl font-semibold text-red-600">Cancel Appointment</h2>
-                                            <p class="text-sm text-gray-500">Enter the OTP sent to your mobile to confirm
-                                                cancellation.</p>
-                                        </div>
-
-                                        <!-- OTP Form -->
-                                        <form>
-                                            <label for="otp" class="block text-sm font-medium text-gray-700 mb-1">Enter
-                                                OTP {{ $allappointment->id }}</label>
-                                            <input type="text" id="otp" name="otp"
-                                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-                                                placeholder="6-digit OTP">
-
-                                            <!-- Submit & Cancel -->
-                                            <div class="mt-6 flex justify-end gap-3">
-                                                <button type="button"
-                                                    onclick="closeModal('otp-modal-{{ $allappointment->id }}')"
-                                                    class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100">
-                                                    Close
-                                                </button>
-                                                <button type="submit"
-                                                    class="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-500">
-                                                    Confirm Cancel
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <script>
-                                    function openModal(id) {
-                                        const modal = document.getElementById(id);
-                                        modal.style.display = 'flex';
-                                    }
-
-                                    function closeModal(id) {
-                                        const modal = document.getElementById(id);
-                                        modal.style.display = 'none';
-                                    }
-                                </script>
+                                
 
 
                             @empty

@@ -84,6 +84,10 @@ class HomeController extends Controller
     {
         return view('landing.appointmentrecipt');
     }
+    public function services()
+    {
+        return view('landing.services');
+    }
 
 
 
@@ -133,9 +137,6 @@ class HomeController extends Controller
             'date' => ['required', 'date'],
             'fee' => ['required', 'numeric'],
         ]);
-
-
-
         $appointment = Appointment::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -173,8 +174,6 @@ class HomeController extends Controller
         $user = User::where('email', $request->email)->first();
         $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
 
-
-
         if (!$user) {
             $user = User::create([
                 'name' => $request->name,
@@ -197,9 +196,6 @@ class HomeController extends Controller
 
         // 🔴 Add this line just after appointment create
         broadcast(new AppointmentCreated($appointment))->toOthers();
-
-
-
 
         // Redirect to confirmation page with session data
         return redirect()->route('successappointment')->with('appointment', $appointment);

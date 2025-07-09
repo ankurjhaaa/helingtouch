@@ -28,7 +28,7 @@
             <li><a href="{{ route('home') }}"
                     class="hover:text-yellow-600 {{ request()->routeIs('home') ? 'text-yellow-600 ' : '' }}"
                     onclick="showLoader()">Home</a></li>
-            <li><a href="" class="hover:text-yellow-600" onclick="showLoader()">Services</a></li>
+            <li><a href="{{ route('services') }}" class="hover:text-yellow-600 {{ request()->routeIs('services') ? 'text-yellow-600 ' : '' }}" onclick="showLoader()">Services</a></li>
             <li><a href="{{ route('landing.our-doctor') }}"
                     class="hover:text-yellow-600 {{ request()->routeIs('landing.our-doctor') ? 'text-yellow-600 ' : '' }}"
                     onclick="showLoader()">Our
@@ -45,21 +45,25 @@
                 @auth
                     {{-- Role-based Dashboard --}}
                     @if(auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.Dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('admin.Dashboard') ? 'text-yellow-600 ' : '' }}">
+                        <a href="{{ route('admin.Dashboard') }}" onclick="showLoader()"
+                            class="hover:text-yellow-600 {{ request()->routeIs('admin.Dashboard') ? 'text-yellow-600 ' : '' }}">
                             Dashboard</a>
                     @elseif(auth()->user()->role === 'doctor')
-                        <a href="{{ route('doctor.dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('doctor.dashboard') ? 'text-yellow-600 ' : '' }}">
+                        <a href="{{ route('doctor.dashboard') }}" onclick="showLoader()"
+                            class="hover:text-yellow-600 {{ request()->routeIs('doctor.dashboard') ? 'text-yellow-600 ' : '' }}">
                             Dashboard</a>
                     @elseif(auth()->user()->role === 'user')
-                        <a href="{{ route('landing.dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('landing.dashboard') ? 'text-yellow-600 ' : '' }}" >
+                        <a href="{{ route('landing.dashboard') }}" onclick="showLoader()"
+                            class="hover:text-yellow-600 {{ request()->routeIs('landing.dashboard') ? 'text-yellow-600 ' : '' }}">
                             Dashboard</a>
 
                     @elseif(auth()->user()->role === 'receptionist')
-                        <a href="{{ route('receptionist.Dashboard') }}" class="hover:text-yellow-600 {{ request()->routeIs('receptionist.Dashboard') ? 'text-yellow-600 ' : '' }}">
+                        <a href="{{ route('receptionist.Dashboard') }}" onclick="showLoader()"
+                            class="hover:text-yellow-600 {{ request()->routeIs('receptionist.Dashboard') ? 'text-yellow-600 ' : '' }}">
                             Dashboard</a>
                     @endif
                 @else
-                    <a href="{{ route('home') }}/#login" class="hover:text-yellow-600 ">Login</a>
+                    <a href="{{ route('home') }}/#login" class="hover:text-yellow-600 " >Login</a>
                 @endauth
 
         </ul>
