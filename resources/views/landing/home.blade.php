@@ -356,4 +356,49 @@
             </div>
         </div>
     </section>
+
+
+    <footer class="bg-gray-800 text-white pt-10">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- Logo & About -->
+        <div>
+            <h2 class="text-2xl font-bold mb-3">Healing Touch</h2>
+            <p class="text-sm">Providing compassionate healthcare services with cutting-edge technology and expert doctors.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+            <h3 class="text-lg font-semibold mb-3">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="/" class="hover:underline">Home</a></li>
+                <li><a href="/about" class="hover:underline">About</a></li>
+                <li><a href="/services" class="hover:underline">Services</a></li>
+                <li><a href="/contact" class="hover:underline">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+            <h3 class="text-lg font-semibold mb-3">Contact Us</h3>
+            <p class="text-sm">📞 +91 9471659700</p>
+            <p class="text-sm">✉️ healingtouch@example.com</p>
+            <p class="text-sm">🏥 Main Road, Patna, Bihar, 800001</p>
+        </div>
+
+        <!-- Opening Hours -->
+        <div>
+            <h3 class="text-lg font-semibold mb-3">Opening Hours</h3>
+            <p class="text-sm">Mon - Fri: 8:00 AM - 6:00 PM</p>
+            <p class="text-sm">Saturday: 9:00 AM - 4:00 PM</p>
+            <p class="text-sm">Sunday: Closed</p>
+            <p class="mt-2 text-sm">🚨 Emergency: 24/7 Available</p>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-10 border-t border-yellow-500 text-center py-4 text-sm">
+        © {{ date('Y') }} Healing Touch Hospital. All rights reserved.
+    </div>
+</footer>
+
 @endsection

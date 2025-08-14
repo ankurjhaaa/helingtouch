@@ -44,7 +44,7 @@
                     </ul>
                 @endif
 
-                <form action="{{ route('admin.applySubmit') }}" method="POST" enctype="multipart/form-data" class="space-y-5" id="applyForm">
+                <form action="{{ route('admin.applySubmit') }}" method="POST" enctype="multipart/form-data" class="space-y-5" >
                     @csrf
 
                     <div data-aos="fade-right" data-aos-delay="300">

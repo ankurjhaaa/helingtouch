@@ -100,7 +100,7 @@ class AdminController extends Controller
         return view('admin.viewrole', compact('users'));
     }
 
-    public function submitform(Request $request)
+    public function submitform(Request $request) 
     {
         $request->validate([
             'name' => 'required|string|max:255',
