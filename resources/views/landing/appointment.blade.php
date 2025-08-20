@@ -133,31 +133,31 @@
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-800">Dr. {{ $doctor->name }}</h3>
                                 @php
-                                    $departmentname = \App\Models\Department::where('id', $availableDay->department_id)->first();
+                                    $departmentname = \App\Models\Department::where('id', $availableDay?->department_id)->first();
                                 @endphp
-                                <p class="text-sm text-[#9b714a] font-medium">{{ $departmentname->name }}</p>
+                                <p class="text-sm text-[#9b714a] font-medium">{{ $departmentname?->name }}</p>
                             </div>
                         </div>
                         <div class="mt-4 space-x-1">
-                            @if ($availableDay->monday == 1)
+                            @if ($availableDay?->monday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Mon</span>
                             @endif
-                            @if ($availableDay->tuesday == 1)
+                            @if ($availableDay?->tuesday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Tue</span>
                             @endif
-                            @if ($availableDay->wednesday == 1)
+                            @if ($availableDay?->wednesday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Wed</span>
                             @endif
-                            @if ($availableDay->thursday == 1)
+                            @if ($availableDay?->thursday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Thu</span>
                             @endif
-                            @if ($availableDay->friday == 1)
+                            @if ($availableDay?->friday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1">Fri</span>
                             @endif
-                            @if ($availableDay->saturday == 1)
+                            @if ($availableDay?->saturday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sat</span>
                             @endif
-                            @if ($availableDay->sunday == 1)
+                            @if ($availableDay?->sunday == 1)
                                 <span class="inline-block bg-[#e0c5a7] text-sm rounded-md px-3 py-1 mt-1">Sun</span>
                             @endif
 
@@ -172,9 +172,9 @@
                                 $isAvailableToday = $availableDay->$todayDay ?? 0;
 
                                 $tomorrow = Carbon::tomorrow()->toDateString();
-                                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay->user_id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
+                                $onLeavetomorrow = \App\Models\Leave::where('doctor_id', $availableDay?->user_id)->where('leave_date', $tomorrow)->where('status', 'approved')->exists();
                             @endphp
-                            <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay->fee }}</span>
+                            <span class="text-sm text-gray-700 font-semibold">₹{{ $availableDay?->fee }}</span>
                             @if($isAvailableToday && !$onLeavetomorrow)
                                 <a href="{{ route('bookAppointment', $doctor->id) }}" onclick="showLoader()"
                                     class="bg-[#9b714a] hover:bg-[#835f3d] text-white px-4 py-1.5 rounded-md text-sm">
